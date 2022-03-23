@@ -6,4 +6,4 @@ from django.shortcuts import render
 def dashboard(request):
     #return HttpResponse("Here's the dashboard.")
     context ={}
-    return render(request, 'dashboard/index.html', context)
+    return render(request, 'dashboard/index2.html', context)
