@@ -11,3 +11,11 @@
     width: 100%;
     height: 45%;
 }
+
+.cardMargin{
+    margin: 10px;
+}
+.footerMargin{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
