@@ -3,7 +3,12 @@ from django.shortcuts import render
 
 
 # Create your views here.
-def dashboard(request):
-    #return HttpResponse("Here's the dashboard.")
-    context ={}
-    return render(request, 'dashboard/index2.html', context)
+def index(request):
+    context = {}
+    return render(request, 'dashboard/index.html', context)
+
+def link_to_dashboard(request):
+    context = {}
+    return render(request, 'dashboard/dashboard.html', context)
+    
+    
