@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'relecov_core',
-    #'relecov_dashboard',
+    'relecov_dashboard',
     
 ]
 
