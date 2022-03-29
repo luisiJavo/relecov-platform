@@ -46,13 +46,12 @@
         <nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgb(238, 241, 236);" role="navigation" >
             <div class="container-fluid">
               <a class="navbar-brand me-auto" href="#">
-                <img src="{% static 'images/logoECDC.png' %}" class="rounded-start img-thumbnail" alt="logo ECDC" style="width: 25%">
-                relecov-platform
+                <img src="{% static 'images/relecov_minus.png' %}" class="rounded-start img-thumbnail" alt="logo ECDC-relecov" style="width: 45%">
               </a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
-              <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin-left: 35%;width: 90%;">
+              <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin-left: 32%;width: 90%;">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0" >
                   <li class="nav-item">
                     <a class="nav-link active me-5" aria-current="page" href="#">Home</a>
@@ -66,7 +65,8 @@
                   <li class="nav-item me-5">
                     <a class="nav-link" href="#">Methods</a>
                   </li>
-                  <li class="nav-item dropdown me-5">
+                  <!--link users-->
+                  <!--<li class="nav-item dropdown me-5">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                       Users
                     </a>
@@ -76,8 +76,9 @@
                       <li><hr class="dropdown-divider"></li>
                       <li><a class="dropdown-item" href="#">another action?</a></li>
                     </ul>
-                  </li>
-                  <button type="button" class="btn me-5" style="margin-left: 1em;margin-top: 0em;margin-bottom: 8px;height: auto; background-color: rgb(135, 163, 85);color: white;" >Join to us</button>
+                  </li>-->
+                  <!--end link users-->
+                  <button type="button" class="btn me-5" style="margin-left: 1em;margin-top: 0em;margin-bottom: 8px;height: auto; background-color: rgb(135, 163, 85);color: white;" >Intranet</button>
                 </ul>
               </div>
             </div>
@@ -102,18 +103,23 @@
         <!--card logos and link to wordpress.isciiides.es-->
           <div class="bg-light"style="text-align: center;"> 
               <div class="card bg-light d-inline ">
-                <img src="{% static 'images/isciiiLogo.png' %}" class="card-img" alt="banner relecov-platform" style="width: 15%;">
+                <img src="{% static 'images/LogoISCIII.png' %}" class="card-img" alt="banner relecov-platform" style="width: 25%;">
               </div>
 
-              <div class="card bg-light d-inline mx-5">
+              <div class="card bg-light d-inline ms-5">
                 <img src="{% static 'images/logoECDC.png' %}" class="card-img" alt="banner relecov-platform" style="width:4%;">
               </div>
 
-              <div class="card bg-light d-inline mx-5">
+              <div class="card bg-light d-inline ms-5">
                 <img src="{% static 'images/logo_union_europea.jpg' %}" class="card-img" alt="banner relecov-platform" style="width:4%;">
               </div>
-              <div class="card bg-light d-block mt-5">
-                <a class="nav-link active" aria-current="page" href="wordpress.isciiides.es">wordpress.isciiides.es</a>
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="card bg-light mt-5">
+                    <a class="nav-link active d-block" aria-current="page" href="http://relecov.isciiides.es/">wordpress.isciiides.es</a>
+                    <a class="nav-link d-block" aria-current="page" href="https://www.isciii.es/Paginas/Inicio.aspx">isciii.es</a>
+                  </div>
+                </div>
               </div>
           </div> 
 
@@ -134,7 +140,6 @@
                     <p>
                       <i class="bi bi-github"></i>
                       <i class="bi bi-slack ms-2"></i>
-                      <i class="bi bi-youtube ms-2"></i>
                       <i class="bi bi-twitter ms-2"></i>
                     </p>
                   </div>
@@ -143,102 +148,56 @@
                 <!--end card logos and link to wordpress.isciiides.es-->
             
                 <!--card column 1-->
-                <div class="card ms-5" style="width: 10%;background-color: rgb(238, 241, 236);">
+                <div class="card ms-5" style="width: 18%;background-color: rgb(238, 241, 236);">
                   <div class="card-body">
-                    <h5 class="card-title">Column 1</h5>
-                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">link 1</a></h6>
-                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">link 2</a></h6>
-                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">link 3</a></h6>
-                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">link 4</a></h6>
-                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">link 5</a></h6>
-                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">link 6</a></h6>
-                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">link 7</a></h6>
-                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">link 8</a></h6>
+                    <h5 class="card-title">Qué hacemos</h5>
+                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">Servicios</a></h6>
+                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">Áreas De Investigación</a></h6>
+                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">Internacional</a></h6>
+                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">Innovación</a></h6>
+                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">Memorias Anuales</a></h6>
+                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">Lo Más Consultado</a></h6>
+                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">Financiación Y Acreditación</a></h6>
+                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">Plan Estratégico 2021-2025</a></h6>
                   </div>
                 </div>
                 <!--end card column 1-->
 
                 <!--card column 2-->
-                <div class="card ms-5" style="width: 10%;background-color: rgb(238, 241, 236);">
+                <div class="card ms-5" style="width: 15%;background-color: rgb(238, 241, 236);">
                   <div class="card-body">
-                    <h5 class="card-title">Column 2</h5>
-                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">link 1</a></h6>
-                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">link 2</a></h6>
-                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">link 3</a></h6>
-                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">link 4</a></h6>
-                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">link 5</a></h6>
-                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">link 6</a></h6>
-                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">link 7</a></h6>
-                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">link 8</a></h6>
+                    <h5 class="card-title">Quiénes somos</h5>
+                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">Misión Y Visión</a></h6>
+                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">Estructura</a></h6>
+                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">Centros Propios</a></h6>
+                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">Otros Centros</a></h6>
+                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">Institutos De Investigación Sanitaria</a></h6>
+                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">Contacto</a></h6>
                   </div>
                 </div>
                 <!--end card column 2-->
 
                 <!--card column 3-->
-                <div class="card ms-5" style="width: 10%;background-color: rgb(238, 241, 236);">
+                <div class="card ms-5" style="width: 17%;background-color: rgb(238, 241, 236);">
                   <div class="card-body">
-                    <h5 class="card-title">Column 3</h5>
-                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">link 1</a></h6>
-                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">link 2</a></h6>
-                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">link 3</a></h6>
-                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">link 4</a></h6>
-                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">link 5</a></h6>
-                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">link 6</a></h6>
-                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">link 7</a></h6>
-                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">link 8</a></h6>
+                    <h5 class="card-title">Información General</h5>
+                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">Divulgación Y Cultura Científica</a></h6>
+                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">Portal De Transparencia</a></h6>
+                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">Redes Sociales</a></h6>
+                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">Contacto Y Localización</a></h6>
+                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">Política De Privacidad</a></h6>
                   </div>
                 </div>
                 <!--end card column 3-->
-
-                <!--card column 4-->
-                <div class="card ms-5" style="width: 10%;background-color: rgb(238, 241, 236);">
-                  <div class="card-body">
-                    <h5 class="card-title">Column 4</h5>
-                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">link 1</a></h6>
-                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">link 2</a></h6>
-                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">link 3</a></h6>
-                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">link 4</a></h6>
-                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">link 5</a></h6>
-                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">link 6</a></h6>
-                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">link 7</a></h6>
-                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">link 8</a></h6>
-                  </div>
-                </div>
-                <!--end card column 4-->
-
-                <!--card column 5-->
-                <div class="card ms-5" style="width: 10%;background-color: rgb(238, 241, 236);">
-                  <div class="card-body">
-                    <h5 class="card-title">Column 5</h5>
-                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">link 1</a></h6>
-                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">link 2</a></h6>
-                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">link 3</a></h6>
-                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">link 4</a></h6>
-                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">link 5</a></h6>
-                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">link 6</a></h6>
-                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">link 7</a></h6>
-                    <h6 class="card-subtitle mb-2 text-muted"><a href="#" class="card-link">link 8</a></h6>
-                  </div>
-                </div>
-                <!--end card column 5-->
               </div>
             </div>
               <!--end card info-->
         </footer>
         <!--end Footer-->   
+        
+        
+        
         <!--script animated counter-->
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         <script>
           const counters = document.querySelectorAll('.value');
           const speed = 500;
@@ -255,12 +214,9 @@
                   }else{
                     counter.innerText = value;
                   }
-               
-             }
-             
+              }
              animate();
           });
-          
-         </script>       
+        </script>       
     </body>
 </html>
