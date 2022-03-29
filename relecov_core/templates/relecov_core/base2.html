@@ -98,32 +98,47 @@
         {% block content %}{% endblock %}
 
         <!--Footer-->
-        <footer class="container-fluid bg-dark ">
-          <div>  logos 
-             <ul class="nav justify-content-center">
-                <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="#">
-                    <img src=>ISCIII
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">ELOC</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Union Europea</a>
-                </li>
-                
-              </ul>
-            </div>
-            <div>
-                <ul class="nav justify-content-center">
-                    <li class="nav-item">
-                      <a class="nav-link active" aria-current="page" href="wordpress.isciiides.es">wordpress.isciiides.es</a>
-                    </li>
-                    
-                  </ul>
-            </div>
+        <footer class="container-fluid bg-light mt-5">
+         <div style="text-align: center;"> 
+          <div class="card bg-light d-inline ">
+            <img src="{% static 'images/isciiiLogo.png' %}" class="card-img" alt="banner relecov-platform" style="width: 15%;">
+          </div>
 
+          <div class="card bg-light d-inline mx-5">
+            <img src="{% static 'images/logoECDC.png' %}" class="card-img" alt="banner relecov-platform" style="width:4%;">
+          </div>
+
+          <div class="card bg-light d-inline mx-5">
+            <img src="{% static 'images/logo_union_europea.jpg' %}" class="card-img" alt="banner relecov-platform" style="width:4%;">
+          </div>
+          <div class="card bg-light d-block mt-5">
+            <a class="nav-link active" aria-current="page" href="wordpress.isciiides.es">wordpress.isciiides.es</a>
+          </div>
+        </div> 
+        <div class="container-fluid mt-5">
+          <div class="card" style="width: 19%;">
+            <div class="card-body">
+              <h5 class="card-title">relecov-platform</h5>
+              <h6 class="card-subtitle mb-2 text-muted" style="font-size: small;">lorem ipsum quaescitae indorum</h6>
+                <p style="font-size: small;">Powered by 
+                  <img src="{% static 'images/django_logo.png' %}" class="card-img-top" alt="icono Django" style="width:16%;">
+                  and
+                  <img src="{% static 'images/mysqlLogo.png' %}" class="card-img-top mx-1" alt="icono MySQL" style="width:10%;">
+                </p>  
+                <h6 class="card-text mt-2 text-muted" style="font-size: small;">See the source code for this App on<br>https://github.com/BU-ISCIII/relecov-platform</h6>
+            </div>
+            <div style="text-align: center;">
+              <p>
+                <i class="bi bi-github"></i>
+                <i class="bi bi-slack ms-2"></i>
+                <i class="bi bi-youtube ms-2"></i>
+                <i class="bi bi-twitter ms-2"></i>
+              </p>
+            </div>
+          </div>
+          
+          
+        </div>
         </footer>
         <!--end Footer-->   
         <!--script animated counter-->
