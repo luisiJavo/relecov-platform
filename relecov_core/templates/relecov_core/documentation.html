@@ -1,10 +1,43 @@
 {% extends "relecov_core/base.html" %} 
 {% load static %} 
 {% block content %} 
-
+<!--
 {% for row in reader%}
     <p>{{row}}</p>
 {% endfor %}
+-->
+
+<!--table-->
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Sample</th>
+      <th scope="col">Chromosome</th>
+      <th scope="col">Filter</th>
+      <th scope="col">Caller</th>
+    </tr>
+  </thead>  
+  <tbody>
+    {% for row in variants%}
+    <tr>
+      <th scope="row">1</th>
+      <td>{{row}}</td>
+      
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td></td>
+      
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td></td>
+      
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<!--end table-->
 
 
 <div class="card bg-dark text-white" style="text-align: center">
