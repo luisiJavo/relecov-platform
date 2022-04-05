@@ -8,6 +8,7 @@ migrations/
 static/
 virtualenv/
 manage.py
+settings.py
 
 # C extensions
 *.so

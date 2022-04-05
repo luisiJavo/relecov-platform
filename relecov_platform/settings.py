@@ -13,7 +13,7 @@ SECRET_KEY = "django-insecure-+g7)v4(@+u!&ve$mt7*))77^-=n6tl=2yf(+gb98mj&75*%k)$
 # SECURITY WARNING: don"t run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost"]
+ALLOWED_HOSTS = []#"localhost"
 
 
 # Application definition
@@ -70,10 +70,10 @@ WSGI_APPLICATION = "relecov_platform.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "USER": "django",
-        "PASSWORD": "django77",
+        "USER": "relecov",
+        "PASSWORD": "0xfa0xff",
         "PORT": "3306",
-        "NAME": "relecov_platform",
+        "NAME": "relecov",
     }
 }
 
@@ -142,8 +142,8 @@ PLOTLY_COMPONENTS = [
 
 
 #  Media settings
-MEDIA_URL = '/documents/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'documents/')
+MEDIA_URL = "/documents/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "documents/")
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
@@ -152,7 +152,7 @@ STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = "/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
