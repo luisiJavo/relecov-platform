@@ -1,13 +1,14 @@
 {% extends "relecov_core/base.html" %} 
 {% load static %} 
 {% block content %} 
-<!--
-{% for row in reader%}
-    <p>{{row}}</p>
-{% endfor %}
--->
+{% load plotly_dash %}
+
+<div class="container-fluid" style="height:800px;">
+  {% plotly_app name="SimpleExample" %}
+<div>
 
 <!--table-->
+<!--
 <table class="table">
   <thead>
     <tr>
@@ -37,9 +38,10 @@
     {% endfor %}
   </tbody>
 </table>
+-->
 <!--end table-->
 
-
+<!--
 <div class="card bg-dark text-white" style="text-align: center">
   <img
     src="{% static 'images/under_construction.png' %}"
@@ -52,3 +54,4 @@
   </div>
 </div>
 {% endblock%}
+-->
