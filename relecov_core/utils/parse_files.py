@@ -1,4 +1,15 @@
 def parse_csv_into_list_of_dicts(file_path):
+    """_summary_
+    This function parses a CSV file and returns a dictionary list of dictionaries.
+    Args:
+        file_path (_type_): _description_
+
+    Returns:
+        dictionary list of dictionaries : this dictionary contains lists of dictionaries.
+    """
+    #fields => SAMPLE(0), CHROM(1), POS(2), REF(3), ALT(4), FILTER(5), DP(6),  REF_DP(7), ALT_DP(8), AF(9), GENE(10), EFFECT(11), HGVS_C(12), 
+    #   HGVS_P(13), HGVS_P1LETTER(14), CALLER(15), LINEAGE(16)
+    
     data_array = []#one field per position
     variant_dict = {}
     variant_list = []
@@ -17,8 +28,6 @@ def parse_csv_into_list_of_dicts(file_path):
     gene_dict = {}
     gene_list = []
     
-    #fields => SAMPLE(0), CHROM(1), POS(2), REF(3), ALT(4), FILTER(5), DP(6),  REF_DP(7), ALT_DP(8), AF(9), GENE(10), EFFECT(11), HGVS_C(12), 
-    #   HGVS_P(13), HGVS_P1LETTER(14), CALLER(15), LINEAGE(16)
     with open(file_path) as fh:
         lines = fh.readlines()
     for line in lines[1:]:
@@ -32,7 +41,6 @@ def parse_csv_into_list_of_dicts(file_path):
         variant_dict["alt_dp"] =data_array[8]
         variant_dict["af"] =data_array[9]
         variant_dict_copy = variant_dict.copy()
-        
         variant_list.append(variant_dict_copy)
         #effect _dict
         effect_dict["effect"] = data_array[11]
@@ -67,5 +75,15 @@ def parse_csv_into_list_of_dicts(file_path):
         gene_dict_copy = gene_dict.copy()
         gene_list.append(gene_dict_copy)
         
-        
-    
+        all_data_read_dict = {
+        "variant":variant_list, 
+        "chromosome":chromosome_list,
+        "effect":effect_list,
+        "sample":sample_list,
+        "filter":filter_list,
+        "caller":caller_list,
+        "lineage":lineage_list,
+        "gene":gene_list,
+        }      
+
+    return all_data_read_dict
