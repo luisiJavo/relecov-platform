@@ -1,118 +1,157 @@
-{% load static %}
-
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  {% load static %}
+  <title>Relecov Dashboard</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
 
-  <title>Ploty Dash example</title>
+  <!-- Favicons -->
+  <link href="{% static 'relecov_dashboard/assets/img/favicon.png' %}" rel="icon">
+  <link href="{% static 'relecov_dashboard/assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
 
-  <!-- Custom fonts for this template-->
-  <link href="{% static 'relecov_dashboard/plotly_dash/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
-  <!-- Custom styles for this template-->
-  <link href="{% static 'relecov_dashboard/plotly_dash/css/sb-admin-2.min.css' %}" rel="stylesheet">
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'relecov_dashboard/assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'relecov_dashboard/dashboard/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'relecov_dashboard/dashboard/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'relecov_dashboard/dashboard/vendor/quill/quill.snow.css' %}" rel="stylesheet">
+  <link href="{% static 'relecov_dashboard/dashboard/vendor/quill/quill.bubble.css' %}" rel="stylesheet">
+  <link href="{% static 'relecov_dashboard/dashboard/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+  <link href="{% static 'relecov_dashboard/dashboard/vendor/simple-datatables/style.css' %}" rel="stylesheet">
 
-
+  <!-- Template Main CSS File -->
+  <link href="{% static 'relecov_dashboard/dashboard/css/style.css' %}" rel="stylesheet">
 </head>
 
-<body id="page-top">
+<body>
 
-  <!-- Page Wrapper -->
-  <div id="wrapper">
+  <!-- ======= Header ======= -->
+    <header id="header" class="header fixed-top d-flex align-items-center">
 
-    <!-- Sidebar -->
-    {% include 'relecov_dashboard/partials/_sidebar.html' %}
-    <!-- End of Sidebar -->
+        <div class="d-flex align-items-center justify-content-between">
+          <a href="index.html" class="logo d-flex align-items-center">
+            <span class="d-none d-lg-block">Relecov Dashboard</span>
+          </a>
+          <i class="bi bi-list toggle-sidebar-btn"></i>
+        </div><!-- End Logo -->
+    </header><!-- End Header -->
 
-    <!-- Content Wrapper -->
-    <div id="content-wrapper" class="d-flex flex-column">
+    <!-- ======= Sidebar ======= -->
+    <aside id="sidebar" class="sidebar">
 
-      <!-- Main Content -->
-      <div id="content">
+        <ul class="sidebar-nav" id="sidebar-nav">
 
-        <!-- Topbar -->
-{% include 'relecov_dashboard/partials/_topbar.html' %}
-        <!-- End of Topbar -->
+            <li class="nav-item">
+                <a class="nav-link " href="index.html">
+                    <i class="bi bi-grid"></i>
+                    <span>VOCs/VUIs in Spain</span>
+                </a>
+            </li><!-- End VOCs/VUIs Nav -->
 
-        <!-- Begin Page Content -->
-        <div class="container-fluid">
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-menu-button-wide"></i><span>VOC Spike Structure</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="components-alerts.html">
+                            <i class="bi bi-circle"></i><span>sub-struture</span>
+                        </a>
+                    </li>
+                </ul>
+            </li><!-- End VOC Spike Structure Nav -->
 
-          <!-- Page Heading -->
-          <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
-          </div>
-        <div class="row">
-            {% block content %}
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-journal-text"></i><span>Antigenic Mutations</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="forms-elements.html">
+                            <i class="bi bi-circle"></i><span>Sub Level</span>
+                        </a>
+                    </li>
+                </ul>
+            </li><!-- End Antigenic Mutations Nav -->
 
-            {% endblock %}
-        </div>
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-layout-text-window-reverse"></i><span>VOCs/VUIs + Antigenicity</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="tables-general.html">
+                            <i class="bi bi-circle"></i><span>General Tables</span>
+                        </a>
+                    </li>
+                </ul>
+            </li><!-- End VOCs/VUIs + Antigenicity Nav -->
 
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-bar-chart"></i><span>T Cell Epitope Mutations</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
 
-      </div>
-      <!-- End of Main Content -->
+            </li><!-- End T Cell Epitope Mutations Nav -->
 
-      <!-- Footer -->
-      {% include 'relecov_dashboard/partials/_footer.html' %}
-      <!-- End of Footer -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-gem"></i><span>Mutations by Week</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+            </li><!-- End Mutations by Week Nav -->
 
-    </div>
-    <!-- End of Content Wrapper -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-gem"></i><span>Spike Profiles</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+            </li><!-- End Spike Profiles Nav -->
 
-  </div>
-  <!-- End of Page Wrapper -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-gem"></i><span>Drug Resistance</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+            </li><!-- End Drug Resistance Nav -->
 
-  <!-- Scroll to Top Button-->
-  <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-  </a>
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-gem"></i><span>Ronapreve</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+            </li><!-- End Ronapreve Nav -->
 
-  <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
-        </div>
-      </div>
-    </div>
-  </div>
-  </div>
-  <!-- Bootstrap core JavaScript-->
-  <script src="{% static 'relecov_dashboard/plotly_dash/vendor/jquery/jquery.min.js' %}"></script>
-  <script src="{% static 'relecov_dashboard/plotly_dash/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-gem"></i><span>Geograhical Distribution</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+            </li><!-- End Geographical Distribution Nav -->
 
-  <!-- Core plugin JavaScript-->
-  <script src="{% static 'relecov_dashboard/plotly_dash/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-gem"></i><span>Omnicron and mAb</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+            </li><!-- End Omnicron and mAb Nav -->
 
-  <!-- Custom scripts for all pages-->
-  <script src="{% static 'relecov_dashboard/plotly_dash/js/sb-admin-2.min.js' %}"></script>
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-gem"></i><span>Recombinats</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+            </li><!-- End Recombinats Nav -->
+        </ul>
+    </aside><!-- End Sidebar-->
 
-  <!-- Page level plugins -->
-  <script src="{% static 'relecov_dashboard/plotly_dash/vendor/chart.js/Chart.min.js' %}"></script>
+    <main id="main" class="main">
+        {% block content %}
+	     <!--========== HERE WILL BE THE INFORMATION FROM DJANGO CODE  ==========-->
+        {% endblock %}
+    </main><!-- End #main -->
 
-  <!-- Page level custom scripts -->
-  <script src="{% static 'relecov_dashboard/plotly_dash/js/demo/chart-area-demo.js' %}"></script>
-  <script src="{% static 'relecov_dashboard/plotly_dash/js/demo/chart-pie-demo.js' %}"></script>
-
+    {% include "relecov_dashboard/footer.html" %}
 </body>
 
 </html>
