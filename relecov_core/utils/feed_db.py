@@ -1,8 +1,8 @@
 from relecov_core.models import *
 
 #setters, insert into tables
-def insert_into_variant_table(variant_list):
-    for variant in variant_list:
+def insert_into_variant_table(variant_dict):
+    for variant in variant_dict:
         variants = Variant(
             pos=variant["pos"],
             ref=variant["ref"],
