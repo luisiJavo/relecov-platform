@@ -1,57 +1,11 @@
 {% extends "relecov_core/base.html" %} 
 {% load static %} 
+
+
 {% block content %} 
-{% load plotly_dash %}
 
-<div class="container-fluid" style="height:800px;">
-  {% plotly_app name="SimpleExample" %}
-<div>
+  <div class="container-fluid mt-5 mb-5 me-5">
+    
+  <div>
 
-<!--table-->
-<!--
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Sample</th>
-      <th scope="col">Chromosome</th>
-      <th scope="col">Filter</th>
-      <th scope="col">Caller</th>
-    </tr>
-  </thead>  
-  <tbody>
-    {% for row in variants%}
-    <tr>
-      <th scope="row">1</th>
-      <td>{{row}}</td>
-      
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td></td>
-      
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td></td>
-      
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
--->
-<!--end table-->
-
-<!--
-<div class="card bg-dark text-white" style="text-align: center">
-  <img
-    src="{% static 'images/under_construction.png' %}"
-    class="card-img mt-5"
-    alt="under construction image"
-    style="width: 35%; margin-left: 30%"
-  />
-  <div class="card-img-overlay">
-    <h5 class="card-title">Documentation</h5>
-  </div>
-</div>
 {% endblock%}
--->

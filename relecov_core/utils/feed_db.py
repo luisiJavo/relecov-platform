@@ -1,8 +1,8 @@
-from ..models import *
+from relecov_core.models import *
 
-#setters
-def insert_into_variant_table(variant_list):
-    for variant in variant_list:
+#setters, insert into tables
+def insert_into_variant_table(variant_dict):
+    for variant in variant_dict:
         variants = Variant(
             pos=variant["pos"],
             ref=variant["ref"],
@@ -66,10 +66,11 @@ def insert_into_gene_table(gene_list):
         )
         genes.save()
 
-#getters
+#getters, get data from tables
 def get_variants_records():
     variants = Variant.objects.all()
     return variants
+
 
 def clear_all_tables():
     #Delete all register into tables 
