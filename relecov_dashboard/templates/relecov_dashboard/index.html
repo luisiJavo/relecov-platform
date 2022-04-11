@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 
@@ -1435,3 +1436,16 @@
 </body>
 
 </html>
+=======
+{% extends 'relecov_dashboard/base.html' %}
+{% load static %}
+{%load plotly_dash%}
+
+{% block content %}
+<p>
+    Poner aqui  el texto y gráficos
+    {%plotly_app name="SimpleExample"%}
+</p>
+
+{% endblock %}
+>>>>>>> 6e58e6a75e143d94e970db494e5028a11c37c592
