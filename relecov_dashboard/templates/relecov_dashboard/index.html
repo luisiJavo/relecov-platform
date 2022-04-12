@@ -1,6 +1,12 @@
 {% extends 'relecov_dashboard/base.html' %}
 {% load static %}
+{%load plotly_dash%}
+
 {% block content %}
-<p>Poner aqui  el texto y gráficos</p>
+<p>
+    Poner aqui  el texto y gráficos
+    <!--ratio=1, eliminamos el scroll-->
+    {%plotly_app name="SimpleExample" ratio=1 %}
+</p>
 
 {% endblock %}
