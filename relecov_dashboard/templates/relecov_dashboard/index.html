@@ -5,7 +5,8 @@
 {% block content %}
 <p>
     Poner aqui  el texto y gráficos
-    {%plotly_app name="SimpleExample"%}
+    <!--ratio=1, eliminamos el scroll-->
+    {%plotly_app name="SimpleExample" ratio=1 %}
 </p>
 
 {% endblock %}
