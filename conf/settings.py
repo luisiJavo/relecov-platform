@@ -29,7 +29,10 @@ INSTALLED_APPS = [
     "channels",
     "channels_redis",
     "relecov_core",
-    "relecov_dashboard"
+    "relecov_dashboard",
+    'django_extensions',
+    'rest_framework',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -141,6 +144,13 @@ PLOTLY_COMPONENTS = [
     "dpd_components",
 ]
 
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'basic': {
+            'type': 'basic'
+        }
+    }
+}
 
 #  Media settings
 MEDIA_URL = '/documents/'
