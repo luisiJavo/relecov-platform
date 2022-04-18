@@ -30,7 +30,9 @@ INSTALLED_APPS = [
     "channels_redis",
     "relecov_core",
     "relecov_dashboard",
-    "bootstrap4",
+    'django_extensions',
+    'rest_framework',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -71,13 +73,12 @@ WSGI_APPLICATION = "relecov_platform.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "USER": "relecov",
-        "PASSWORD": "0xfa0xff",
+        "USER": "django",
+        "PASSWORD": "django77",
         "PORT": "3306",
-        "NAME": "relecov",
+        "NAME": "relecov_platform",
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -132,8 +133,6 @@ STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
     "django_plotly_dash.finders.DashAssetFinder",
     "django_plotly_dash.finders.DashComponentFinder",
-    #prueba
-    "django_plotly_dash.finders.DashAppDirectoryFinder",
 ]
 
 PLOTLY_COMPONENTS = [
@@ -141,35 +140,14 @@ PLOTLY_COMPONENTS = [
     "dash_html_components",
     "dash_renderer",
     "dpd_components",
-    # Other components, as needed
-    'dash_bootstrap_components',
 ]
-#prueba
-PLOTLY_DASH = {
 
-    # Route used for the message pipe websocket connection
-    "ws_route" :   "dpd/ws/channel",
-
-    # Route used for direct http insertion of pipe messages
-    "http_route" : "dpd/views",
-
-    # Flag controlling existince of http poke endpoint
-    "http_poke_enabled" : True,
-
-    # Insert data for the demo when migrating
-    "insert_demo_migrations" : False,
-
-    # Timeout for caching of initial arguments in seconds
-    "cache_timeout_initial_arguments": 60,
-
-    # Name of view wrapping function
-    "view_decorator": None,
-
-    # Flag to control location of initial argument storage
-    "cache_arguments": True,
-
-    # Flag controlling local serving of assets
-    "serve_locally": False,
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'basic': {
+            'type': 'basic'
+        }
+    }
 }
 
 #  Media settings

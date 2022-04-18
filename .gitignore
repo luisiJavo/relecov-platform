@@ -8,7 +8,7 @@ migrations/
 static/
 virtualenv/
 manage.py
-settings.py
+relecov_platform/settings.py
 
 # C extensions
 *.so
