@@ -5,10 +5,10 @@ __pycache__/
 
 #
 migrations/
-static/
+# static/
 virtualenv/
 manage.py
-relecov_platform/settings.py
+relecov_platform/
 
 # C extensions
 *.so
