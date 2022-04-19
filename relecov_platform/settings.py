@@ -140,6 +140,8 @@ PLOTLY_COMPONENTS = [
     "dash_html_components",
     "dash_renderer",
     "dpd_components",
+    # Other components, as needed
+    #"dash_bootstrap_components",
 ]
 
 SWAGGER_SETTINGS = {
