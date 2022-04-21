@@ -5,7 +5,7 @@ from . import views
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path("", views.relecov_form, name="form"),
+    path("", views.relecov_form, name="form1"),
     #path("2", views.index2, name="index2"),
     #path("3", views.index3, name="index3"),
     #path("django_plotly_dash/", include("django_plotly_dash.urls")),
