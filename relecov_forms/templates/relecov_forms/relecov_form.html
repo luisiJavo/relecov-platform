@@ -1,23 +1,27 @@
 {% extends 'relecov_forms/base.html' %}
+
 {% load static %}
 <!--{%load plotly_dash%}-->
 
 {% block content %}
-<p>
-    Prueba JExcel Muestras
-    <div id="spreadsheet" ></div>
-    <div id="spreadsheet1"></div>
-    <p><button id='download'>Export my spreadsheet as CSV</button></p>
-</p>
+<div class="mt-5 mb-5 card-fluid" >
+    
+        <div style="text-align:center">  
+            <p>
+                Prueba JExcel Muestras
+            </p> 
+            <div id="spreadsheet" class="overflow-scroll" style="width:75%"></div>
+            <br/><br/>
+            <button id='download'>Export my spreadsheet as CSV</button>
+        </div>
+        
+    
+</div>
 
     
 
             <script>
-                var data = [[]]
-                /*var data = [
-                    ['Jazz', 'Honda', '2019-02-12', '', true, '$ 2.000,00', '#777700'],
-                    ['Civic', 'Honda', '2018-07-11', '', true, '$ 4.000,01', '#007777'],
-                ];*/
+                var data = [[],[],[],[],[],[]];//initialized with 6 empty rows
                 
                 var mySpreadsheet = jspreadsheet(document.getElementById('spreadsheet'), {
                     data:data,
@@ -58,12 +62,8 @@
                         { type: 'text', title:'Host Gender', width:280 },
                         { type: 'text', title:'Sequence file R1 fastq', width:280 },
                         { type: 'text', title:'Sequence file R2 fastq', width:280 },
-                        /*{ type: 'calendar', title:'Available', width:200 },
-                        { type: 'image', title:'Photo', width:120 },
-                        { type: 'checkbox', title:'Stock', width:80 },
-                        { type: 'numeric', title:'Price', width:100, mask:'$ #.##,00', decimal:',' },
-                        { type: 'color', width:100, render:'square', }*/
-                    ]
+                    ],
+                    
                 });
 
                 document.getElementById('download').onclick = function () {
