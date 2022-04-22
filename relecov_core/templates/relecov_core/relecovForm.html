@@ -1,24 +1,26 @@
-{% extends 'relecov_forms/base.html' %}
-
+{% extends "relecov_core/base.html" %}
 {% load static %}
+<!--{% include "relecov_core/JExcelFunctionality.html" %}-->
 <!--{%load plotly_dash%}-->
 
 {% block content %}
-<div class="mt-5 mb-5 card-fluid" >
-    
-        <div style="text-align:center">  
-            <p>
-                Prueba JExcel Muestras
-            </p> 
-            <div id="spreadsheet" class="overflow-scroll" style="width:75%"></div>
-            <br/><br/>
-            <button id='download'>Export my spreadsheet as CSV</button>
-        </div>
-        
-    
-</div>
+<script src="https://bossanova.uk/jspreadsheet/v4/jexcel.js"></script>
+<link rel="stylesheet" href="https://bossanova.uk/jspreadsheet/v4/jexcel.css" type="text/css" />
+<script src="https://jsuites.net/v4/jsuites.js"></script>
+<link rel="stylesheet" href="https://jsuites.net/v4/jsuites.css" type="text/css" />
 
-    
+
+
+    <div class="mt-5 mb-5 card-fluid" >
+            <div style="text-align:center">  
+                <p>
+                    Prueba JExcel Muestras
+                </p> 
+                <div id="spreadsheet" class="overflow-scroll" style="width:75%"></div>
+                <br/><br/>
+                <button id='download'>Export my spreadsheet as CSV</button>
+            </div>
+    </div>
 
             <script>
                 var data = [[],[],[],[],[],[]];//initialized with 6 empty rows
@@ -69,7 +71,6 @@
                 document.getElementById('download').onclick = function () {
                     mySpreadsheet.download();
                 }
-
-                </script>
+            </script>
 
 {% endblock %}
