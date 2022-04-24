@@ -13,192 +13,86 @@
 <script src="{% static 'forms/js/relecov_forms.js' %}" crossorigin="anonymous"></script>
 <!--End ISkyLims-->
 <!--JExcel Luis-->
-    <div class="row row-space-4 margin-b-4 card">
-        <div class="col-sm-12 card">
-            <div class="tab">
-                <button class="tablinks" onclick="summaryBin(event, 'newSamples')" id="defaultOpen">Record new Samples</button>
-                <button class="tablinks" onclick="summaryBin(event, 'batchSamples')">Load batch new Samples</button>
+<div class="row row-space-4 margin-b-4">
+    <div class="col-sm-12">
+        <div class="tab">
+            <button class="tablinks" onclick="summaryBin(event, 'newSamples')" id="defaultOpen">Record new Samples</button>
+            <button class="tablinks" onclick="summaryBin(event, 'batchSamples')">Load batch new Samples</button>
 
-                <div id="newSamples" class="tabcontent card">
-                    <div class="row row-space-4 margin-b-4">
-                        <div class="col-sm-12" >
-                            <div class="panel panel-default" >
-                                <div class="panel-heading"><h3>Record new Samples</h3></div>
-                                <div class="panel-body" >
+            <div id="newSamples" class="tabcontent">
+                <div class="row row-space-4 margin-b-4">
+                    <div class="col-sm-12" >
+                        <div class="panel panel-default" >
+                            <div class="panel-heading"><h3>Record new Samples</h3></div>
+                            <div class="panel-body" >
+
                                 <br><br><br>
-                                        <form method="post" enctype="multipart/form-data" name="sampledefinition" id="sampledefinition" class="form-horizontal well" style="min-height: 500px;">
-                                        {% csrf_token %}
-                                        <div id="spreadsheet" class="overflow-scroll card" style="width:75%"></div>
-                                        <br/><br/>
-                                        <button id='download'>Export my spreadsheet as CSV</button>
-                                            <div class="scrolling-wrapper">
-                                                <input type="hidden" name="action" value="recordsample"/>
-                                                <div id="spreadsheet"></div>
-                                                <br>
-                                            </div> <!-- end of scrolling -->
-                                        <br><br>
+                                <form method="post" enctype="multipart/form-data" name="sampledefinition"  id="sampledefinition" class="form-horizontal well" style="min-height: 500px;">
+                                    {% csrf_token %}
+                                    <div class="scrolling-wrapper">
+                                        <input type="hidden" name="action" value="recordsample"/>
+                                        <div id="spreadsheet" class="overflow-scroll" style="width: 100%;"></div>
                                         <br>
-                                        <input type="button" value="Download Spreadsheet" onclick="table1.download()"/>
-                                        <input class="btn pull-right btn-primary" type="submit" value="Submit">
-                                        </form>
-                                </div> <!-- end of panel body -->
-                            </div> <!--// end panel -->
-                        </div> <!--// end col-sm-12 -->
-                    </div> <!-- end of row -->
-                </div><!-- // end of tab newSamples -->
-<script>
-var data = [[],[],[],[],[],[]];//initialized with 6 empty rows
-var mySpreadsheet = jspreadsheet(document.getElementById('spreadsheet'), {
-data:data,
-csvHeaders:true,
-tableOverflow:true,
-columns: [
-{ type: 'text', title:'Public Health sample id (SIVIES)', width:230 },
-{ type: 'text', title:'Sample ID given by originating laboratory', width:280 },
-{ type: 'text', title:'Sample ID given by the submitting laboratory', width:300 },
-{ type: 'text', title:'Sample ID given in the microbiology lab', width:280 },
-{ type: 'text', title:'Sample ID given if multiple rna-extraction or passages', width:280 },
-{ type: 'text', title:'Sample ID given for sequencing', width:280 },
-{ type: 'text', title:'Sample ID given by originating laboratory', width:280 },
-{ type: 'text', title:'Sample ID given by the submitting laboratory', width:280 },
-{ type: 'text', title:'Sample ID given in the microbiology lab', width:280 },
-{ type: 'text', title:'Sample ID given if multiple rna-extraction or passages', width:280 },
-{ type: 'dropdown', title:'Originating Laboratory', width:280, source:[ 
-"Hospital Clínic de Barcelona (HCB)", "Instituto de Salud Carlos III ", "Microbiología HUC San Cecilio, Granada ",
-"Microbiología. Hospital Universitario Virgen del Rocio. Sevillia", "Hospital Clínico Universitario Lozano Blesa", "Hospital Universitario Miguel Servet",
-"Centro de Investigación Biomédica de Aragón", "Hospital Universitario Central de Asturias", "Servicio de Microbiologia HU Son Espases", 
-"Hospital Universitario Ntra. Sra de Candelaria (HUNSC)", "Instituto Tecnológico y de Energías Renovables, S.A. (ITER) - centro de referencia",
-] },
-{ type: 'text', title:'Sample Collection Date', width:280 },
-{ type: 'text', title:'Sample Received Date', width:280 },
-{ type: 'dropdown', title:'Specimen source', width:280, source:[ 
-"Nasopharynx aspirate", "Oral epithelium from ectoderm biopsy", "Skin epidermis biopsy",
-"Epithelium biopsy", "Bronchial lymph node biopsy", "Hepatic diverticulum biopsy",
-"Liver bud biopsy", "Biliary bud biopsy", "Gall bladder biopsy", 
-"Liver biopsy", "Lung biopsy","Oropharynx biopsy","Nasopharynx biopsy","Respiratory tract biopsy",
-] },
-{ type: 'dropdown', title:'Environmental Material', width:280, source:[ 
-"Animal litter", "Animal manure", "Farmyard manure",
-"Fresh animal manure", "Horse manure", "Pig manure",
-"Stable manure", "Anthropogenic environmental material", "Agricultural environmental material", 
-"Food material", "Food isolate","Food source","Algae","Animal",
-] },
-{ type: 'text', title:'Host Age', width:280 },
-{ type: 'text', title:'Host Gender', width:280 },
-{ type: 'text', title:'Sequence file R1 fastq', width:280 },
-{ type: 'text', title:'Sequence file R2 fastq', width:280 },
-],
+                                    </div> <!--  end of scrolling  -->
+                                        <script>
+                                            setJExcelTable()
+                                        </script>
+                                    <br><br>
+                                    <br>
+                                    <input type="button" value="Download Spreadsheet" onclick="table1.download()"/>
+                                    <input class="btn pull-right btn-primary" type="submit" value="Submit">
+                                </form>
 
-allowInsertColumn:false,
-allowDeleteColumn:false,
-allowRenameColumn:false,
-csvFileName:'samples',
-//minDimensions:[{{sample_information.table_size}},3],
-});
+                            </div>  <!--  end of panel body  -->
+                        </div> <!--// end panel -->
+                    </div> <!--// end col-sm-12  -->
+                </div> <!--  end of row -->
+            </div><!-- // end of tab newPatient -->
 
-document.getElementById('download').onclick = function () {
-mySpreadsheet.download();
-}
-</script>
-
-                <div id="batchSamples" class="tabcontent card">
-                    <div class="row row-space-4 margin-b-4">
-                        <div class="col-sm-10 col-sm-offset-1" >
-                            <div class="panel panel-default">
-                                <div class="panel-heading card"><h3 style="text-align:center">Load New Samples in batch</h3></div>
-                                <div class="panel-body">
-                                    <form method="post" enctype="multipart/form-data" name="defineBatchSamples" id="defineBatchSamples" class="form-horizontal well" style="min-height: 700px;">
+            <div id="batchSamples" class="tabcontent">
+                <div class="row row-space-4 margin-b-4">
+                    <div class="col-sm-10 col-sm-offset-1" >
+                        <div class="panel panel-default">
+                            <div class="panel-heading"><h3 style="text-align:center">Load New Samples in batch</h3></div>
+                            <div class="panel-body">
+                                <form method="post" enctype="multipart/form-data" name="defineBatchSamples"  id="defineBatchSamples" class="form-horizontal well" style="min-height: 700px;">
                                     {% csrf_token %}
                                     <input type="hidden" name="action" value="defineBatchSamples"/>
-                                    <div class="col-sm-12" >
+                                    <div  class="col-sm-12" >
                                         <div class="panel panel-default" >
-                                        <div class="panel-heading"><h3 style="text-align:center">Upload the excel file to define a batch of samples. </h3></div>
+                                            <div class="panel-heading"><h3  style="text-align:center">Upload the excel file to define a batch of samples. </h3></div>
                                             <div class="panel-body" >
-                                                        <div class="form-group required">
-                                                        <label class="col-sm-5 control-label" for="samplesExcel" ><td> Upload Samples file</td> </label>
-                                                        <div class="col-sm-5"><input class="form-control" required = "required" type="file" accept=".xls, .xlsx" name="samplesExcel" id="samplesExcel" ></div>
-                                                        </div> <!-- end from-group -->
-                                            <BR>
-                                            </div> <!-- End Panel Body -->
-                                    </div> <!-- End Panel -->
-                                    <input class="btn pull-left btn-primary" type="reset" value="Reset Fields">
-                                    <input class="btn pull-right btn-primary" type="submit" value="Submit">
+                                                <div class="form-group required">
+                                                    <label class="col-sm-5  control-label" for="samplesExcel" ><td> Upload Samples file</td> </label>
+                                                    <div class="col-sm-5">
+                                                        <input class="form-control" required = "required" type="file" accept=".xls, .xlsx" name="samplesExcel" id="samplesExcel" >
+                                                    </div>
+                                                </div>  <!-- end from-group   -->
+                                                <BR>
+                                            </div> <!-- End   Panel Body   -->
+                                        </div>  <!-- End   Panel    -->
+
+                                        <input class="btn pull-left btn-primary" type="reset" value="Reset Fields">
+                                        <input class="btn pull-right btn-primary" type="submit" value="Submit">
                                     </div> <!-- end col-sm-8 -->
-                                    </form>
-                                    <br>
-                                    <p> Fields marked with <FONT COLOR="Red">*</FONT> are mandatory</p>
-                                </div> <!-- end of panel body -->
-                            </div> <!-- end of panel -->
-                        </div> <!--// end col-sm-10 -->
-                    </div> <!-- end of row -->
-                </div><!-- // end of tab batchPatient -->
-            </div><!--end of Tab -->
-        </div> <!--// end col-sm-12 -->
-    </div> <!-- end of row -->
+
+                                </form>
+                                <br>
+                                <p> Fields marked with <FONT COLOR="Red">*</FONT> are mandatory</p>
 
 
-<!---->
-    <!--
-    <div class="mt-5 mb-5 card-fluid" >
-            <div style="text-align:center">  
-                <p>
-                    Prueba JExcel Muestras
-                </p> 
-                <div id="spreadsheet" class="overflow-scroll" style="width:75%"></div>
-                <br/><br/>
-                <button id='download'>Export my spreadsheet as CSV</button>
-            </div>
-    </div>
+                            </div> <!--  end of panel body -->
+                        </div> <!--  end of panel  -->
+                    </div> <!--// end col-sm-10  -->
+                </div> <!--  end of row -->
+            </div><!-- // end of tab batchPatient -->
+        </div> <!--  end of Tab  -->
+    </div> <!--// end col-sm-12  -->
+</div> <!--// end row -->
 
-            <script>
-                var data = [[],[],[],[],[],[]];//initialized with 6 empty rows
-                
-                var mySpreadsheet = jspreadsheet(document.getElementById('spreadsheet'), {
-                    data:data,
-                    csvHeaders:true,
-                    tableOverflow:true,
-                    columns: [
-                        { type: 'text', title:'Public Health sample id (SIVIES)', width:230 },
-                        { type: 'text', title:'Sample ID given by originating laboratory', width:280 },
-                        { type: 'text', title:'Sample ID given by the submitting laboratory', width:300 },
-                        { type: 'text', title:'Sample ID given in the microbiology lab', width:280 },
-                        { type: 'text', title:'Sample ID given if multiple rna-extraction or passages', width:280 },
-                        { type: 'text', title:'Sample ID given for sequencing', width:280 },
-                        { type: 'text', title:'Sample ID given by originating laboratory', width:280 },
-                        { type: 'text', title:'Sample ID given by the submitting laboratory', width:280 },
-                        { type: 'text', title:'Sample ID given in the microbiology lab', width:280 },
-                        { type: 'text', title:'Sample ID given if multiple rna-extraction or passages', width:280 },
-                        { type: 'dropdown', title:'Originating Laboratory', width:280, source:[ 
-                            "Hospital Clínic de Barcelona (HCB)", "Instituto de Salud Carlos III ", "Microbiología HUC San Cecilio, Granada ",
-                            "Microbiología. Hospital Universitario Virgen del Rocio. Sevillia", "Hospital Clínico Universitario Lozano Blesa", "Hospital Universitario Miguel Servet",
-                            "Centro de Investigación Biomédica de Aragón", "Hospital Universitario Central de Asturias", "Servicio de Microbiologia HU Son Espases", 
-                            "Hospital Universitario Ntra. Sra de Candelaria (HUNSC)", "Instituto Tecnológico y de Energías Renovables, S.A. (ITER) - centro de referencia",
-                            ] },
-                        { type: 'text', title:'Sample Collection Date', width:280 },
-                        { type: 'text', title:'Sample Received Date', width:280 },
-                        { type: 'dropdown', title:'Specimen source', width:280, source:[ 
-                            "Nasopharynx aspirate", "Oral epithelium from ectoderm biopsy", "Skin epidermis biopsy",
-                            "Epithelium  biopsy", "Bronchial lymph node biopsy", "Hepatic diverticulum biopsy",
-                            "Liver bud biopsy", "Biliary bud biopsy", "Gall bladder biopsy", 
-                            "Liver biopsy", "Lung biopsy","Oropharynx biopsy","Nasopharynx biopsy","Respiratory tract biopsy",
-                            ] },
-                        { type: 'dropdown', title:'Environmental Material', width:280, source:[ 
-                        "Animal litter", "Animal manure", "Farmyard manure",
-                        "Fresh animal manure", "Horse manure", "Pig manure",
-                        "Stable manure", "Anthropogenic environmental material", "Agricultural environmental material", 
-                        "Food material", "Food isolate","Food source","Algae","Animal",
-                        ] },
-                        { type: 'text', title:'Host Age', width:280 },
-                        { type: 'text', title:'Host Gender', width:280 },
-                        { type: 'text', title:'Sequence file R1 fastq', width:280 },
-                        { type: 'text', title:'Sequence file R2 fastq', width:280 },
-                    ],
-                    
-                });
+<script>
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+</script>
 
-                document.getElementById('download').onclick = function () {
-                    mySpreadsheet.download();
-                }
-            </script>
-        -->
 {% endblock %}
