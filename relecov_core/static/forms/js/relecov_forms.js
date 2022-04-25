@@ -63,6 +63,6 @@ function setJExcelTable(){
     });
 
     document.getElementById('download').onclick = function () {
-    mySpreadsheet.download();
+        mySpreadsheet.download();
     }
 }
