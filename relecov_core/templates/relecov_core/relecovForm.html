@@ -3,6 +3,7 @@
 <!--{% include "relecov_core/JExcelFunctionality.html" %}-->
 <!--{%load plotly_dash%}-->
 
+
 {% block content %}
 <script src="https://bossanova.uk/jspreadsheet/v4/jexcel.js"></script>
 <link rel="stylesheet" href="https://bossanova.uk/jspreadsheet/v4/jexcel.css" type="text/css" />
@@ -15,6 +16,7 @@
             <div style="text-align:center"> 
                 <form method="post" enctype="multipart/form-data" name="sampledefinition"  id="sampledefinition" class="form-horizontal well" style="min-height: 500px;">
                     {% csrf_token %} 
+                    <input type="hidden" name="action" value="sampledefinition"/>
                     <div id="spreadsheet" class="overflow-scroll" style="width:75%"></div>
                     <br/><br/>
                     <button id='download'>Export my spreadsheet as CSV</button>
@@ -23,26 +25,30 @@
             </div>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
 
-            <script>
-                $(document).ready(function () {
-
-                    $("#sampledefinition").submit(function (e) {
-                        //stop submitting the form to see the disabled button effect
-                        // e.preventDefault();
-                        //disable the submit button
-                        var table_data = table1.getData()
-                        var data_json = JSON.stringify(table_data)
-                        $("<input />").attr("type", "hidden")
-                           .attr("name", "table_data")
-                           .attr("value", data_json)
-                           .appendTo("#sampledefinition");
-                        $("#btnSubmit").attr("disabled", true);
-                        //console(data_json);
-                        return true;
-                    });
-                });
-            </script>    
+        $("#sampledefinition").submit(function (e) {
+          //alert("Submitted");
+            //stop submitting the form to see the disabled button effect
+            // e.preventDefault();
+            //disable the submit button
+          var table_data = table1.getData();
+          var data_json = JSON.stringify(table_data);
+          
+          //alert(data_json);
+          $("<input />").attr("type", "hidden")
+            .attr("name", "table_data")
+            .attr("value", data_json)
+            .appendTo("#sampledefinition");
+          $("#btnSubmit").attr("disabled", true);
+          return true;
+        });
+        
+    });
+   
+</script>
+            
 
 
             <script>
@@ -91,9 +97,9 @@
                     
                 });
 
-                //document.getElementById('download').onclick = function () {
-                //    table1.download();
-                //}
+                document.getElementById('download').onclick = function () {
+                    table1.download();
+                }
 
             </script>
 
