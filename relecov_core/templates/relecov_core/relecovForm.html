@@ -10,22 +10,45 @@
 <link rel="stylesheet" href="https://jsuites.net/v4/jsuites.css" type="text/css" />
 
 
-
+<div id="newSamples" class="tabcontent">
     <div class="mt-5 mb-5 card-fluid" >
-            <div style="text-align:center">  
-                <p>
-                    Prueba JExcel Muestras
-                </p> 
-                <div id="spreadsheet" class="overflow-scroll" style="width:75%"></div>
-                <br/><br/>
-                <button id='download'>Export my spreadsheet as CSV</button>
+            <div style="text-align:center"> 
+                <form method="post" enctype="multipart/form-data" name="sampledefinition"  id="sampledefinition" class="form-horizontal well" style="min-height: 500px;">
+                    {% csrf_token %} 
+                    <div id="spreadsheet" class="overflow-scroll" style="width:75%"></div>
+                    <br/><br/>
+                    <button id='download'>Export my spreadsheet as CSV</button>
+                    <input class="btn pull-right btn-primary" type="submit" value="Submit">
+                </form>
             </div>
     </div>
+</div>
+
+            <script>
+                $(document).ready(function () {
+
+                    $("#sampledefinition").submit(function (e) {
+                        //stop submitting the form to see the disabled button effect
+                        // e.preventDefault();
+                        //disable the submit button
+                        var table_data = table1.getData()
+                        var data_json = JSON.stringify(table_data)
+                        $("<input />").attr("type", "hidden")
+                           .attr("name", "table_data")
+                           .attr("value", data_json)
+                           .appendTo("#sampledefinition");
+                        $("#btnSubmit").attr("disabled", true);
+                        //console(data_json);
+                        return true;
+                    });
+                });
+            </script>    
+
 
             <script>
                 var data = [[],[],[],[],[],[]];//initialized with 6 empty rows
                 
-                var mySpreadsheet = jspreadsheet(document.getElementById('spreadsheet'), {
+                var table1 = jspreadsheet(document.getElementById('spreadsheet'), {
                     data:data,
                     csvHeaders:true,
                     tableOverflow:true,
@@ -68,9 +91,10 @@
                     
                 });
 
-                document.getElementById('download').onclick = function () {
-                    mySpreadsheet.download();
-                }
+                //document.getElementById('download').onclick = function () {
+                //    table1.download();
+                //}
+
             </script>
 
 {% endblock %}
