@@ -77,7 +77,7 @@ DATABASES = {
         "PASSWORD": "djangopass",
         "PORT": "djangoport",
         'HOST': 'djangohost',
-        "NAME": "relecov_platform",
+        "NAME": "relecov",
     }
 }
 
