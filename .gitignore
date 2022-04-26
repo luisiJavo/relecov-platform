@@ -8,8 +8,10 @@ migrations/
 # static/
 virtualenv/
 manage.py
-relecov_platform/
-
+relecov_platform/settings.py
+relecov_platform/asgi.py
+relecov_platform/routing.py
+relecov_platform/wsgi.py
 # C extensions
 *.so
 
