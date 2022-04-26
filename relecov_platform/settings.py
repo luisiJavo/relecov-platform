@@ -13,7 +13,7 @@ SECRET_KEY = "django-insecure-+g7)v4(@+u!&ve$mt7*))77^-=n6tl=2yf(+gb98mj&75*%k)$
 # SECURITY WARNING: don"t run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []#"localhost"
+ALLOWED_HOSTS = ["relecov-platform.isciiides.es", "localhost"]
 
 
 # Application definition
@@ -73,8 +73,9 @@ WSGI_APPLICATION = "relecov_platform.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
+        "HOST" : "dmysqlps.isciiides.es",
         "USER": "relecov",
-        "PASSWORD": "0xfa0xff",
+        "PASSWORD": "V4c2l2r$",
         "PORT": "3306",
         "NAME": "relecov",
     }
