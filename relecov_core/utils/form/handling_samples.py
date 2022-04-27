@@ -49,7 +49,7 @@ def analyze_input_samples(request):
     #print(na_json_data)
     #list_test = na_json_data.split(",")
     #print(list_test)
-    print(len(na_json_data))
+    print(na_json_data)
     #for row in na_json_data:
         #print(len(row))
         #sample_data = {}
