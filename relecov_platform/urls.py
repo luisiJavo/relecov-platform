@@ -16,9 +16,10 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("relecov_core.urls")),
     path("dashboard/", include("relecov_dashboard.urls")),
-    
+
     # REST FRAMEWORK URLS
     path('api/', include('relecov_core.api.urls')),
-    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0))
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0)),
+    path('accounts/', include('django.contrib.auth.urls'))
 
 ]
