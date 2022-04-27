@@ -3,6 +3,7 @@
 <!--{% include "relecov_core/JExcelFunctionality.html" %}-->
 <!--{%load plotly_dash%}-->
 
+
 {% block content %}
 <script src="https://bossanova.uk/jspreadsheet/v4/jexcel.js"></script>
 <link rel="stylesheet" href="https://bossanova.uk/jspreadsheet/v4/jexcel.css" type="text/css" />
@@ -10,22 +11,47 @@
 <link rel="stylesheet" href="https://jsuites.net/v4/jsuites.css" type="text/css" />
 
 
-
+<div id="newSamples" class="tabcontent">
     <div class="mt-5 mb-5 card-fluid" >
-            <div style="text-align:center">  
-                <p>
-                    Prueba JExcel Muestras
-                </p> 
-                <div id="spreadsheet" class="overflow-scroll" style="width:75%"></div>
-                <br/><br/>
-                <button id='download'>Export my spreadsheet as CSV</button>
+            <div style="text-align:center"> 
+                <form method="post" enctype="multipart/form-data" name="sampledefinition"  id="sampledefinition" class="form-horizontal well" style="min-height: 500px;">
+                    {% csrf_token %} 
+                    <input type="hidden" name="action" value="sampledefinition"/>
+                    <div id="spreadsheet" class="overflow-scroll" style="width:75%"></div>
+                    <br/><br/>
+                    <button id='download'>Export my spreadsheet as CSV</button>
+                    <input class="btn pull-right btn-primary" type="submit" value="Submit">
+                </form>
             </div>
     </div>
+</div>
+<script>
+    $(document).ready(function () {
+
+        $("#sampledefinition").submit(function (e) {
+        //stop submitting the form to see the disabled button effect
+        // e.preventDefault();
+        //disable the submit button
+            var table_data = table1.getData();
+            var data_json = JSON.stringify(table_data);
+            $("<input />").attr("type", "hidden")
+                .attr("name", "table_data")
+                .attr("value", data_json)
+                .appendTo("#sampledefinition");
+            $("#btnSubmit").attr("disabled", true);
+            return true;
+            });
+        
+    });
+   
+</script>
+            
+
 
             <script>
                 var data = [[],[],[],[],[],[]];//initialized with 6 empty rows
                 
-                var mySpreadsheet = jspreadsheet(document.getElementById('spreadsheet'), {
+                var table1 = jspreadsheet(document.getElementById('spreadsheet'), {
                     data:data,
                     csvHeaders:true,
                     tableOverflow:true,
@@ -36,10 +62,6 @@
                         { type: 'text', title:'Sample ID given in the microbiology lab', width:280 },
                         { type: 'text', title:'Sample ID given if multiple rna-extraction or passages', width:280 },
                         { type: 'text', title:'Sample ID given for sequencing', width:280 },
-                        { type: 'text', title:'Sample ID given by originating laboratory', width:280 },
-                        { type: 'text', title:'Sample ID given by the submitting laboratory', width:280 },
-                        { type: 'text', title:'Sample ID given in the microbiology lab', width:280 },
-                        { type: 'text', title:'Sample ID given if multiple rna-extraction or passages', width:280 },
                         { type: 'dropdown', title:'Originating Laboratory', width:280, source:[ 
                             "Hospital Clínic de Barcelona (HCB)", "Instituto de Salud Carlos III ", "Microbiología HUC San Cecilio, Granada ",
                             "Microbiología. Hospital Universitario Virgen del Rocio. Sevillia", "Hospital Clínico Universitario Lozano Blesa", "Hospital Universitario Miguel Servet",
@@ -69,8 +91,10 @@
                 });
 
                 document.getElementById('download').onclick = function () {
-                    mySpreadsheet.download();
+                table1.download();
+                    
                 }
+
             </script>
 
 {% endblock %}

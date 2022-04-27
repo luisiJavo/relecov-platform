@@ -3,6 +3,7 @@ from multiprocessing import context, Manager
 from relecov_core.models import *
 from django.shortcuts import render
 from relecov_core.utils.feed_db import *
+from relecov_core.utils.form.handling_samples import analyze_input_samples
 from relecov_core.utils.random_data import generate_random_sequences, generate_weeks
 from relecov_core.utils.parse_files import *
 
@@ -17,10 +18,17 @@ import plotly.graph_objects as go
 import plotly.express as px
 import pandas as pd
 
+from django.contrib.auth.decorators import login_required
+
 
 def index(request):
     context = {}
     return render(request, "relecov_core/index.html", context)
+
+
+@login_required
+def intranet(request):
+    return render(request, "relecov_core/relecovForm.html")
 
 
 def variants(request):
@@ -32,6 +40,9 @@ def documentation(request):
     context = {}
     return render(request, "relecov_core/documentation.html", context)
 
+#@login_required()
 def relecov_form(request):
-    #csv_file = "relecov_core/docs/jspreadsheet.csv"
+    if request.method == 'POST' and request.POST['action'] == 'sampledefinition':
+        #import pdb; pdb.set_trace()
+        sample_recorded = analyze_input_samples(request)
     return render(request,"relecov_core/relecovForm.html",{})
