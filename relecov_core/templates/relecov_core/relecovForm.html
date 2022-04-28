@@ -5,10 +5,12 @@
 
 
 {% block content %}
+
 <script src="https://bossanova.uk/jspreadsheet/v4/jexcel.js"></script>
 <link rel="stylesheet" href="https://bossanova.uk/jspreadsheet/v4/jexcel.css" type="text/css" />
 <script src="https://jsuites.net/v4/jsuites.js"></script>
 <link rel="stylesheet" href="https://jsuites.net/v4/jsuites.css" type="text/css" />
+<<<<<<< HEAD
 <!---->
 <!--ISkyLims-->
 <script src="{% static 'forms/js/relecov_forms.js' %}" crossorigin="anonymous"></script>
@@ -154,74 +156,78 @@
                     <button id='download'>Export my spreadsheet as CSV</button>
                     <input class="btn pull-right btn-primary" type="submit" value="Submit">
                 </form>
+=======
+<style>
+    .scrolling-wrapper {
+        overflow-x: auto;
+        overflow-y: auto;
+        white-space: nowrap;
+        height: 400px;
+    }
+ </style>
+{% if success %}
+
+{% else %}
+     <section>
+         <div class="container overflow-hidden">
+            <div class="row gx-5">
+                <div style="text-align:center">
+                    <form method="post" enctype="multipart/form-data" name="sampledata"  id="sampledata" class="form-horizontal well" style="min-height: 500px;">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="sampledefinition"/>
+                        <div class="scrolling-wrapper">
+                            <div id="spreadsheet" class="overflow-scroll" style="width:75%"></div>
+                        </div> <!--  end of scrolling  -->
+                        <input type="button" value="Download Spreadsheet" onclick="table1.download()"/>
+                        <input class="btn pull-right btn-primary" type="submit" value="Submit">
+                    </form>
+                </div>
+>>>>>>> af9a285dadb090336567c38ed527f99623fcf11e
             </div>
-    </div>
-</div>
-<script>
-    $(document).ready(function () {
+        </div>
+    </section>
 
-        $("#sampledefinition").submit(function (e) {
-        //stop submitting the form to see the disabled button effect
-        // e.preventDefault();
-        //disable the submit button
-            var table_data = table1.getData();
-            var data_json = JSON.stringify(table_data);
-            $("<input />").attr("type", "hidden")
-                .attr("name", "table_data")
-                .attr("value", data_json)
-                .appendTo("#sampledefinition");
-            $("#btnSubmit").attr("disabled", true);
-            return true;
-            });
-        
-    });
-   
-</script>
-            
+    <script>
+        var data = [[]];//initialized with 6 empty rows
 
-
-            <script>
-                var data = [[],[],[],[],[],[]];//initialized with 6 empty rows
-                
-                var table1 = jspreadsheet(document.getElementById('spreadsheet'), {
-                    data:data,
-                    csvHeaders:true,
-                    tableOverflow:true,
-                    columns: [
-                        { type: 'text', title:'Public Health sample id (SIVIES)', width:230 },
-                        { type: 'text', title:'Sample ID given by originating laboratory', width:280 },
-                        { type: 'text', title:'Sample ID given by the submitting laboratory', width:300 },
-                        { type: 'text', title:'Sample ID given in the microbiology lab', width:280 },
-                        { type: 'text', title:'Sample ID given if multiple rna-extraction or passages', width:280 },
-                        { type: 'text', title:'Sample ID given for sequencing', width:280 },
-                        { type: 'dropdown', title:'Originating Laboratory', width:280, source:[ 
-                            "Hospital Clínic de Barcelona (HCB)", "Instituto de Salud Carlos III ", "Microbiología HUC San Cecilio, Granada ",
-                            "Microbiología. Hospital Universitario Virgen del Rocio. Sevillia", "Hospital Clínico Universitario Lozano Blesa", "Hospital Universitario Miguel Servet",
-                            "Centro de Investigación Biomédica de Aragón", "Hospital Universitario Central de Asturias", "Servicio de Microbiologia HU Son Espases", 
-                            "Hospital Universitario Ntra. Sra de Candelaria (HUNSC)", "Instituto Tecnológico y de Energías Renovables, S.A. (ITER) - centro de referencia",
-                            ] },
-                        { type: 'text', title:'Sample Collection Date', width:280 },
-                        { type: 'text', title:'Sample Received Date', width:280 },
-                        { type: 'dropdown', title:'Specimen source', width:280, source:[ 
-                            "Nasopharynx aspirate", "Oral epithelium from ectoderm biopsy", "Skin epidermis biopsy",
-                            "Epithelium  biopsy", "Bronchial lymph node biopsy", "Hepatic diverticulum biopsy",
-                            "Liver bud biopsy", "Biliary bud biopsy", "Gall bladder biopsy", 
-                            "Liver biopsy", "Lung biopsy","Oropharynx biopsy","Nasopharynx biopsy","Respiratory tract biopsy",
-                            ] },
-                        { type: 'dropdown', title:'Environmental Material', width:280, source:[ 
-                        "Animal litter", "Animal manure", "Farmyard manure",
-                        "Fresh animal manure", "Horse manure", "Pig manure",
-                        "Stable manure", "Anthropogenic environmental material", "Agricultural environmental material", 
-                        "Food material", "Food isolate","Food source","Algae","Animal",
-                        ] },
-                        { type: 'text', title:'Host Age', width:280 },
-                        { type: 'text', title:'Host Gender', width:280 },
-                        { type: 'text', title:'Sequence file R1 fastq', width:280 },
-                        { type: 'text', title:'Sequence file R2 fastq', width:280 },
-                    ],
-                    
+        var table1 = jspreadsheet(document.getElementById('spreadsheet'), {
+            data:data,
+            csvHeaders:true,
+            tableOverflow:false,
+            columns: [
+                {% for item in sample_recorded.heading %}
+                    {% if "Date" in item %}
+                        { type: 'calendar', title: "{{item}}", width:280 },
+                    {% else %}
+                        { type: 'text', title: "{{item}}", width:280 },
+                    {% endif %}
+                {% endfor %}
+            ],
+            allowInsertColumn:false,
+            allowDeleteColumn:false,
+            allowRenameColumn:false,
+            csvFileName:'Metadata_download',
+            minDimensions:[{{sample_recorded.heading|length}},6],
+        });
+    </script>
+    <script>
+        $( document ).ready(function () {
+            $("#sampledata").submit(function(e){
+            //stop submitting the form to see the disabled button effect
+            // e.preventDefault();
+            //disable the submit button
+                var table_data = table1.getData();
+                var data_json = JSON.stringify(table_data);
+                $("<input />").attr("type", "hidden")
+                    .attr("name", "table_data")
+                    .attr("value", data_json)
+                    .appendTo("#sampledata");
+                $("#btnSubmit").attr("disabled", true);
+                return true;
                 });
+        });
 
+<<<<<<< HEAD
                 document.getElementById('download').onclick = function () {
                 table1.download();
                     
@@ -230,4 +236,8 @@
             </script>
 >>>>>>> ed41e6b142332ffa6a5607d1e8ec0a86bf84dae5
 
+=======
+    </script>
+{% endif %}
+>>>>>>> af9a285dadb090336567c38ed527f99623fcf11e
 {% endblock %}
