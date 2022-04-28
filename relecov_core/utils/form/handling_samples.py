@@ -1,3 +1,7 @@
+from itertools import count
+from relecov_core.core_config import *
+import json
+
 def analyze_input_samples(request):
     '''
     Description:
@@ -9,17 +13,11 @@ def analyze_input_samples(request):
         it will return a dictionary which contains the processed samples.
     Input:
         request
-        app_name
     Functions:
-        check_if_sample_already_defined : located at this file
-        check_empty_fields :            located at this file
-        check_patient_code_exists :     located at this file
-        create_empty_patient :          located at this file
-        increase_unique_value :         located at this file
+        
     Constants:
-        HEADING_FOR_DISPLAY_RECORDED_SAMPLES
-        HEADING_FOR_RECORD_SAMPLES
-        OPTIONAL_SAMPLES_FIELDS
+        HEADING_FOR_DISPLAY_RECORDED_SAMPLES # relecov_core/core_config.py
+        HEADING_FOR_RECORD_SAMPLE_IN_DATABASE # relecov_core/core_config.py
     Variables:
         defined_samples  # contains the list of sample in defined state
         samples_continue  # samples id's from the samples in defined state
@@ -31,13 +29,13 @@ def analyze_input_samples(request):
     Return:
         sample_recorded # Dictionnary with all samples cases .
     '''
-
-    #na_json_data = json.loads(request.POST['table_data'])
-    na_json_data = request.POST['table_data']
-    #heading_in_form = HEADING_FOR_RECORD_SAMPLES
+    na_json_data = json.loads(request.POST['table_data'])
+    heading_in_form = HEADING_FOR_RECORD_SAMPLES
+    heading_in_database = HEADING_FOR_RECORD_SAMPLE_IN_DATABASE
 
     sample_recorded = {}
 
+<<<<<<< HEAD
     #defined_samples, samples_continue = [], []
     #pre_defined_samples, pre_defined_samples_id = [], []
     #invalid_samples, invalid_samples_id = [], []
@@ -166,4 +164,8 @@ def analyze_input_samples(request):
     sample_recorded['recorded_sample_heading'] = HEADING_FOR_DISPLAY_RECORDED_SAMPLES
     sample_recorded['valid_samples_ids'] = samples_continue
     """
+=======
+    print(na_json_data[1][1])
+    
+>>>>>>> d99fee6f49d721ebf9d2424f2cb510646560beff
     return sample_recorded

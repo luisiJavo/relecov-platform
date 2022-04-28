@@ -161,21 +161,18 @@
     $(document).ready(function () {
 
         $("#sampledefinition").submit(function (e) {
-          //alert("Submitted");
-            //stop submitting the form to see the disabled button effect
-            // e.preventDefault();
-            //disable the submit button
-          var table_data = table1.getData();
-          var data_json = JSON.stringify(table_data);
-          
-          //alert(data_json);
-          $("<input />").attr("type", "hidden")
-            .attr("name", "table_data")
-            .attr("value", data_json)
-            .appendTo("#sampledefinition");
-          $("#btnSubmit").attr("disabled", true);
-          return true;
-        });
+        //stop submitting the form to see the disabled button effect
+        // e.preventDefault();
+        //disable the submit button
+            var table_data = table1.getData();
+            var data_json = JSON.stringify(table_data);
+            $("<input />").attr("type", "hidden")
+                .attr("name", "table_data")
+                .attr("value", data_json)
+                .appendTo("#sampledefinition");
+            $("#btnSubmit").attr("disabled", true);
+            return true;
+            });
         
     });
    
@@ -197,10 +194,6 @@
                         { type: 'text', title:'Sample ID given in the microbiology lab', width:280 },
                         { type: 'text', title:'Sample ID given if multiple rna-extraction or passages', width:280 },
                         { type: 'text', title:'Sample ID given for sequencing', width:280 },
-                        { type: 'text', title:'Sample ID given by originating laboratory', width:280 },
-                        { type: 'text', title:'Sample ID given by the submitting laboratory', width:280 },
-                        { type: 'text', title:'Sample ID given in the microbiology lab', width:280 },
-                        { type: 'text', title:'Sample ID given if multiple rna-extraction or passages', width:280 },
                         { type: 'dropdown', title:'Originating Laboratory', width:280, source:[ 
                             "Hospital Clínic de Barcelona (HCB)", "Instituto de Salud Carlos III ", "Microbiología HUC San Cecilio, Granada ",
                             "Microbiología. Hospital Universitario Virgen del Rocio. Sevillia", "Hospital Clínico Universitario Lozano Blesa", "Hospital Universitario Miguel Servet",
@@ -230,7 +223,8 @@
                 });
 
                 document.getElementById('download').onclick = function () {
-                    table1.download();
+                table1.download();
+                    
                 }
 
             </script>
