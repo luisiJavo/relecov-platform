@@ -5,30 +5,43 @@
 
 
 {% block content %}
+
 <script src="https://bossanova.uk/jspreadsheet/v4/jexcel.js"></script>
 <link rel="stylesheet" href="https://bossanova.uk/jspreadsheet/v4/jexcel.css" type="text/css" />
 <script src="https://jsuites.net/v4/jsuites.js"></script>
 <link rel="stylesheet" href="https://jsuites.net/v4/jsuites.css" type="text/css" />
+<style>
+    .scrolling-wrapper {
+        overflow-x: auto;
+        overflow-y: auto;
+        white-space: nowrap;
+        height: 400px;
+    }
+ </style>
+{% if success %}
 
-
-<div id="newSamples" class="tabcontent">
-    <div class="mt-5 mb-5 card-fluid" >
-            <div style="text-align:center"> 
-                <form method="post" enctype="multipart/form-data" name="sampledata"  id="sampledata" class="form-horizontal well" style="min-height: 500px;">
-                    {% csrf_token %} 
-                    <input type="hidden" name="action" value="sampledefinition"/>
-                    <div id="spreadsheet" class="overflow-scroll" style="width:75%"></div>
-                    <br/><br/>
-                    <button id='download'>Export my spreadsheet as CSV</button>
-                    <input class="btn pull-right btn-primary" type="submit" value="Submit">
-                </form>
+{% else %}
+     <section>
+         <div class="container overflow-hidden">
+            <div class="row gx-5">
+                <div style="text-align:center">
+                    <form method="post" enctype="multipart/form-data" name="sampledata"  id="sampledata" class="form-horizontal well" style="min-height: 500px;">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="sampledefinition"/>
+                        <div class="scrolling-wrapper">
+                            <div id="spreadsheet" class="overflow-scroll" style="width:75%"></div>
+                        </div> <!--  end of scrolling  -->
+                        <input type="button" value="Download Spreadsheet" onclick="table1.download()"/>
+                        <input class="btn pull-right btn-primary" type="submit" value="Submit">
+                    </form>
+                </div>
             </div>
-    </div>
-</div>
-    
+        </div>
+    </section>
+
     <script>
-        var data = [[],[],[],[],[],[]];//initialized with 6 empty rows
-        
+        var data = [[]];//initialized with 6 empty rows
+
         var table1 = jspreadsheet(document.getElementById('spreadsheet'), {
             data:data,
             //csvHeaders:true,
@@ -36,19 +49,36 @@
             columns: [
                 {% for item in sample_recorded.heading %}
                     {% if "Date" in item %}
-                        { type: 'calendar', title: "{{item}}", width:280 }, 
+                        { type: 'calendar', title: "{{item}}", width:280 },
                     {% else %}
-                        { type: 'text', title: "{{item}}", width:280 },      
+                        { type: 'text', title: "{{item}}", width:280 },
                     {% endif %}
                 {% endfor %}
             ],
+            allowInsertColumn:false,
+            allowDeleteColumn:false,
+            allowRenameColumn:false,
+            csvFileName:'Metadata_download',
+            minDimensions:[{{sample_recorded.heading|length}},6],
+        });
+    </script>
+    <script>
+        $( document ).ready(function () {
+            $("#sampledata").submit(function(e){
+            //stop submitting the form to see the disabled button effect
+            // e.preventDefault();
+            //disable the submit button
+                var table_data = table1.getData();
+                var data_json = JSON.stringify(table_data);
+                $("<input />").attr("type", "hidden")
+                    .attr("name", "table_data")
+                    .attr("value", data_json)
+                    .appendTo("#sampledata");
+                $("#btnSubmit").attr("disabled", true);
+                return true;
+                });
         });
 
-        document.getElementById('download').onclick = function(){
-        table1.download();
-        }
-
     </script>
-    
-
+{% endif %}
 {% endblock %}
