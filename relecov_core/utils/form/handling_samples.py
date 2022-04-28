@@ -1,4 +1,4 @@
-from itertools import count
+#from itertools import count
 from relecov_core.core_config import *
 import json
 
@@ -29,12 +29,14 @@ def analyze_input_samples(request):
     Return:
         sample_recorded # Dictionnary with all samples cases .
     '''
-    na_json_data = json.loads(request.POST['table_data'])
-    heading_in_form = HEADING_FOR_RECORD_SAMPLES
-    heading_in_database = HEADING_FOR_RECORD_SAMPLE_IN_DATABASE
+    #na_json_data = json.loads(request.POST['table_data'])
+    headings = HEADING_FOR_RECORD_SAMPLES
 
     sample_recorded = {}
-
-    print(na_json_data[1][1])
+    #print(headings[1][1])
+    sample_recorded["heading"] = [x[0] for x in HEADING_FOR_RECORD_SAMPLES]
+    #print(na_json_data[1][1])
+    #print(na_json_data)
+    
     
     return sample_recorded

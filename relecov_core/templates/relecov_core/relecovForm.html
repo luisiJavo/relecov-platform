@@ -54,7 +54,25 @@
                 var table1 = jspreadsheet(document.getElementById('spreadsheet'), {
                     data:data,
                     csvHeaders:true,
-                    tableOverflow:true,
+                    tableOverflow:false,
+                    columns: [
+                        {% for item in sample_recorded.heading %}
+                            {% if "Date" in item %}
+                                { type: 'calendar', title: "{{item}}", width:280 }, 
+                            {% else %}
+                                { type: 'calendar', title: "{{item}}", width:280 },      
+                            {% endif %}
+                        {% endfor %}
+                    
+                    ],
+                    
+                });
+
+
+                var table2 = jspreadsheet(document.getElementById('spreadsheet'), {
+                    data:data,
+                    csvHeaders:true,
+                    tableOverflow:false,
                     columns: [
                         { type: 'text', title:'Public Health sample id (SIVIES)', width:230 },
                         { type: 'text', title:'Sample ID given by originating laboratory', width:280 },
