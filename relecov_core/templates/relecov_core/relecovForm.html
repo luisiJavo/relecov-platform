@@ -31,8 +31,8 @@
         
         var table1 = jspreadsheet(document.getElementById('spreadsheet'), {
             data:data,
-            csvHeaders:true,
-            tableOverflow:false,
+            //csvHeaders:true,
+            //tableOverflow:false,
             columns: [
                 {% for item in sample_recorded.heading %}
                     {% if "Date" in item %}
@@ -49,23 +49,6 @@
         }
 
     </script>
-    <script>
-        $(document).ready(function(){
-            $("#sampledata").submit(function(e){
-            //stop submitting the form to see the disabled button effect
-            // e.preventDefault();
-            //disable the submit button
-                var table_data = table1.getData();
-                var data_json = JSON.stringify(table_data);
-                $("<input />").attr("type", "hidden")
-                    .attr("name", "table_data")
-                    .attr("value", data_json)
-                    .appendTo("#sampledata");
-                $("#btnSubmit").attr("disabled", true);
-                return true;
-                });
-        });
     
-    </script>
 
 {% endblock %}

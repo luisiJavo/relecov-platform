@@ -1,6 +1,7 @@
 #from itertools import count
 from relecov_core.core_config import *
 import json
+from relecov_core.models import *
 
 def get_input_samples(request):
     '''
@@ -31,8 +32,17 @@ def get_input_samples(request):
 
 def analyze_input_samples(request):
     sample_recorded = {}
+    data = {}
     na_json_data = json.loads(request.POST["table_data"])
+    #na_json_data = json.loads(request.POST.__getitem__("table_data"))
     for row in na_json_data:
-        print(row)
+        #print(row)
+        data["collecting_lab_sample_id"] = row[1]
+        data["sequencing_sample_id"] = row[5]
+        data["biosample_accession_ENA"] = ""
+        data["virus_name"] = ""
+        data["gisaid_id"] = ""
+        data["sequencing_date"] = ""
+        SampleManager(data)
     
     return sample_recorded
