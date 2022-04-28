@@ -30,9 +30,33 @@ def get_input_samples(request):
 
 
 def analyze_input_samples(request):
+    heading_author = HEADING_FOR_AUTHOR_TABLE
     sample_recorded = {}
+    heading = [x[0] for x in HEADING_FOR_RECORD_SAMPLES]
+    data_sample = {}
+    data_author = {}
     na_json_data = json.loads(request.POST["table_data"])
     for row in na_json_data:
         print(row)
-    
+        #if row[1] == "":
+        #    continue
+        
+        for idx in range(len(heading)):
+            """
+            data_sample["collecting_lab_sample_id"] = row[1]
+            data_sample["sequencing_sample_id"] = row[5]
+            data_sample["biosample_accession_ENA"] = ""
+            data_sample["virus_name"] = ""
+            data_sample["gisaid_id"] = ""
+            data_sample["sequencing_date"] = ""
+            #Sample.objects.create_new_sample(data_sample)
+            """
+            if heading[idx] in HEADING_FOR_AUTHOR_TABLE:
+                data_author[HEADING_FOR_AUTHOR_TABLE[heading[idx]]] = row[idx]
+                #data_author["analysis_authors"] = row[15]
+                #data_author["author_submitter"] = row[16]
+                #data_author["authors"] = row[17]
+            #Authors.objects.create_new_authors(data_author)
+        print(data_author)
+
     return sample_recorded
