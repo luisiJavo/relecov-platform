@@ -28,7 +28,6 @@ def get_input_samples(request):
 
 
 def analyze_input_samples(request):
-    heading_author = HEADING_FOR_AUTHOR_TABLE
     sample_recorded = {}
     heading = [x[0] for x in HEADING_FOR_RECORD_SAMPLES]
     data_sample = {}
@@ -56,5 +55,6 @@ def analyze_input_samples(request):
                 #data_author["authors"] = row[17]
             #Authors.objects.create_new_authors(data_author)
         print(data_author)
+        sample_recorded["process"] = "Success"
 
     return sample_recorded
