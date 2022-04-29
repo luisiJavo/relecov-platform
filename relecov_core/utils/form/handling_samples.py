@@ -19,11 +19,9 @@ def get_input_samples(request):
         HEADING_FOR_RECORD_SAMPLE_IN_DATABASE 
     
     Return:
-        sample_recorded # Dictionnary with all samples cases .
+        sample_recorded # Dictionnary with all samples cases.
     '''
     sample_recorded = {}
-    headings = HEADING_FOR_RECORD_SAMPLES
-
     sample_recorded["heading"] = [x[0] for x in HEADING_FOR_RECORD_SAMPLES]
     
     return sample_recorded
