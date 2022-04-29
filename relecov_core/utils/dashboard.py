@@ -8,11 +8,13 @@ from django_plotly_dash import DjangoDash
 
 # import plotly.graph_objects as go
 import plotly.express as px
-#import pandas as pd
 
-#from dash import Input, Output#Dash, dcc, html,
+# import pandas as pd
+
+# from dash import Input, Output#Dash, dcc, html,
 from dash.dependencies import Input, Output
 import dash
+
 # import dash_bootstrap_components as dbc
 
 # IMPORT FROM UTILS
@@ -20,35 +22,39 @@ from relecov_core.utils.random_data import *
 from relecov_core.utils.parse_files import *
 from relecov_core.utils.dashboard import *
 
-def generate_table(dataframe, max_rows=14):
-        return html.Table(
-            className="table table-striped",
-            children=[
-                html.Thead(
-                    className="table-info",
-                    children=html.Tr(
-                        [html.Th(col) for col in dataframe.columns]),
 
-                ),
-                html.Tbody([
-                    html.Tr([
-                        html.Td(dataframe.iloc[i][col]) for col in dataframe.columns
-                    ]) for i in range(min(len(dataframe), max_rows))
-                ],)
-            ]
-        )
+def generate_table(dataframe, max_rows=14):
+    return html.Table(
+        className="table table-striped",
+        children=[
+            html.Thead(
+                className="table-info",
+                children=html.Tr([html.Th(col) for col in dataframe.columns]),
+            ),
+            html.Tbody(
+                [
+                    html.Tr(
+                        [html.Td(dataframe.iloc[i][col]) for col in dataframe.columns]
+                    )
+                    for i in range(min(len(dataframe), max_rows))
+                ],
+            ),
+        ],
+    )
 
 
 def set_dataframe_range_slider(variant_data, selected_range):
     sequences_list = generate_random_sequences()
     lineage_list = []
     sequences_list2 = []
-    lineage_week_list2 =[]
+    lineage_week_list2 = []
     lineage_list2 = []
 
     for variant in variant_data:
         lineage_list.append(variant["lineage_dict"]["lineage"])
-        if(int(variant["lineage_dict"]["week"]) >= int(selected_range[0]) and int(variant["lineage_dict"]["week"]) <= int(selected_range[1])):
+        if int(variant["lineage_dict"]["week"]) >= int(selected_range[0]) and int(
+            variant["lineage_dict"]["week"]
+        ) <= int(selected_range[1]):
             lineage_list2.append(variant["lineage_dict"]["lineage"])
             lineage_week_list2.append(variant["lineage_dict"]["week"])
     for i in range(len(lineage_list2)):
@@ -63,18 +69,18 @@ def set_dataframe_range_slider(variant_data, selected_range):
     )
     return df
 
+
 def get_variant_graph(variant_data):
-    max_weeks=0
-    selected_range =[1,19]
+    max_weeks = 0
+    selected_range = [1, 19]
     df_table = pd.read_csv("relecov_core/docs/cogUK/table_3_2022-04-12.csv")
 
-    df = set_dataframe_range_slider(variant_data,selected_range)
+    df = set_dataframe_range_slider(variant_data, selected_range)
 
-    for week in df['Week'].unique():
+    for week in df["Week"].unique():
         max_weeks += 1
     # app = DjangoDash("SimpleExampleRangeSlider", external_stylesheets=[dbc.themes.BOOTSTRAP])  # replaces dash.Dash
     app = DjangoDash("SimpleExampleRangeSlider")  # replaces dash.Dash
-
 
     fig = px.bar(df, x="Week", y="Sequences", color="Variant", barmode="stack")
 
@@ -92,18 +98,14 @@ def get_variant_graph(variant_data):
                         className="card-text",
                         children="Variant data.",
                     ),
-                ]
+                ],
             ),
-
             html.Div(
                 children=[
                     html.Div(
                         children=[
                             dcc.Graph(
-                                className = "card",
-                                id="graph-with-slider",
-                                figure=fig
-
+                                className="card", id="graph-with-slider", figure=fig
                             )
                         ]
                     )
@@ -111,15 +113,14 @@ def get_variant_graph(variant_data):
             ),
             html.Br(),
             html.Div(
-               children = dcc.RangeSlider(
-                    min = df["Week"].min(),
-                    max = max_weeks,
+                children=dcc.RangeSlider(
+                    min=df["Week"].min(),
+                    max=max_weeks,
                     step="1",
-                    value=[int(df["Week"].min()),max_weeks],
-                    marks={str(week): str(week) for week in df['Week'].unique()},
-                    id='week-slider'
+                    value=[int(df["Week"].min()), max_weeks],
+                    marks={str(week): str(week) for week in df["Week"].unique()},
+                    id="week-slider",
                 ),
-
             ),
             html.Div(
                 className="card bg-light",
@@ -128,22 +129,21 @@ def get_variant_graph(variant_data):
                         className="card-body",
                         children=[
                             html.H3(
-                            children="Variants of concern (VOC) and under investigation (VUI) detected in the Spain data.",
-                            className="card-title"
+                                children="Variants of concern (VOC) and under investigation (VUI) detected in the Spain data.",
+                                className="card-title",
                             ),
                             html.H5(
                                 children="DISCLAIMER: relecov-platform uses curated sequences for determining the counts of a given lineage. Other sources of information may be reporting cases with partial sequence information or other forms of PCR testing.",
-                                className="card-text"
-                            )
-
-                        ]
+                                className="card-text",
+                            ),
+                        ],
                     )
-                ]
+                ],
             ),
             html.Div(
                 children=generate_table(df_table),
-            )
-       ]
+            ),
+        ],
     )
     """
     def set_dataframe(variant_data, selected_week):
