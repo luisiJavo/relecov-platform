@@ -55,15 +55,17 @@ def analyze_input_samples(request):
     for row in na_json_data:
         print(row)
         if row[1] == "":
-            # list_of_incomplete_rows.append(row)
+            #list_of_incomplete_rows.append(row)
             continue
 
         # column read
         for idx in range(len(headings)):
+            """
             if row[idx] == "":
-                list_of_incomplete_rows.append(row)
+                #list_of_incomplete_rows.append(row)
                 list_of_incomplete_fields_per_row.append(row[idx])
                 data_incomplete_fields[row] = list_of_incomplete_rows
+            """
 
             if headings[idx] in HEADING_FOR_AUTHOR_TABLE:
                 data_author[HEADING_FOR_AUTHOR_TABLE[headings[idx]]] = row[idx]
@@ -86,6 +88,23 @@ def analyze_input_samples(request):
         print(data_analysis)
         print(data_qc_stats)
         print(data_incomplete_fields)
+        
+        data_author_error = False
+        
+        for data in data_author:
+            print(data)
+            if data != "":
+                data_author_error == True
+            else:
+                data_author_error == False
+                break
+            
+        if data_author_error:
+            sample_recorded["check"] = "Success"
+        else:
+            sample_recorded["check"] = "Error"
+        
+        print(sample_recorded)
         # Insert into tables
         """
         Authors.objects.create_new_authors(data_author)
