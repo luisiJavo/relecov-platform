@@ -40,8 +40,8 @@ def analyze_input_samples(request):
     na_json_data = json.loads(request.POST["table_data"])
     for row in na_json_data:
         print(row)
-        #if row[1] == "":
-        #    continue
+        if row[1] == "":
+            continue
         
         for idx in range(len(heading)):
             """
