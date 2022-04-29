@@ -23,27 +23,37 @@ def get_input_samples(request):
         sample_recorded # Dictionnary with all samples cases .
     '''
     sample_recorded = {}
-    headings = HEADING_FOR_RECORD_SAMPLES
-   
-
     sample_recorded["heading"] = [x[0] for x in HEADING_FOR_RECORD_SAMPLES]
     
     return sample_recorded
 
 
 def analyze_input_samples(request):
-    heading_author = HEADING_FOR_AUTHOR_TABLE
     sample_recorded = {}
-    heading = [x[0] for x in HEADING_FOR_RECORD_SAMPLES]
+    heading_author = [x[0] for x in HEADING_FOR_RECORD_SAMPLES]
     data_sample = {}
     data_author = {}
+    
+    data_caller = {}
+    data_filter = {}
+    data_effect = {}
+    data_lineage = {}
+    data_gene = {}
+    data_chromosome = {}
+    data_variant = {}
+    data_analysis = {}
+    data_qc_stats = {}
+    data_chromosome = {}
+    #data_public_database = {}
+    #data_public_database_fields = {}
+    
     na_json_data = json.loads(request.POST["table_data"])
     for row in na_json_data:
         print(row)
         if row[1] == "":
             continue
         
-        for idx in range(len(heading)):
+        for idx in range(len(heading_author)):
             """
             data_sample["collecting_lab_sample_id"] = row[1]
             data_sample["sequencing_sample_id"] = row[5]
@@ -53,8 +63,8 @@ def analyze_input_samples(request):
             data_sample["sequencing_date"] = ""
             #Sample.objects.create_new_sample(data_sample)
             """
-            if heading[idx] in HEADING_FOR_AUTHOR_TABLE:
-                data_author[HEADING_FOR_AUTHOR_TABLE[heading[idx]]] = row[idx]
+            if heading_author[idx] in HEADING_FOR_AUTHOR_TABLE:
+                data_author[HEADING_FOR_AUTHOR_TABLE[heading_author[idx]]] = row[idx]
                 #data_author["analysis_authors"] = row[15]
                 #data_author["author_submitter"] = row[16]
                 #data_author["authors"] = row[17]
