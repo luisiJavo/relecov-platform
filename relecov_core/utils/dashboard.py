@@ -14,7 +14,8 @@ import plotly.express as px
 from dash.dependencies import Input, Output
 import dash
 # import dash_bootstrap_components as dbc
-
+import os
+from django.conf import settings
 # IMPORT FROM UTILS
 from relecov_core.utils.random_data import *
 from relecov_core.utils.parse_files import *
@@ -66,7 +67,7 @@ def set_dataframe_range_slider(variant_data, selected_range):
 def get_variant_graph(variant_data):
     max_weeks=0
     selected_range =[1,19]
-    df_table = pd.read_csv("relecov_core/docs/cogUK/table_3_2022-04-12.csv")
+    df_table = pd.read_csv(os.path.join(settings.BASE_DIR, "relecov_core", "docs", "cogUK", "table_3_2022-04-12.csv"))
 
     df = set_dataframe_range_slider(variant_data,selected_range)
 
