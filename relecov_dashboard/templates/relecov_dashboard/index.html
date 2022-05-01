@@ -1,14 +1,16 @@
-{% extends 'relecov_dashboard/base.html' %}
+{% extends 'relecov_core/base.html' %}
+
 {% load static %}
 {%load plotly_dash%}
 
 {% block content %}
-
-
-<p>
-    Poner aqui  el texto y gráficos
-    {% plotly_app name="VariantGraph" ratio=2 %}
-</p>
-
-
+{% include "relecov_dashboard/variantSideBar.html" %}
+<br><br><br><br>
+<div class="container d-flex flex-column text-center position-relative">
+    <section id="about" class="about">
+        <div class="container-fluid overflow-hidden">
+            {% plotly_app name="TestVariantGraph" ratio=4 %}
+        </div>
+    </section>
+</div>
 {% endblock %}
