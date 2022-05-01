@@ -32,29 +32,35 @@ def analyze_input_samples(request):
     heading = [x[0] for x in HEADING_FOR_RECORD_SAMPLES]
     data_sample = {}
     data_author = {}
+    wrong_rows = []
+    row_counter = 0
     na_json_data = json.loads(request.POST["table_data"])
     for row in na_json_data:
-        print(row)
-        #if row[1] == "":
-        #    continue
+        #row_counter += 1
         
+        if row[0] == "":
+            continue
+        
+        for field in range(len(row)):
+            if row[field] == "":
+                wrong_rows.append(row)
+                break
+
         for idx in range(len(heading)):
-            """
-            data_sample["collecting_lab_sample_id"] = row[1]
-            data_sample["sequencing_sample_id"] = row[5]
-            data_sample["biosample_accession_ENA"] = ""
-            data_sample["virus_name"] = ""
-            data_sample["gisaid_id"] = ""
-            data_sample["sequencing_date"] = ""
-            #Sample.objects.create_new_sample(data_sample)
-            """
             if heading[idx] in HEADING_FOR_AUTHOR_TABLE:
                 data_author[HEADING_FOR_AUTHOR_TABLE[heading[idx]]] = row[idx]
-                #data_author["analysis_authors"] = row[15]
-                #data_author["author_submitter"] = row[16]
-                #data_author["authors"] = row[17]
-            #Authors.objects.create_new_authors(data_author)
+                #if row[idx] == "":
+                #    wrong_rows[row_counter] = row
+                #Authors.objects.create_new_authors(data_author)
+        #print(row_counter)
         print(data_author)
-        sample_recorded["process"] = "Success"
+        print(wrong_rows)
+        if len(wrong_rows) < 1:
+            sample_recorded["process"] = "Success"
+        else:
+            sample_recorded["process"] = "Error"
+            sample_recorded["wrong_rows"] = wrong_rows
+            sample_recorded["heading"] = heading
+    print(sample_recorded["process"])
 
     return sample_recorded
