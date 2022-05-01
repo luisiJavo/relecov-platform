@@ -9,7 +9,7 @@
         <title>Relecov Platform</title>
 
         <!-- Favicons -->
-        <link href="{% static 'relecov_core/img/favicon.png' %}" rel="icon">
+        <link href="{% static 'relecov_core/assets/img/favicon.png' %}" rel="icon">
         <!--buISCIII style sheet css-->
         <!-- <link href="{% static 'dashboard/css/buISCIII_styles.css'%}" rel="stylesheet"/> -->
 
@@ -24,12 +24,15 @@
 
         <!-- Template Main CSS File -->
         <link href="{% static 'relecov_core/assets/css/main.css' %}" rel="stylesheet">
+
+
+
         <!--   Jquery scripts   -->
         <script src="{% static 'relecov_core/assets/js/jquery-3.6.0.min.js' %}"></script>
     </head>
     <!-- <body style="background-color: white!important;"> -->
     <body>
-        <!-- ======= Header ======= -->
+
 
         <header id="header" class="header fixed-top" data-scrollto-offset="0">
 
@@ -61,13 +64,19 @@
 
         </header><!-- End Header -->
 
+        <!-- ======= Header ======= -->
+
+
+
 
 
 
                 {% block content %}
 
-                {% endblock %}
 
+
+
+                {% endblock %}
 
 
         {% include "relecov_core/footer.html" %}
@@ -85,7 +94,7 @@
 
         <!-- Template Main JS File -->
         <script src="{% static 'relecov_core/assets/js/main.js' %}"></script>
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
 
 
     </body>

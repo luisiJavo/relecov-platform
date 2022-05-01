@@ -1,6 +1,7 @@
 #from itertools import count
 from relecov_core.core_config import *
 import json
+from relecov_core.models import *
 
 def get_input_samples(request):
     '''
