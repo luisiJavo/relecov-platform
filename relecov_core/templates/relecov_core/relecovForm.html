@@ -44,8 +44,8 @@
 
         var table1 = jspreadsheet(document.getElementById('spreadsheet'), {
             data:data,
-            csvHeaders:true,
-            tableOverflow:false,
+            //csvHeaders:true,
+            //tableOverflow:false,
             columns: [
                 {% for item in sample_recorded.heading %}
                     {% if "Date" in item %}
