@@ -1,10 +1,11 @@
 {% extends "relecov_core/base.html" %}
 {% load static %}
-<!--{% include "relecov_core/JExcelFunctionality.html" %}-->
+
 <!--{%load plotly_dash%}-->
 
 
 {% block content %}
+{% include "relecov_core/intranet2Sidebar.html" %}
 
 <script src="https://bossanova.uk/jspreadsheet/v4/jexcel.js"></script>
 <link rel="stylesheet" href="https://bossanova.uk/jspreadsheet/v4/jexcel.css" type="text/css" />
@@ -21,12 +22,12 @@
 {% if sample_recorded.process == "Success" %}
     Process Success
 {% elif sample_recorded.process == "Error" %}
-<div class="container">   
+<div class="container" style="margin-top: -6%">   
     <div class = "card">
-        <div class="card-body">
+        <div class="card-body text-center">
             
             <h4 class="card-title bg-warning">
-                <img src="{% static 'images/oops.png' %}" class="card-img" style="width:8%;" >
+                <img src="{% static 'images/oops.png' %}" class="card-img" style="width:5%;" >
                 ... we had problems with some records
             </h4>
             <p class="card-text">check the following rows</p>
@@ -78,8 +79,8 @@
 
 <!---------------------------------------------------------------->
 {% else %}
-     <section>
-         <div class="container overflow-hidden">
+     <section style="margin-top: -7%;">
+         <div class="container overflow-hidden" >
             <div class="row gx-5">
                 <div style="text-align:center">
                     <form method="post" enctype="multipart/form-data" name="sampledata"  id="sampledata" class="form-horizontal well" style="min-height: 500px;">
