@@ -51,16 +51,17 @@ def generate_table(dataframe, max_rows=14):
         children=[
             html.Thead(
                 className="table-info",
-                children=html.Tr(
-                    [html.Th(col) for col in dataframe.columns]),
-
+                children=html.Tr([html.Th(col) for col in dataframe.columns]),
             ),
-            html.Tbody([
-                html.Tr([
-                    html.Td(dataframe.iloc[i][col]) for col in dataframe.columns
-                ]) for i in range(min(len(dataframe), max_rows))
-            ],)
-        ]
+            html.Tbody(
+                [
+                    html.Tr(
+                        [html.Td(dataframe.iloc[i][col]) for col in dataframe.columns]
+                    )
+                    for i in range(min(len(dataframe), max_rows))
+                ],
+            ),
+        ],
     )
 
 
@@ -68,12 +69,14 @@ def set_dataframe_range_slider(variant_data, selected_range):
     sequences_list = generate_random_sequences()
     lineage_list = []
     sequences_list2 = []
-    lineage_week_list2 =[]
+    lineage_week_list2 = []
     lineage_list2 = []
 
     for variant in variant_data:
         lineage_list.append(variant["lineage_dict"]["lineage"])
-        if(int(variant["lineage_dict"]["week"]) >= int(selected_range[0]) and int(variant["lineage_dict"]["week"]) <= int(selected_range[1])):
+        if int(variant["lineage_dict"]["week"]) >= int(selected_range[0]) and int(
+            variant["lineage_dict"]["week"]
+        ) <= int(selected_range[1]):
             lineage_list2.append(variant["lineage_dict"]["lineage"])
             lineage_week_list2.append(variant["lineage_dict"]["week"])
     for i in range(len(lineage_list2)):
@@ -94,12 +97,13 @@ def create_test_variant_graph(variant_data, selected_range):
     # selected_range =[1,19]
 
     df = set_dataframe_range_slider(variant_data, selected_range)
-    df_table = pd.read_csv(os.path.join(settings.BASE_DIR, "relecov_core", "docs", "cogUK", "table_3_2022-04-12.csv"))
-    for week in df['Week'].unique():
+    df_table = pd.read_csv(
+        os.path.join(
+            settings.BASE_DIR, "relecov_core", "docs", "cogUK", "table_3_2022-04-12.csv"
+        )
+    )
+    for week in df["Week"].unique():
         max_weeks += 1
-    # app = DjangoDash("SimpleExampleRangeSlider", external_stylesheets=[dbc.themes.BOOTSTRAP])  # replaces dash.Dash
-    #app = DjangoDash("SimpleExampleRangeSlider")  # replaces dash.Dash
-
 
     fig = px.bar(df, x="Week", y="Sequences", color="Variant", barmode="stack")
 
@@ -117,18 +121,14 @@ def create_test_variant_graph(variant_data, selected_range):
                         className="card-text",
                         children="Linages evolution.",
                     ),
-                ]
+                ],
             ),
-
             html.Div(
                 children=[
                     html.Div(
                         children=[
                             dcc.Graph(
-                                className = "card",
-                                id="graph-with-slider",
-                                figure=fig
-
+                                className="card", id="graph-with-slider", figure=fig
                             )
                         ]
                     )
@@ -136,15 +136,14 @@ def create_test_variant_graph(variant_data, selected_range):
             ),
             html.Br(),
             html.Div(
-               children = dcc.RangeSlider(
-                    min = df["Week"].min(),
-                    max = max_weeks,
+                children=dcc.RangeSlider(
+                    min=df["Week"].min(),
+                    max=max_weeks,
                     step="1",
-                    value=[int(df["Week"].min()),max_weeks],
-                    marks={str(week): str(week) for week in df['Week'].unique()},
-                    id='week-slider'
+                    value=[int(df["Week"].min()), max_weeks],
+                    marks={str(week): str(week) for week in df["Week"].unique()},
+                    id="week-slider",
                 ),
-
             ),
             html.Div(
                 className="card bg-light",
@@ -153,20 +152,23 @@ def create_test_variant_graph(variant_data, selected_range):
                         className="card-body",
                         children=[
                             html.H3(
-                            children="Variants of concern (VOC) and under investigation (VUI) detected in the Spain data.",
-                            className="card-title"
+                                children="Variants of concern (VOC) and"
+                                + "under investigation (VUI) detected in the Spain data.",
+                                className="card-title",
                             ),
                             html.H5(
-                                children="DISCLAIMER: relecov-platform uses curated sequences for determining the counts of a given lineage. Other sources of information may be reporting cases with partial sequence information or other forms of PCR testing.",
-                                className="card-text"
-                            )
-
-                        ]
+                                children="DISCLAIMER: relecov-platform uses curated sequences"
+                                + "for determining the counts of a given lineage. Other sources"
+                                + "of information may be reporting cases with partial sequence"
+                                + "information or other forms of PCR testing.",
+                                className="card-text",
+                            ),
+                        ],
                     )
-                ]
+                ],
             ),
             html.Div(
                 children=generate_table(df_table),
-            )
-       ]
+            ),
+        ],
     )
