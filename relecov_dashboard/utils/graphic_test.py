@@ -56,9 +56,7 @@ def generate_table(dataframe, max_rows=14):
             html.Tbody(
                 [
                     html.Tr(
-                        [html.Td(
-                            dataframe.iloc[i][col]
-                            ) for col in dataframe.columns]
+                        [html.Td(dataframe.iloc[i][col]) for col in dataframe.columns]
                     )
                     for i in range(min(len(dataframe), max_rows))
                 ],
@@ -76,9 +74,7 @@ def set_dataframe_range_slider(variant_data, selected_range):
 
     for variant in variant_data:
         lineage_list.append(variant["lineage_dict"]["lineage"])
-        if int(
-            variant["lineage_dict"]["week"]
-        ) >= int(selected_range[0]) and int(
+        if int(variant["lineage_dict"]["week"]) >= int(selected_range[0]) and int(
             variant["lineage_dict"]["week"]
         ) <= int(selected_range[1]):
             lineage_list2.append(variant["lineage_dict"]["lineage"])
@@ -103,11 +99,7 @@ def create_test_variant_graph(variant_data, selected_range):
     df = set_dataframe_range_slider(variant_data, selected_range)
     df_table = pd.read_csv(
         os.path.join(
-            settings.BASE_DIR, 
-            "relecov_core", 
-            "docs", 
-            "cogUK", 
-            "table_3_2022-04-12.csv"
+            settings.BASE_DIR, "relecov_core", "docs", "cogUK", "table_3_2022-04-12.csv"
         )
     )
     for week in df["Week"].unique():
@@ -136,9 +128,7 @@ def create_test_variant_graph(variant_data, selected_range):
                     html.Div(
                         children=[
                             dcc.Graph(
-                                className="card", 
-                                id="graph-with-slider", 
-                                figure=fig
+                                className="card", id="graph-with-slider", figure=fig
                             )
                         ]
                     )
@@ -151,9 +141,7 @@ def create_test_variant_graph(variant_data, selected_range):
                     max=max_weeks,
                     step="1",
                     value=[int(df["Week"].min()), max_weeks],
-                    marks={
-                        str(week): str(week) for week in df["Week"].unique()
-                        },
+                    marks={str(week): str(week) for week in df["Week"].unique()},
                     id="week-slider",
                 ),
             ),
@@ -164,15 +152,15 @@ def create_test_variant_graph(variant_data, selected_range):
                         className="card-body",
                         children=[
                             html.H3(
-                                children="Variants of concern (VOC) and" + 
-                                    "under investigation (VUI) detected in the Spain data.",
+                                children="Variants of concern (VOC) and"
+                                + "under investigation (VUI) detected in the Spain data.",
                                 className="card-title",
                             ),
                             html.H5(
-                                children="DISCLAIMER: relecov-platform uses curated sequences" + 
-                                    "for determining the counts of a given lineage. Other sources" + 
-                                    "of information may be reporting cases with partial sequence" + 
-                                    "information or other forms of PCR testing.",
+                                children="DISCLAIMER: relecov-platform uses curated sequences"
+                                + "for determining the counts of a given lineage. Other sources"
+                                + "of information may be reporting cases with partial sequence"
+                                + "information or other forms of PCR testing.",
                                 className="card-text",
                             ),
                         ],
