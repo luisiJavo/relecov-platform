@@ -21,7 +21,7 @@ def get_input_samples(request):
         HEADING_FOR_RECORD_SAMPLE_IN_DATABASE
 
     Return:
-        sample_recorded # Dictionnary with all samples cases .
+        sample_recorded # Dictionnary with all samples cases.
     """
     sample_recorded = {}
     sample_recorded["heading"] = [x[0] for x in HEADING_FOR_RECORD_SAMPLES]
@@ -31,87 +31,39 @@ def get_input_samples(request):
 
 def analyze_input_samples(request):
     sample_recorded = {}
-    headings = [x[0] for x in HEADING_FOR_RECORD_SAMPLES]
+    heading = [x[0] for x in HEADING_FOR_RECORD_SAMPLES]
     data_sample = {}
     data_author = {}
-    data_lineage = {}
-    data_analysis = {}
-    data_qc_stats = {}
-    data_caller = {}
-    data_filter = {}
-    data_effect = {}
-    data_gene = {}
-    data_chromosome = {}
-    data_variant = {}
-    data_chromosome = {}
-    data_incomplete_fields = {}
-    list_of_incomplete_fields_per_row = []
-    list_of_incomplete_rows = []
-    # data_public_database = {}
-    # data_public_database_fields = {}
-
+    wrong_rows = []
+    row_counter = 0
     na_json_data = json.loads(request.POST["table_data"])
     # row read
     for row in na_json_data:
-        print(row)
-        if row[1] == "":
-            # list_of_incomplete_rows.append(row)
+        #row_counter += 1
+        
+        if row[0] == "":
             continue
-
-        # column read
-        for idx in range(len(headings)):
-            """
-            if row[idx] == "":
-                #list_of_incomplete_rows.append(row)
-                list_of_incomplete_fields_per_row.append(row[idx])
-                data_incomplete_fields[row] = list_of_incomplete_rows
-            """
-
-            if headings[idx] in HEADING_FOR_AUTHOR_TABLE:
-                data_author[HEADING_FOR_AUTHOR_TABLE[headings[idx]]] = row[idx]
-
-            if headings[idx] in HEADING_FOR_SAMPLE_TABLE:
-                data_sample[HEADING_FOR_SAMPLE_TABLE[headings[idx]]] = row[idx]
-
-            if headings[idx] in HEADING_FOR_LINEAGE_TABLE:
-                data_lineage[HEADING_FOR_LINEAGE_TABLE[headings[idx]]] = row[idx]
-
-            if headings[idx] in HEADING_FOR_ANALYSIS_TABLE:
-                data_analysis[HEADING_FOR_ANALYSIS_TABLE[headings[idx]]] = row[idx]
-
-            if headings[idx] in HEADING_FOR_QCSTATS_TABLE:
-                data_qc_stats[HEADING_FOR_QCSTATS_TABLE[headings[idx]]] = row[idx]
-
-        print(data_author)
-        print(data_sample)
-        print(data_lineage)
-        print(data_analysis)
-        print(data_qc_stats)
-        print(data_incomplete_fields)
-
-        data_author_error = False
-
-        for data in data_author:
-            print(data)
-            if data != "":
-                data_author_error == True
-            else:
-                data_author_error == False
+        
+        for field in range(len(row)):
+            if row[field] == "":
+                wrong_rows.append(row)
                 break
 
-        if data_author_error:
-            sample_recorded["check"] = "Success"
+        for idx in range(len(heading)):
+            if heading[idx] in HEADING_FOR_AUTHOR_TABLE:
+                data_author[HEADING_FOR_AUTHOR_TABLE[heading[idx]]] = row[idx]
+                #if row[idx] == "":
+                #    wrong_rows[row_counter] = row
+                #Authors.objects.create_new_authors(data_author)
+        #print(row_counter)
+        print(data_author)
+        print(wrong_rows)
+        if len(wrong_rows) < 1:
+            sample_recorded["process"] = "Success"
         else:
-            sample_recorded["check"] = "Error"
-
-        print(sample_recorded)
-        # Insert into tables
-        """
-        Authors.objects.create_new_authors(data_author)
-        Sample.objects.create_new_sample(data_sample)
-        Lineage.objects.create_new_Lineage(data_lineage)
-        Analysis.objects.create_new_analysis(data_analysis)
-        QcStats.objects.create_new_qc_stats(data_qc_stats)
-        """
+            sample_recorded["process"] = "Error"
+            sample_recorded["wrong_rows"] = wrong_rows
+            sample_recorded["heading"] = heading
+    print(sample_recorded["process"])
 
     return sample_recorded
