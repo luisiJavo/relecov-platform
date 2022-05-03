@@ -55,7 +55,7 @@ def analyze_input_samples(request):
     for row in na_json_data:
         print(row)
         if row[1] == "":
-            #list_of_incomplete_rows.append(row)
+            # list_of_incomplete_rows.append(row)
             continue
 
         # column read
@@ -88,9 +88,9 @@ def analyze_input_samples(request):
         print(data_analysis)
         print(data_qc_stats)
         print(data_incomplete_fields)
-        
+
         data_author_error = False
-        
+
         for data in data_author:
             print(data)
             if data != "":
@@ -98,12 +98,12 @@ def analyze_input_samples(request):
             else:
                 data_author_error == False
                 break
-            
+
         if data_author_error:
             sample_recorded["check"] = "Success"
         else:
             sample_recorded["check"] = "Error"
-        
+
         print(sample_recorded)
         # Insert into tables
         """
