@@ -1,10 +1,11 @@
-#from itertools import count
+# from itertools import count
 from relecov_core.core_config import *
 import json
 from relecov_core.models import *
 
+
 def get_input_samples(request):
-    '''
+    """
     Description:
         The function will get the samples data that user filled in the form.
         defined_samples are the samples that either has no sample project or for
@@ -14,17 +15,17 @@ def get_input_samples(request):
         it will return a dictionary which contains the processed samples.
     Input:
         request
-       
+
     Constants:
         HEADING_FOR_DISPLAY_RECORDED_SAMPLES
-        HEADING_FOR_RECORD_SAMPLE_IN_DATABASE 
-    
+        HEADING_FOR_RECORD_SAMPLE_IN_DATABASE
+
     Return:
         sample_recorded # Dictionnary with all samples cases.
-    '''
+    """
     sample_recorded = {}
     sample_recorded["heading"] = [x[0] for x in HEADING_FOR_RECORD_SAMPLES]
-    
+
     return sample_recorded
 
 
@@ -36,12 +37,13 @@ def analyze_input_samples(request):
     wrong_rows = []
     row_counter = 0
     na_json_data = json.loads(request.POST["table_data"])
+    # row read
     for row in na_json_data:
-        #row_counter += 1
-        
+        # row_counter += 1
+
         if row[0] == "":
             continue
-        
+
         for field in range(len(row)):
             if row[field] == "":
                 wrong_rows.append(row)
@@ -50,10 +52,10 @@ def analyze_input_samples(request):
         for idx in range(len(heading)):
             if heading[idx] in HEADING_FOR_AUTHOR_TABLE:
                 data_author[HEADING_FOR_AUTHOR_TABLE[heading[idx]]] = row[idx]
-                #if row[idx] == "":
+                # if row[idx] == "":
                 #    wrong_rows[row_counter] = row
-                #Authors.objects.create_new_authors(data_author)
-        #print(row_counter)
+                # Authors.objects.create_new_authors(data_author)
+        # print(row_counter)
         print(data_author)
         print(wrong_rows)
         if len(wrong_rows) < 1:

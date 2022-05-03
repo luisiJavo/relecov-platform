@@ -1,5 +1,6 @@
 from pathlib import Path
 import os
+
 # Build paths inside the project like this: BASE_DIR / "subdir".
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -30,9 +31,9 @@ INSTALLED_APPS = [
     "channels_redis",
     "relecov_core",
     "relecov_dashboard",
-    'django_extensions',
-    'rest_framework',
-    'drf_yasg',
+    "django_extensions",
+    "rest_framework",
+    "drf_yasg",
 ]
 
 MIDDLEWARE = [
@@ -76,7 +77,7 @@ DATABASES = {
         "USER": "djangouser",
         "PASSWORD": "djangopass",
         "PORT": "djangoport",
-        'HOST': 'djangohost',
+        "HOST": "djangohost",
         "NAME": "relecov",
     }
 }
@@ -144,17 +145,11 @@ PLOTLY_COMPONENTS = [
     "dpd_components",
 ]
 
-SWAGGER_SETTINGS = {
-    'SECURITY_DEFINITIONS': {
-        'basic': {
-            'type': 'basic'
-        }
-    }
-}
+SWAGGER_SETTINGS = {"SECURITY_DEFINITIONS": {"basic": {"type": "basic"}}}
 
 #  Media settings
-MEDIA_URL = '/documents/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'documents/')
+MEDIA_URL = "/documents/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "documents/")
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
@@ -163,7 +158,7 @@ STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = "/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
