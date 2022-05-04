@@ -24,6 +24,10 @@
  </style>
 {% if sample_recorded.process == "Success" %}
     Process Success
+
+{% elif sample_recorded.process == "fichero_recibido" %}
+    fichero_recibido
+
 {% elif sample_recorded.process == "Error" %}
 <section style="margin-top: 4%">
     <div class="container d-flex flex-column text-center position-relative" style="width:60%">
@@ -177,7 +181,7 @@
                                                             <div class="card-body" >
                                                                 <div class="form-group required">
                                                                     <label class="col-sm-5 control-label card-text" for="samplesExcel" style="margin-left:10px;"><td> Upload Samples file</td> </label>
-                                                                    <div class="col-sm-5"><input class="form-control" required = "required" type="file" accept=".xls, .xlsx" name="samplesExcel" id="samplesExcel" ></div>
+                                                                    <div class="col-sm-5"><input class="form-control" required = "required" type="file" accept=".xls, .xlsx, .csv" name="samplesExcel" id="samplesExcel" ></div>
                                                                 </div>  <!-- end from-group   -->
                                                                 <br>
                                                             </div> <!-- End   Panel Body   -->
