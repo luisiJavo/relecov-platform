@@ -85,8 +85,8 @@ def get_variant_graph(variant_data):
 
     for week in df["Week"].unique():
         max_weeks += 1
-    # replaces dash.Dash    
-    app = DjangoDash("SimpleExampleRangeSlider")  
+    # replaces dash.Dash
+    app = DjangoDash("SimpleExampleRangeSlider")
 
     fig = px.bar(df, x="Week", y="Sequences", color="Variant", barmode="stack")
 
@@ -151,4 +151,3 @@ def get_variant_graph(variant_data):
             ),
         ],
     )
-    
