@@ -85,8 +85,8 @@ def get_variant_graph(variant_data):
 
     for week in df["Week"].unique():
         max_weeks += 1
-    # app = DjangoDash("SimpleExampleRangeSlider", external_stylesheets=[dbc.themes.BOOTSTRAP])  # replaces dash.Dash
-    app = DjangoDash("SimpleExampleRangeSlider")  # replaces dash.Dash
+    # replaces dash.Dash    
+    app = DjangoDash("SimpleExampleRangeSlider")  
 
     fig = px.bar(df, x="Week", y="Sequences", color="Variant", barmode="stack")
 
@@ -151,29 +151,4 @@ def get_variant_graph(variant_data):
             ),
         ],
     )
-    """
-    def set_dataframe(variant_data, selected_week):
-        sequences_list = generate_random_sequences()
-    lineage_list = []
-    sequences_list2 = []
-    lineage_week_list2 =[]
-    lineage_list2 = []
-
-    for variant in variant_data:
-        lineage_list.append(variant["lineage_dict"]["lineage"])
-        if(int(variant["lineage_dict"]["week"]) >= int(selected_week)):
-            lineage_list2.append(variant["lineage_dict"]["lineage"])
-            lineage_week_list2.append(variant["lineage_dict"]["week"])
-
-    sequences_list2 = sequences_list[len(lineage_list)-len(lineage_list2):]
-
-    df = pd.DataFrame(
-        {
-            "Week": lineage_week_list2,
-            "Sequences": sequences_list2,
-            "Variant": lineage_list2,
-        }
-    )
-    return df
-
-    """
+    
