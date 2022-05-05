@@ -167,6 +167,6 @@ def create_test_variant_graph(variant_data, selected_range):
                     )
                 ],
             ),
-            # html.Div(children=generate_table(df_table),),
+            #html.Div(children=generate_table(df_table),),
         ],
     )
