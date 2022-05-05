@@ -30,20 +30,20 @@
 # Sidebar  z-index: 996;
 --------------------------------------------------------------*/
 .sidebar {
-  position: absolute;
+  position: fixed;
   top: 150px;
   left: 0;
   bottom: 0;
-  width: 100px;
+  width: 300px;
  
   transition: all 0.3s;
   padding: 20px;
-  /*overflow-y: auto;*/
+  overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: #aab7cf transparent;
   box-shadow: 0px 0px 20px rgba(1, 41, 112, 0.1);
   background-color: #fff;
-  bottom:200px;
+  bottom:310px;
 }
 @media (max-width: 1199px) {
   .sidebar {

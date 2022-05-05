@@ -30,22 +30,29 @@
 # Sidebar  z-index: 996;
 --------------------------------------------------------------*/
 .sidebar {
-  position: absolute;
+  position:fixed;
   top: 150px;
   left: 0;
   bottom: 0;
-  width: 100px;
+  width: auto;
  
-  transition: all 0.3s;
+  /*transition: all 0.3s;*/
   padding: 20px;
   /*overflow-y: auto;*/
-  scrollbar-width: thin;
+  scrollbar-width: none;
   scrollbar-color: #aab7cf transparent;
   box-shadow: 0px 0px 20px rgba(1, 41, 112, 0.1);
   background-color: #fff;
-  bottom:200px;
+  bottom:auto;
+  /*margin-right: auto;*/
+  display:flexbox;
 }
-@media (max-width: 1199px) {
+@media (max-width: 1199x) {
+  .sidebar {
+    left: -150px;
+  }
+}
+@media (max-width: 1799x) {
   .sidebar {
     left: -300px;
   }
@@ -70,7 +77,7 @@
     margin-left: 0;
   }
   .toggle-sidebar .sidebar {
-    left: -300px;
+    left: -50px;
   }
 }
  
