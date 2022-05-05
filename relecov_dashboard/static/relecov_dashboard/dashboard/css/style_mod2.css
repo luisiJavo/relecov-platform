@@ -30,7 +30,7 @@
 # Sidebar  z-index: 996;
 --------------------------------------------------------------*/
 .sidebar {
-  position:-ms-page;
+  position:fixed;
   top: 150px;
   left: 0;
   bottom: 0;
@@ -47,12 +47,12 @@
   /*margin-right: auto;*/
   display:flexbox;
 }
-@media (max-width: 1299px) {
+@media (max-width: 1199x) {
   .sidebar {
     left: -150px;
   }
 }
-@media (max-width: 1599x) {
+@media (max-width: 1799x) {
   .sidebar {
     left: -300px;
   }
