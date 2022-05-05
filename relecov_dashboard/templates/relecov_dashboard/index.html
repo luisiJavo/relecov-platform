@@ -4,16 +4,15 @@
 {%load plotly_dash%}
 
 {% block content %}
-<!--{% include "relecov_dashboard/variantSideBar.html" %}-->
 <br><br><br><br>
 <div>
-   <!--<div class="container d-inline-flex flex-column text-center ">-->
+   <div class="container d-inline-flex flex-column text-center ">
         {% include "relecov_dashboard/variantSideBar2.html" %}
-    <!--</div>-->
-    <!--<section id="about" class="about">-->
+   </div>
+    <section id="about" class="about">
         <div class="container-fluid flex-column" style="width: auto;margin-left: 15%;">
             {% plotly_app name="TestVariantGraph" ratio=1 %}
         </div>
-    <!--</section>-->
+    </section>
 </div>
 {% endblock %}
