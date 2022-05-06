@@ -12,6 +12,8 @@ relecov_platform/settings.py
 relecov_platform/asgi.py
 relecov_platform/routing.py
 relecov_platform/wsgi.py
+documents/
+
 # C extensions
 *.so
 
