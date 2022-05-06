@@ -1,8 +1,10 @@
 import random
-import os
+
+# import os
 from django.conf import settings
 import pandas as pd
-from django_plotly_dash import DjangoDash
+
+# from django_plotly_dash import DjangoDash
 import dash_core_components as dcc
 import dash_html_components as html
 import plotly.express as px
@@ -97,11 +99,17 @@ def create_test_variant_graph(variant_data, selected_range):
     # selected_range =[1,19]
 
     df = set_dataframe_range_slider(variant_data, selected_range)
+    """
     df_table = pd.read_csv(
         os.path.join(
-            settings.BASE_DIR, "relecov_core", "docs", "cogUK", "table_3_2022-04-12.csv"
+            settings.BASE_DIR, 
+            "relecov_core", 
+            "docs", 
+            "cogUK", 
+            "table_3_2022-04-12.csv"
         )
     )
+    """
     for week in df["Week"].unique():
         max_weeks += 1
 
@@ -152,21 +160,26 @@ def create_test_variant_graph(variant_data, selected_range):
                         className="card-body",
                         children=[
                             html.H3(
-                                children="Variants of concern (VOC) and"
-                                + "under investigation (VUI) detected in the Spain data.",
+                                children="Variants of concern"
+                                + "(VOC) and under investigation"
+                                + "(VUI) detected in the Spain data.",
                                 className="card-title",
                             ),
                             html.H5(
-                                children="DISCLAIMER: relecov-platform uses curated sequences"
-                                + "for determining the counts of a given lineage. Other sources"
-                                + "of information may be reporting cases with partial sequence"
-                                + "information or other forms of PCR testing.",
+                                children="DISCLAIMER: relecov-platform"
+                                + "uses curated sequences"
+                                + "for determining the counts"
+                                + "of a given lineage. Other sources"
+                                + "of information may be reporting"
+                                + "cases with partial sequence"
+                                + "information or other forms"
+                                + "of PCR testing.",
                                 className="card-text",
                             ),
                         ],
                     )
                 ],
             ),
-            #html.Div(children=generate_table(df_table),),
+            # html.Div(children=generate_table(df_table),),
         ],
     )
