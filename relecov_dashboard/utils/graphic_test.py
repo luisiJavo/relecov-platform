@@ -1,7 +1,7 @@
 import random
 
 # import os
-from django.conf import settings
+#from django.conf import settings
 import pandas as pd
 
 # from django_plotly_dash import DjangoDash
@@ -103,9 +103,9 @@ def create_test_variant_graph(variant_data, selected_range):
     df_table = pd.read_csv(
         os.path.join(
             settings.BASE_DIR, 
-            "relecov_core", 
-            "docs", 
-            "cogUK", 
+            "relecov_core",
+            "docs",
+            "cogUK",
             "table_3_2022-04-12.csv"
         )
     )

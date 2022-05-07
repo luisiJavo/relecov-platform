@@ -3,7 +3,7 @@ import pandas as pd
 
 # plotly dash
 import dash_core_components as dcc
-#import dash_html_components as html
+# import dash_html_components as html
 from django_plotly_dash import DjangoDash
 
 # import plotly.graph_objects as go
@@ -12,20 +12,21 @@ import plotly.express as px
 # import pandas as pd
 
 # from dash import Input, Output#Dash, dcc, html,
-#from dash.dependencies import Input, Output
-#import dash
+# from dash.dependencies import Input, Output
+# import dash
 
 # import dash_bootstrap_components as dbc
 import os
 from django.conf import settings
 
 # IMPORT FROM UTILS
-#from relecov_core.utils.random_data import *
-#from relecov_core.utils.parse_files import *
-#from relecov_core.utils.dashboard import *
+from relecov_core.utils.random_data import generate_random_sequences
+# from relecov_core.utils.parse_files import *
+# from relecov_core.utils.dashboard import *
 
 # replaces dash.Dash
-app = DjangoDash("SimpleExampleRangeSlider") 
+app = DjangoDash("SimpleExampleRangeSlider")
+
 
 def generate_table(dataframe, max_rows=14):
     return html.Table(
@@ -88,7 +89,7 @@ def get_variant_graph(variant_data):
     for week in df["Week"].unique():
         max_weeks += 1
     # replaces dash.Dash
-    #app = DjangoDash("SimpleExampleRangeSlider")
+    # app = DjangoDash("SimpleExampleRangeSlider")
 
     fig = px.bar(df, x="Week", y="Sequences", color="Variant", barmode="stack")
 
