@@ -14,7 +14,7 @@ def generate_weeks():
     MAX1 = 10
     MAX2 = 3
     counter = 0
-    
+
     while counter < MAX1:
         weeks_list.append(1)
         counter += 1
@@ -65,4 +65,3 @@ def generate_weeks():
     counter = 0
 
     return weeks_list
-    
