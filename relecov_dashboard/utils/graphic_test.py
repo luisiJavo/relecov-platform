@@ -1,10 +1,5 @@
 import random
-
-# import os
-# from django.conf import settings
 import pandas as pd
-
-# from django_plotly_dash import DjangoDash
 import dash_core_components as dcc
 import dash_html_components as html
 import plotly.express as px
@@ -96,20 +91,8 @@ def set_dataframe_range_slider(variant_data, selected_range):
 
 def create_test_variant_graph(variant_data, selected_range):
     max_weeks = 0
-    # selected_range =[1,19]
-
     df = set_dataframe_range_slider(variant_data, selected_range)
-    """
-    df_table = pd.read_csv(
-        os.path.join(
-            settings.BASE_DIR,
-            "relecov_core",
-            "docs",
-            "cogUK",
-            "table_3_2022-04-12.csv"
-        )
-    )
-    """
+
     for week in df["Week"].unique():
         max_weeks += 1
 
