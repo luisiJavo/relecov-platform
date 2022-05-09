@@ -11,28 +11,57 @@ def generate_random_sequences():
 
 def generate_weeks():
     weeks_list = []
+    MAX1 = 10
+    MAX2 = 3
+    counter = 0
 
-    for j in range(10):
+    while counter < MAX1:
         weeks_list.append(1)
-    for k in range(10):
+        counter += 1
+    counter = 0
+    while counter < MAX1:
         weeks_list.append(2)
-    for l in range(10):
+        counter += 1
+    counter = 0
+    while counter < MAX1:
         weeks_list.append(3)
-    for m in range(10):
+        counter += 1
+    counter = 0
+    while counter < MAX1:
         weeks_list.append(4)
-    for n in range(10):
+        counter += 1
+    counter = 0
+    while counter < MAX1:
         weeks_list.append(5)
-    for o in range(10):
+        counter += 1
+    counter = 0
+    while counter < MAX1:
         weeks_list.append(6)
-    for p in range(10):
+        counter += 1
+    counter = 0
+    while counter < MAX1:
         weeks_list.append(7)
-    for q in range(10):
+        counter += 1
+    counter = 0
+    while counter < MAX1:
         weeks_list.append(8)
-    for r in range(10):
+        counter += 1
+    counter = 0
+    while counter < MAX1:
+        weeks_list.append(1)
+        counter += 1
+    counter = 0
+    while counter < MAX1:
         weeks_list.append(9)
-    for s in range(10):
+        counter += 1
+    counter = 0
+    while counter < MAX1:
         weeks_list.append(10)
-    for t in range(3):
+        counter += 1
+    counter = 0
+    while counter < MAX2:
         weeks_list.append(11)
+        counter += 1
+    counter = 0
 
     return weeks_list
