@@ -240,13 +240,12 @@
                                                         <!--<p class="card-title"> Laboratory Information</p>-->
                                                         <form class="row g-3"  method="post" action="{% url 'metadataForm' %}">
                                                             {% csrf_token %}
-                                                            
                                                             <div class="form-floating mb-3">
                                                                 {% for fields in m_form.batch %}
                                                                     {% if fields.Options %}
                                                                         <div class="form-floating mb-3">
                                                                             <p>{{fields.Label}}</p>
-                                                                            <select class="form-select form-select-sm" aria-label=".form-select-sm example" required>
+                                                                            <select class="form-select form-select-sm" aria-label="form-select-sm example" required>
                                                                                 <option value="">Select One</option>
                                                                                 {% for field in fields.Options %}
                                                                                 <option value={{fields.Label}}>{{field}}</option>
@@ -254,13 +253,16 @@
                                                                             </select>
                                                                         </div>
                                                                     {% elif fields.Format == "date" %}
-                                                                        <p>{{fields.Label}}</p>
-                                                                        <input type="date" class="form-control" id="floatingInput" name={{fields.Label}} placeholder={{fields.Label}}>
-                                                                        <label for="floatingInput">{{fields.Label}}</label>
+                                                                        <div class="form-floating mb-3">
+                                                                            <p>{{fields.Label}}</p>
+                                                                            <input type="date" class="form-control" id="floatingInput" name={{fields.Label}} placeholder={{fields.Label}}>
+                                                                            <label for="floatingInput">{{fields.Label}}</label>
+                                                                        </div>
                                                                     {% else %}
-                                                                    <p>{{fields.Label}}</p>
-                                                                    <input type="text" class="form-control" id="floatingInput" name={{fields.Label}} placeholder={{fields.Label}}>
-                                                                    <label for="floatingInput">{{fields.Label}}</label>
+                                                                    <div class="form-floating mb-3">
+                                                                        <input type="text" class="form-control" id="floatingInput" name={{fields.Label}} placeholder={{fields.Label}}>
+                                                                        <label for="floatingInput">{{fields.Label}}</label>
+                                                                    </div>
                                                                     {% endif %} 
                                                                 {% endfor %}     
                                                                     
