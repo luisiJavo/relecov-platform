@@ -19,7 +19,7 @@
         height: 400px;
     }
 </style>
-{% if sample_recorded.process == "Success" %}
+{% if sample_recorded.process == "test" %}
     Process Success
 
 {% elif sample_recorded.process == "fichero_recibido" %}
@@ -70,19 +70,19 @@
        //csvHeaders:true,
        //tableOverflow:false,
        columns: [
-           {% for item in sample_recorded.heading %}
-               {% if "Date" in item %}
-                   { type: 'calendar', title: "{{item}}", width:280 },
-               {% else %}
-                   { type: 'text', title: "{{item}}", width:280 },
-               {% endif %}
-           {% endfor %}
+       {% for item in sample_recorded.sample %}
+            {% if "date" in item.Format %}
+                { type: 'calendar', title: "{{item.Label}}", width:280 },
+            {% else %}
+                { type: 'text', title: "{{item.Label}}", width:280 },
+            {% endif %}
+        {% endfor %}
        ],
        allowInsertColumn:false,
        allowDeleteColumn:false,
        allowRenameColumn:false,
        csvFileName:'Metadata_download',
-       minDimensions:[{{sample_recorded.heading|length}},6],
+       minDimensions:[{{sample_recorded.samples|length}},6],
     });
 </script>
 <!--EndJExcel Form after Errors-->
@@ -90,134 +90,7 @@
 
 
 <!--if first metadata is correct-->
-{% elif sample_recorded.process == "pre_metadata_is_correct" %}
-<section style="margin-top: 2%;">
-    <div class="container d-flex flex-column text-center position-relative" style="width:60%">
-        <section style="">
-            <div class="container overflow-hidden" >
-                <div class="row row-space-4">
-                    <div class="col-sm-12">
-                        <div class="tab">
-                            <button class="tablinks" onclick="summaryBin(event, 'newSamples')" id="defaultOpen">Record new Samples</button>
-                            <button class="tablinks" onclick="summaryBin(event, 'batchSamples')">Load batch new Samples</button>
-            
-                            <div id="newSamples" class="tabcontent">
-                                <div class="row row-space-4">
-                                    <div class="col-sm-12" >
-                                        <div class="panel panel-default" >
-                                            <div class="panel-heading"><h3>Record new Samples</h3></div>
-                                            <div class="panel-body" >
-            
-                                                <br><br><br>
-                                                <form method="post" enctype="multipart/form-data" name="sampledata"  id="sampledata" class="form-horizontal well" style="min-height: 500px;">
-                                                    {% csrf_token %}
-                                                    <div class="scrolling-wrapper">
-                                                        <input type="hidden" name="action" value="sampledefinition"/>
-                                                        <div id="spreadsheet"></div>
-                                                        <br>
-                                                    </div> <!--  end of scrolling  -->
-                                                        <script>
-                                                            var data = [[]];//initialized with 6 empty rows
-
-                                                            var table1 = jspreadsheet(document.getElementById('spreadsheet'), {
-                                                                data:data,
-                                                                //csvHeaders:true,
-                                                                //tableOverflow:false,
-                                                                columns: [
-                                                                    {% for item in sample_recorded.samples %}
-                                                                        {% if "date" in item.Format %}
-                                                                            { type: 'calendar', title: "{{item.Label}}", width:280 },
-                                                                        {% else %}
-                                                                            { type: 'text', title: "{{item.Label}}", width:280 },
-                                                                        {% endif %}
-                                                                    {% endfor %}
-                                                                ],
-                                                                allowInsertColumn:false,
-                                                                allowDeleteColumn:false,
-                                                                allowRenameColumn:false,
-                                                                csvFileName:'Metadata_download',
-                                                                minDimensions:[{{sample_recorded.samples|length}},6],
-                                                            });
-                                                        </script>
-                                                    <br><br>
-                                                    <br>
-                                                    <input type="button" value="Download Spreadsheet" onclick="table1.download()"/>
-                                                    <input class="btn pull-right btn-primary" type="submit" value="Submit">
-                                                </form>
-            
-                                                <script>
-                                                        $( document ).ready(function () {
-                                                            $("#sampledata").submit(function(e){
-                                                            //stop submitting the form to see the disabled button effect
-                                                            // e.preventDefault();
-                                                            //disable the submit button
-                                                                var table_data = table1.getData();
-                                                                var data_json = JSON.stringify(table_data);
-                                                                $("<input />").attr("type", "hidden")
-                                                                    .attr("name", "table_data")
-                                                                    .attr("value", data_json)
-                                                                    .appendTo("#sampledata");
-                                                                $("#btnSubmit").attr("disabled", true);
-                                                                return true;
-                                                                });
-                                                        });
-                                                </script>
-            
-                                            </div>  <!--  end of panel body  -->
-                                        </div> <!--// end panel -->
-                                    </div> <!--// end col-sm-12  -->
-                                </div> <!--  end of row -->
-                            </div><!-- // end of tab newPatient -->
-            
-                            <div id="batchSamples" class="tabcontent">
-                                <div class="row row-space-4 margin-b-4">
-                                    <div class="col-sm-10 col-sm-offset-1" >
-                                        <div class="card">
-                                            <div class="card-title"><h3 style="text-align:center">Load New Samples in batch</h3></div>
-                                            <div class="card-body">
-                                                <form method="post" enctype="multipart/form-data" name="defineBatchSamples"  id="defineBatchSamples" class="form-horizontal well" style="min-height: 200px;">
-                                                    {% csrf_token %}
-                                                    <input type="hidden" name="action" value="defineBatchSamples"/>
-                                                    <div  class="card" >
-                                                        <!--<div class="card-body" >-->
-                                                            <div class="card-title">Upload the excel file to define a batch of samples.</div>
-                                                            <div class="card-body">
-                                                                <div class="form-group required">
-                                                                    <label class="col-sm-5 control-label card-text" for="samplesExcel" style="margin-left:10px;"><td> Upload Samples file</td> </label>
-                                                                    <div class="col-sm-5"><input class="form-control" required = "required" type="file" accept=".xls, .xlsx," name="samplesExcel" id="samplesExcel" ></div>
-                                                                </div>  <!-- end from-group   -->
-                                                                <br>
-                                                            </div> <!-- End   Panel Body   -->
-                                                        </div>  <!-- End   Panel    -->
-            
-                                                        <input class="btn pull-left btn-primary position-absolute bottom-0 start-0" type="reset" value="Reset Fields">
-                                                        <input class="btn pull-right btn-primary position-absolute bottom-0 end-0" type="submit" value="Submit">
-                                                    <!--</div>end col-sm-8 -->
-            
-                                                </form>
-                                                <!--<br><p> Fields marked with <FONT COLOR="Red">*</FONT> are mandatory</p>-->
-            
-            
-                                            </div><!--  end of panel body -->
-                                        </div> <!--  end of panel  -->
-                                    </div> <!--// end col-sm-10  -->
-                                </div> <!--  end of row -->
-                            </div><!-- // end of tab batchPatient -->
-                        </div> <!--  end of Tab  -->
-                    </div> <!--// end col-sm-12  -->
-                </div> <!--// end row -->
-            </div>
-        </section>
-    </div>
-</section>
-        <script>
-            // Get the element with id="defaultOpen" and click on it
-            document.getElementById("defaultOpen").click();
-        </script>
-<!--endif first metadata form is correct-->
-
-<!--Default page-->
-{% else %}
+{% elif sample_recorded.process == "Success" %}
 <section style="margin-top: 2%;">
     <div class="container d-flex flex-column text-center position-relative" style="width:60%">
         <section style="">
@@ -242,7 +115,7 @@
                                                             {% csrf_token %}
                                                             <input type="hidden" name="action" value="metadata_form_batch">
                                                             <div class="form-floating mb-3">
-                                                                {% for fields in m_form.batch %}
+                                                                {% for fields in sample_recorded.batch %}
                                                                     {% if fields.Options %}
                                                                         <div class="form-floating mb-3">
                                                                             <p>{{fields.Label}}</p>
@@ -341,5 +214,132 @@
         </script>
        
 <!--endDefault page-->
+
+<!--Default page-->
+{% else %}
+<section style="margin-top: 2%;">
+    <div class="container d-flex flex-column text-center position-relative" style="width:60%">
+        <section style="">
+            <div class="container overflow-hidden" >
+                <div class="row row-space-4">
+                    <div class="col-sm-12">
+                        <div class="tab">
+                            <button class="tablinks" onclick="summaryBin(event, 'newSamples')" id="defaultOpen">Record new Samples</button>
+                            <button class="tablinks" onclick="summaryBin(event, 'batchSamples')">Load batch new Samples</button>
+            
+                            <div id="newSamples" class="tabcontent">
+                                <div class="row row-space-4">
+                                    <div class="col-sm-12" >
+                                        <div class="panel panel-default" >
+                                            <div class="panel-heading"><h3>Record new Samples</h3></div>
+                                            <div class="panel-body" >
+            
+                                                <br><br><br>
+                                                <form method="post" enctype="multipart/form-data" name="sampledata"  id="sampledata" class="form-horizontal well" style="min-height: 500px;">
+                                                    {% csrf_token %}
+                                                    <div class="scrolling-wrapper">
+                                                        <input type="hidden" name="action" value="sampledefinition"/>
+                                                        <div id="spreadsheet"></div>
+                                                        <br>
+                                                    </div> <!--  end of scrolling  -->
+                                                        <script>
+                                                            var data = [[]];//initialized with 6 empty rows
+
+                                                            var table1 = jspreadsheet(document.getElementById('spreadsheet'), {
+                                                                data:data,
+                                                                //csvHeaders:true,
+                                                                //tableOverflow:false,
+                                                                columns: [
+                                                                    {% for item in m_form.samples %}
+                                                                        {% if "date" in item.Format %}
+                                                                            { type: 'calendar', title: "{{item.Label}}", width:280 },
+                                                                        {% else %}
+                                                                            { type: 'text', title: "{{item.Label}}", width:280 },
+                                                                        {% endif %}
+                                                                    {% endfor %}
+                                                                ],
+                                                                allowInsertColumn:false,
+                                                                allowDeleteColumn:false,
+                                                                allowRenameColumn:false,
+                                                                csvFileName:'Metadata_download',
+                                                                minDimensions:[{{m_form.samples|length}},6],
+                                                            });
+                                                        </script>
+                                                    <br><br>
+                                                    <br>
+                                                    <input type="button" value="Download Spreadsheet" onclick="table1.download()"/>
+                                                    <input class="btn pull-right btn-primary" type="submit" value="Submit">
+                                                </form>
+            
+                                                <script>
+                                                        $( document ).ready(function () {
+                                                            $("#sampledata").submit(function(e){
+                                                            //stop submitting the form to see the disabled button effect
+                                                            // e.preventDefault();
+                                                            //disable the submit button
+                                                                var table_data = table1.getData();
+                                                                var data_json = JSON.stringify(table_data);
+                                                                $("<input />").attr("type", "hidden")
+                                                                    .attr("name", "table_data")
+                                                                    .attr("value", data_json)
+                                                                    .appendTo("#sampledata");
+                                                                $("#btnSubmit").attr("disabled", true);
+                                                                return true;
+                                                                });
+                                                        });
+                                                </script>
+            
+                                            </div>  <!--  end of panel body  -->
+                                        </div> <!--// end panel -->
+                                    </div> <!--// end col-sm-12  -->
+                                </div> <!--  end of row -->
+                            </div><!-- // end of tab newPatient -->
+            
+                            <div id="batchSamples" class="tabcontent">
+                                <div class="row row-space-4 margin-b-4">
+                                    <div class="col-sm-10 col-sm-offset-1" >
+                                        <div class="card">
+                                            <div class="card-title"><h3 style="text-align:center">Load New Samples in batch</h3></div>
+                                            <div class="card-body">
+                                                <form method="post" enctype="multipart/form-data" name="defineBatchSamples"  id="defineBatchSamples" class="form-horizontal well" style="min-height: 200px;">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="action" value="defineBatchSamples"/>
+                                                    <div  class="card" >
+                                                        <!--<div class="card-body" >-->
+                                                            <div class="card-title">Upload the excel file to define a batch of samples.</div>
+                                                            <div class="card-body">
+                                                                <div class="form-group required">
+                                                                    <label class="col-sm-5 control-label card-text" for="samplesExcel" style="margin-left:10px;"><td> Upload Samples file</td> </label>
+                                                                    <div class="col-sm-5"><input class="form-control" required = "required" type="file" accept=".xls, .xlsx," name="samplesExcel" id="samplesExcel" ></div>
+                                                                </div>  <!-- end from-group   -->
+                                                                <br>
+                                                            </div> <!-- End   Panel Body   -->
+                                                        </div>  <!-- End   Panel    -->
+            
+                                                        <input class="btn pull-left btn-primary position-absolute bottom-0 start-0" type="reset" value="Reset Fields">
+                                                        <input class="btn pull-right btn-primary position-absolute bottom-0 end-0" type="submit" value="Submit">
+                                                    <!--</div>end col-sm-8 -->
+            
+                                                </form>
+                                                <!--<br><p> Fields marked with <FONT COLOR="Red">*</FONT> are mandatory</p>-->
+            
+            
+                                            </div><!--  end of panel body -->
+                                        </div> <!--  end of panel  -->
+                                    </div> <!--// end col-sm-10  -->
+                                </div> <!--  end of row -->
+                            </div><!-- // end of tab batchPatient -->
+                        </div> <!--  end of Tab  -->
+                    </div> <!--// end col-sm-12  -->
+                </div> <!--// end row -->
+            </div>
+        </section>
+    </div>
+</section>
+        <script>
+            // Get the element with id="defaultOpen" and click on it
+            document.getElementById("defaultOpen").click();
+        </script>
+<!--endif first metadata form is correct-->
 {% endif %}
 {% endblock %}
