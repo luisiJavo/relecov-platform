@@ -124,11 +124,11 @@
                                                                 //csvHeaders:true,
                                                                 //tableOverflow:false,
                                                                 columns: [
-                                                                    {% for item in sample_recorded.heading %}
-                                                                        {% if "Date" in item %}
-                                                                            { type: 'calendar', title: "{{item}}", width:280 },
+                                                                    {% for item in sample_recorded.samples %}
+                                                                        {% if "date" in item.Format %}
+                                                                            { type: 'calendar', title: "{{item.Label}}", width:280 },
                                                                         {% else %}
-                                                                            { type: 'text', title: "{{item}}", width:280 },
+                                                                            { type: 'text', title: "{{item.Label}}", width:280 },
                                                                         {% endif %}
                                                                     {% endfor %}
                                                                 ],
@@ -136,7 +136,7 @@
                                                                 allowDeleteColumn:false,
                                                                 allowRenameColumn:false,
                                                                 csvFileName:'Metadata_download',
-                                                                minDimensions:[{{sample_recorded.heading|length}},6],
+                                                                minDimensions:[{{sample_recorded.samples|length}},6],
                                                             });
                                                         </script>
                                                     <br><br>
@@ -240,12 +240,14 @@
                                                         <!--<p class="card-title"> Laboratory Information</p>-->
                                                         <form class="row g-3"  method="post" action="{% url 'metadataForm' %}">
                                                             {% csrf_token %}
+                                                            <input type="hidden" name="action" value="metadata_form_batch">
                                                             <div class="form-floating mb-3">
                                                                 {% for fields in m_form.batch %}
                                                                     {% if fields.Options %}
                                                                         <div class="form-floating mb-3">
                                                                             <p>{{fields.Label}}</p>
-                                                                            <select class="form-select form-select-sm" aria-label="form-select-sm example" required>
+                                                                            <!--<select class="form-select form-select-sm" aria-label="form-select-sm example" required>-->
+                                                                            <select class="form-select form-select-sm" aria-label="form-select-sm example">    
                                                                                 <option value="">Select One</option>
                                                                                 {% for field in fields.Options %}
                                                                                 <option value={{fields.Label}}>{{field}}</option>
@@ -269,9 +271,20 @@
                                                                 
                                                             </div>
                                                             <div class="col-auto">
-                                                                <button type="submit" class="btn btn-primary mb-3">Submit Info</button>
+                                                                <button type="submit" id="btnSubmit" class="btn btn-primary mb-3">Submit Info</button>
                                                             </div>
                                                         </form>
+                                                        <script>
+                                                            $(document).ready(function() {
+                                                                $("#btnSubmit").click(function() {
+                                                                  // disable button
+                                                                  //$(this).prop("disabled", true);
+                                                                  // Show spinner
+                                                                  //$("#spinner").prop("hidden", false);
+                                                                  $("#metadata_form_batch").submit();
+                                                                });
+                                                            });1
+                                                        </script>
                                                     </div>
                                                 </div>
                                             </div>
@@ -303,7 +316,7 @@
                                                         </div>  <!-- End   Panel    -->
             
                                                         <input class="btn pull-left btn-primary position-absolute bottom-0 start-0" type="reset" value="Reset Fields">
-                                                        <input class="btn pull-right btn-primary position-absolute bottom-0 end-0" type="submit" value="Submit">
+                                                        <input class="btn pull-right btn-primary position-absolute bottom-0 end-0" type="submit" id="btnSubmit" value="Submit">
                                                     <!--</div>end col-sm-8 -->
             
                                                 </form>
@@ -326,6 +339,7 @@
             // Get the element with id="defaultOpen" and click on it
             document.getElementById("defaultOpen").click();
         </script>
+       
 <!--endDefault page-->
 {% endif %}
 {% endblock %}
