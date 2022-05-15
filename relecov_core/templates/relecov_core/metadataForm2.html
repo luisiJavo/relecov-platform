@@ -228,9 +228,9 @@
                             <button class="tablinks" onclick="summaryBin(event, 'newSamples')" id="defaultOpen">Record new Samples</button>
                             <button class="tablinks" onclick="summaryBin(event, 'batchSamples')">Load batch new Samples</button>
                                 {% if request.session.insert_sample_data == "insert_sample_data" %}
-                                    <div class="card">
+                                    <div class="card border border-warning mt-3 mb-3">
                                         <div class="card-body">
-                                            <h2 class="card-title">Be careful, you already completed this table</h2>                                            
+                                            <h3 class="card-title">Be careful, you already completed this table</h3>                                            
                                         </div>
                                     </div>
                                 {% endif %}
