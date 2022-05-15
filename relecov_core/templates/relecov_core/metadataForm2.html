@@ -19,6 +19,7 @@
         height: 400px;
     }
 </style>
+
 {% if sample_recorded.process == "test" %}
     Process Success
 
@@ -226,7 +227,13 @@
                         <div class="tab">
                             <button class="tablinks" onclick="summaryBin(event, 'newSamples')" id="defaultOpen">Record new Samples</button>
                             <button class="tablinks" onclick="summaryBin(event, 'batchSamples')">Load batch new Samples</button>
-            
+                                {% if request.session.insert_sample_data == "insert_sample_data" %}
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h2 class="card-title">Be careful, you already completed this table</h2>                                            
+                                        </div>
+                                    </div>
+                                {% endif %}
                             <div id="newSamples" class="tabcontent">
                                 <div class="row row-space-4">
                                     <div class="col-sm-12" >
