@@ -228,7 +228,11 @@
                             <button class="tablinks" onclick="summaryBin(event, 'newSamples')" id="defaultOpen">Record new Samples</button>
                             <button class="tablinks" onclick="summaryBin(event, 'batchSamples')">Load batch new Samples</button>
                             <button class="tablinks" onclick="summaryBin(event, 'pendingData')">Pending Data</button>
-                                {% if request.session.insert_sample_data == "insert_sample_data" %}
+                                
+                            <div id="newSamples" class="tabcontent">
+                                <div class="row row-space-4">
+                                    <div class="col-sm-12" >
+                                        {% if request.session.pending_data_msg == "PENDING DATA" %}
                                     <div class="card border border-warning mt-3 mb-3">
                                         <div class="card-body">
                                             <h3 class="card-title">
@@ -239,9 +243,6 @@
                                         </div>
                                     </div>
                                 {% endif %}
-                            <div id="newSamples" class="tabcontent">
-                                <div class="row row-space-4">
-                                    <div class="col-sm-12" >
                                         <div class="panel panel-default" >
                                             <div class="panel-heading"><h3>Record new Samples</h3></div>
                                             <div class="panel-body" >
@@ -349,21 +350,32 @@
                                         <div class="card">
                                             <div class="card-title"><h3 style="text-align:center">Pending Data List</h3></div>
                                             <div class="card-body">
-                                                    <input type="hidden" name="action" value="pendingDataReturn"/>
-                                                    <div  class="card" >
-                                                        <!--<div class="card-body" >-->
-                                                            <div class="card-title">DL</div>
-                                                            <div class="card-body">
-                                                                <br>You forgot...
-                                                            </div> <!-- End   Panel Body   -->
-                                                        </div>  <!-- End   Panel    -->
-            
-                                                        <input class="btn pull-left btn-primary position-absolute bottom-0 start-0" type="reset" value="Reset Fields">
-                                                        <input class="btn pull-right btn-primary position-absolute bottom-0 end-0" type="submit" value="Submit">
-                                                    <!--</div>end col-sm-8 -->
+                                                <input type="hidden" name="action" value="pendingDataReturn"/>
+                                                <div  class="card" >
+                                                    <div class="card-body" >
+                                                        <div class="card-body overflow-scroll">
+                                                            <br>You entered the data shown below.<br>
+                                                            {% if request.session.pending_data_msg == "PENDING DATA"%}
+                                                            <table>
+                                                                <tr>
+                                                                {% for key, value in request.session.pending_data_list.items %}
+                                                                    <th>{{ key }}</th>
+                                                                {% endfor %}          
+                                                                </tr>
+                                                                <tr>
+                                                                {% for key, value in request.session.pending_data_list.items %}
+                                                                    <td>{{ value }}</td>
+                                                                {% endfor %}          
+                                                                </tr>
+                                                            </table>
+                                                            {% endif %}
+                                                            <br>
+                                                        </div> <!-- End   Panel Body   -->
+                                                    </div>  <!-- End   Panel    -->
+                                                    <input class="btn pull-left btn-primary position-absolute bottom-0 start-0" type="reset" value="Reset Fields">
+                                                    <input class="btn pull-right btn-primary position-absolute bottom-0 end-0" type="submit" value="Submit">
+                                                <!--</div>end col-sm-8 -->
                                                 <!--<br><p> Fields marked with <FONT COLOR="Red">*</FONT> are mandatory</p>-->
-            
-            
                                             </div><!--  end of panel body -->
                                         </div> <!--  end of panel  -->
                                     </div> <!--// end col-sm-10  -->
