@@ -414,8 +414,8 @@
                                                 <div  class="card" >
                                                     <div class="card-body" >
                                                         <div class="card-body overflow-scroll">
-                                                            <br>You entered the data shown below.<br>
                                                             {% if request.session.pending_data_msg == "PENDING DATA"%}
+                                                            <br>You entered the data shown below.<br>
                                                             <table>
                                                                 <tr>
                                                                 {% for key, value in request.session.pending_data_list.items %}
@@ -428,6 +428,8 @@
                                                                 {% endfor %}          
                                                                 </tr>
                                                             </table>
+                                                            {% else %}
+                                                                You don't have Pending Data 
                                                             {% endif %}
                                                             <br>
                                                         </div> <!-- End   Panel Body   -->
