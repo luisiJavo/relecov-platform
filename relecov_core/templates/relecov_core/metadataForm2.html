@@ -50,9 +50,9 @@
     <div class="container overflow-hidden">
        <div class="row gx-5">
            <div style="text-align:center">
-               <form method="post" enctype="multipart/form-data" name="sampledata"  id="sampledata" class="form-horizontal well" style="min-height: 500px;">
+               <form method="post" enctype="multipart/form-data" name="sampledataReprocess"  id="sampledataReprocess" class="form-horizontal well" style="min-height: 500px;">
                    {% csrf_token %}
-                   <input type="hidden" name="action" value="sampledefinition"/>
+                   <input type="hidden" name="action" value="sampledefinitionReprocess"/>
                    <div class="scrolling-wrapper">
                        <div id="spreadsheet" class="overflow-scroll" style="width:75%"></div>
                    </div> <!--  end of scrolling  -->
@@ -86,6 +86,24 @@
        minDimensions:[{{sample_recorded.samples|length}},6],
     });
 </script>
+
+<script>
+    $( document ).ready(function () {
+        $("#sampledataReprocess").submit(function(e){
+        //stop submitting the form to see the disabled button effect
+        // e.preventDefault();
+        //disable the submit button
+            var table_data = table1.getData();
+            var data_json = JSON.stringify(table_data);
+            $("<input />").attr("type", "hidden")
+                .attr("name", "table_data")
+                .attr("value", data_json)
+                .appendTo("#sampledataReprocess");
+            $("#btnSubmit").attr("disabled", true);
+            return true;
+            });
+    });
+</script>
 <!--EndJExcel Form after Errors-->
 
 
@@ -101,6 +119,7 @@
                         <div class="tab">
                             <button class="tablinks" onclick="summaryBin(event, 'firstMetadataForm')" id="defaultOpen">Record new Samples</button>
                             <button class="tablinks" onclick="summaryBin(event, 'batchSamples')">Load batch new Samples</button>
+                            <button class="tablinks" onclick="summaryBin(event, 'pendingData')">Pending Data</button>
                             <!--First metadataform-->
                             <br><br>
                             <!--<section style="">
@@ -202,6 +221,47 @@
                                     </div> <!--// end col-sm-10  -->
                                 </div> <!--  end of row -->
                             </div><!-- // end of tab batchPatient -->
+
+                            <!--Pending Data Tab-->
+                            <div id="pendingData" class="tabcontent">
+                                <div class="row row-space-4 margin-b-4">
+                                    <div class="col-sm-10 col-sm-offset-1" >
+                                        <div class="card">
+                                            <div class="card-title"><h3 style="text-align:center">Pending Data List</h3></div>
+                                            <div class="card-body">
+                                                <input type="hidden" name="action" value="pendingDataReturn"/>
+                                                <div  class="card" >
+                                                    <div class="card-body" >
+                                                        <div class="card-body overflow-scroll">
+                                                            <br>You entered the data shown below.<br>
+                                                            {% if request.session.pending_data_msg == "PENDING DATA"%}
+                                                            <table>
+                                                                <tr>
+                                                                {% for key, value in request.session.pending_data_list.items %}
+                                                                    <th>{{ key }}</th>
+                                                                {% endfor %}          
+                                                                </tr>
+                                                                <tr>
+                                                                {% for key, value in request.session.pending_data_list.items %}
+                                                                    <td>{{ value }}</td>
+                                                                {% endfor %}          
+                                                                </tr>
+                                                            </table>
+                                                            {% endif %}
+                                                            <br>
+                                                        </div> <!-- End   Panel Body   -->
+                                                    </div>  <!-- End   Panel    -->
+                                                    <input class="btn pull-left btn-primary position-absolute bottom-0 start-0" type="reset" value="Reset Fields">
+                                                    <input class="btn pull-right btn-primary position-absolute bottom-0 end-0" type="submit" value="Submit">
+                                                <!--</div>end col-sm-8 -->
+                                                <!--<br><p> Fields marked with <FONT COLOR="Red">*</FONT> are mandatory</p>-->
+                                            </div><!--  end of panel body -->
+                                        </div> <!--  end of panel  -->
+                                    </div> <!--// end col-sm-10  -->
+                                </div> <!--  end of row -->
+                            </div><!-- // end of tab batchPatient -->
+                            <!--End Pending Data Tab-->     
+
                         </div> <!--  end of Tab  -->
                     </div> <!--// end col-sm-12  -->
                 </div> <!--// end row -->
