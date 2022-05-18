@@ -143,19 +143,19 @@
                                                                             <select class="form-select form-select-sm" aria-label="form-select-sm example">    
                                                                                 <option value="">Select One</option>
                                                                                 {% for field in fields.Options %}
-                                                                                <option value={{fields.Label}}>{{field}}</option>
+                                                                                <option value={{fields.Property}}>{{field}}</option>
                                                                                 {% endfor %}
                                                                             </select>
                                                                         </div>
                                                                     {% elif fields.Format == "date" %}
                                                                         <div class="form-floating mb-3">
                                                                             <p>{{fields.Label}}</p>
-                                                                            <input type="date" class="form-control" id="floatingInput" name={{fields.Label}} placeholder={{fields.Label}}>
+                                                                            <input type="date" class="form-control" id="floatingInput" name={{fields.Property}} placeholder={{fields.Label}}>
                                                                             <label for="floatingInput">{{fields.Label}}</label>
                                                                         </div>
                                                                     {% else %}
                                                                     <div class="form-floating mb-3">
-                                                                        <input type="text" class="form-control" id="floatingInput" name={{fields.Label}} placeholder={{fields.Label}}>
+                                                                        <input type="text" class="form-control" id="floatingInput" name={{fields.Property}} placeholder={{fields.Label}}>
                                                                         <label for="floatingInput">{{fields.Label}}</label>
                                                                     </div>
                                                                     {% endif %} 
