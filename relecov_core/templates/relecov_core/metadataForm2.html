@@ -140,10 +140,10 @@
                                                                         <div class="form-floating mb-3">
                                                                             <p>{{fields.Label}}</p>
                                                                             <!--<select class="form-select form-select-sm" aria-label="form-select-sm example" required>-->
-                                                                            <select class="form-select form-select-sm" aria-label="form-select-sm example">    
+                                                                            <select class="form-select form-select-sm" aria-label="form-select-sm example" name={{fields.Property}}>    
                                                                                 <option value="">Select One</option>
                                                                                 {% for field in fields.Options %}
-                                                                                <option value={{fields.Property}}>{{field}}</option>
+                                                                                <option value={{field}} name={{field}}>{{field}}</option>
                                                                                 {% endfor %}
                                                                             </select>
                                                                         </div>
