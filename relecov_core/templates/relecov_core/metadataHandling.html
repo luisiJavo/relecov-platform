@@ -6,7 +6,7 @@
 
 <section id="relecov-platform" class="hero-animated d-flex align-items-center">
     <div class="container d-flex flex-column justify-content-center align-items-center  position-relative" data-aos="zoom-out">
-        <div class="container sm-9 offset-2">
+        <div class="container sm-9 offset-2"> 
 			<br><br><br>
             {% if ERROR %}
                 <div class="row row-space-2 margin-b-4">
@@ -25,7 +25,7 @@
                 <div class="row row-space-2 margin-b-4">
                     <div class="col-sm-9" >
                         <div class="card">
-                            <div class="card-header text-center text-danger"><h3 style="text-align:center">Sucessful metadata loaded</h3> </div>
+                            <div class="card-header text-center"><h3 style="text-align:center">Sucessful metadata loaded</h3> </div>
                             <div class="card-body  text-center">
                                 <br>
                                 <p><strong>{{SUCCESS}}</strong></p>
@@ -75,9 +75,8 @@
                                         </div> <!-- end card body-->
                                         <div class="card-body">
                                             <div class="text-left">
-                                                <input class="btn  btn-outline-secondary" type="reset" value="Reset Fields">
-                                                <input class="btn float-end btn-outline-primary" type="submit" id="btnSubmit" value="Submit">
-
+                                                <input class="btn  btn-outline-primary" type="submit" id="btnSubmit" value="Submit">
+                                                <input class="btn  btn-outline-secondary float-end" type="reset" value="Reset Fields">
                                             </div>
                                         </div>     <!-- end card body  -->
                                     </form>
@@ -107,9 +106,9 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    {% for id, name, version, default, used, file in metadata %}
+                                                    {% for id, name, version, default, used, file in metadatas %}
                                                         <tr>
-                                                            <td><a href="/schemaDisplay={{id}}">{{name}}</a></td>
+                                                            <td><a href="/metadataDisplay={{id}}">{{name}}</a></td>
                                                             <td>{{version}}</td>
                                                             <td>{{default}}</td>
                                                             <td>{{used}}</td>
