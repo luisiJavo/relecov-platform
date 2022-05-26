@@ -34,3 +34,36 @@ def parse_csv_into_list_of_dicts(file_path):
         variant_data.append(data_dict)
 
     return variant_data
+
+
+def parse_csv(file_path):
+    data_dict = {}
+    list_of_dictionaries = []
+
+    with open(file_path) as fh:
+        lines = fh.readlines()
+
+    csv_headings = lines[0]
+    csv_headings_list = csv_headings.split(",")
+
+    # delete final \n
+    if csv_headings_list[len(csv_headings_list) - 1].endswith("\n"):
+        position = len(csv_headings_list) - 1
+        end_item = csv_headings_list[position][:-1]
+        csv_headings_list.pop(position)
+        csv_headings_list.append(end_item)
+
+    for line in lines[1:]:
+        data_list = line.split(",")
+        position = len(csv_headings_list) - 1
+        if data_list[position].endswith("\n"):
+            end_item = data_list[position][:-1]
+            data_list.pop(position)
+            data_list.append(end_item)
+
+        for idx in range(len(data_list)):
+            data_dict[csv_headings_list[idx]] = data_list[idx]
+
+        list_of_dictionaries.append(data_dict)
+
+    return list_of_dictionaries
