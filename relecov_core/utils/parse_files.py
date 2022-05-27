@@ -1,4 +1,13 @@
-from relecov_core.models import Chromosome
+from relecov_core.models import (
+    Variant,
+    VariantInSample,
+    Chromosome,
+    Position,
+    Filter,
+    Gene,
+    Effect,
+    # Sample,
+)
 
 
 def parse_csv_into_list_of_dicts(file_path):
@@ -46,16 +55,12 @@ def parse_csv(file_path):
     EFFECT(11), HGVS_C(12), HGVS_P(13), HGVS_P1LETTER(14),
     CALLER(15), LINEAGE(16)
     """
-    data_dict = {}
-    list_of_dictionaries = []
+    data_dict_ids = {}
 
     with open(file_path) as fh:
         lines = fh.readlines()
 
-    csv_headings_list = lines[0].strip().split(",")
-    # csv_headings_list = csv_headings.split(",")
-
-    # delete final \n
+    # csv_headings_list = lines[0].strip().split(",")
 
     for line in lines[1:]:
         data_list = line.strip().split(",")
@@ -65,10 +70,41 @@ def parse_csv(file_path):
             ).last()
         else:
             chromosome_obj = Chromosome.objects.create_new_chromosome(data_list[1])
+            data_dict_ids["chromosomeID_id"] = chromosome_obj
 
-        # for idx in range(len(data_list)):
-        #    data_dict[csv_headings_list[idx]] = data_list[idx]
+        if Position.objects.filter(pos__iexact=data_list[2]).exists():
+            position_obj = Position.objects.filter(pos__iexact=data_list[2]).last()
+        else:
+            position_obj = Position.objects.create_new_position(data_list)
+            data_dict_ids["positionID_id"] = position_obj
 
-        # list_of_dictionaries.append(data_dict)
+        if Filter.objects.filter(filter__iexact=data_list[5]).exists():
+            filter_obj = Filter.objects.filter(filter__iexact=data_list[5]).last()
+        else:
+            filter_obj = Filter.objects.create_new_filter(data_list[5])
+            data_dict_ids["filterID_id"] = filter_obj
 
-    return list_of_dictionaries
+        if VariantInSample.objects.filter(chromosome__iexact=data_list[1]).exists():
+            variant_in_sample_obj = Chromosome.objects.filter(
+                chromosome__iexact=data_list[1]
+            ).last()
+        else:
+            variant_in_sample_obj = Chromosome.objects.create_new_chromosome(data_list)
+            data_dict_ids["variant_in_sampleID_id"] = variant_in_sample_obj
+
+        if Gene.objects.filter(gene__iexact=data_list[1]).exists():
+            gene_obj = Gene.objects.filter(gene__iexact=data_list[10]).last()
+        else:
+            gene_obj = Chromosome.objects.create_new_gene(data_list[10])
+            data_dict_ids["geneID_id"] = gene_obj
+
+        if Effect.objects.filter(effect__iexact=data_list[11]).exists():
+            effect_obj = Effect.objects.filter(effect__iexact=data_list[11]).last()
+        else:
+            effect_obj = Effect.objects.create_new_effect(data_list[11])
+            data_dict_ids["effectID_id"] = effect_obj
+
+        if Variant.objects.filter(ref__iexact=data_list[3]).exists():
+            Variant.objects.filter(ref__iexact=data_list[3]).last()
+        else:
+            Variant.objects.create_new_variant(data_list[3], data_dict_ids)
