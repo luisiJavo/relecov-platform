@@ -6,7 +6,7 @@ from relecov_core.models import (
     Filter,
     Gene,
     Effect,
-    Sample,
+    # Sample,
 )
 
 
@@ -60,7 +60,7 @@ def parse_csv(file_path):
     with open(file_path) as fh:
         lines = fh.readlines()
 
-    csv_headings_list = lines[0].strip().split(",")
+    # csv_headings_list = lines[0].strip().split(",")
 
     for line in lines[1:]:
         data_list = line.strip().split(",")
@@ -105,8 +105,10 @@ def parse_csv(file_path):
             data_dict_ids["effectID_id"] = effect_obj
 
         if Variant.objects.filter(ref__iexact=data_list[3]).exists():
-            variant_obj = Variant.objects.filter(ref__iexact=data_list[3]).last()
+            # variant_obj = 
+            Variant.objects.filter(ref__iexact=data_list[3]).last()
         else:
-            variant_obj = Variant.objects.create_new_variant(
+            # variant_obj = 
+            Variant.objects.create_new_variant(
                 data_list[3], data_dict_ids
             )
