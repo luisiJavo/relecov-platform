@@ -1,3 +1,6 @@
+from relecov_core.models import Chromosome
+
+
 def parse_csv_into_list_of_dicts(file_path):
     """
     fields => SAMPLE(0), CHROM(1), POS(2), REF(3), ALT(4),
@@ -37,33 +40,35 @@ def parse_csv_into_list_of_dicts(file_path):
 
 
 def parse_csv(file_path):
+    """
+    fields => SAMPLE(0), CHROM(1), POS(2), REF(3), ALT(4),
+    FILTER(5), DP(6),  REF_DP(7), ALT_DP(8), AF(9), GENE(10),
+    EFFECT(11), HGVS_C(12), HGVS_P(13), HGVS_P1LETTER(14),
+    CALLER(15), LINEAGE(16)
+    """
     data_dict = {}
     list_of_dictionaries = []
 
     with open(file_path) as fh:
         lines = fh.readlines()
 
-    csv_headings = lines[0]
-    csv_headings_list = csv_headings.split(",")
+    csv_headings_list = lines[0].strip().split(",")
+    # csv_headings_list = csv_headings.split(",")
 
     # delete final \n
-    if csv_headings_list[len(csv_headings_list) - 1].endswith("\n"):
-        position = len(csv_headings_list) - 1
-        end_item = csv_headings_list[position][:-1]
-        csv_headings_list.pop(position)
-        csv_headings_list.append(end_item)
 
     for line in lines[1:]:
-        data_list = line.split(",")
-        position = len(csv_headings_list) - 1
-        if data_list[position].endswith("\n"):
-            end_item = data_list[position][:-1]
-            data_list.pop(position)
-            data_list.append(end_item)
+        data_list = line.strip().split(",")
+        if Chromosome.objects.filter(chromosome__iexact=data_list[1]).exists():
+            chromosome_obj = Chromosome.objects.filter(
+                chromosome__iexact=data_list[1]
+            ).last()
+        else:
+            chromosome_obj = Chromosome.objects.create_new_chromosome(data_list[1])
 
-        for idx in range(len(data_list)):
-            data_dict[csv_headings_list[idx]] = data_list[idx]
+        # for idx in range(len(data_list)):
+        #    data_dict[csv_headings_list[idx]] = data_list[idx]
 
-        list_of_dictionaries.append(data_dict)
+        # list_of_dictionaries.append(data_dict)
 
     return list_of_dictionaries
