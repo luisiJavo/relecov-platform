@@ -60,8 +60,6 @@ def parse_csv(file_path):
     with open(file_path) as fh:
         lines = fh.readlines()
 
-    # csv_headings_list = lines[0].strip().split(",")
-
     for line in lines[1:]:
         data_list = line.strip().split(",")
         if Chromosome.objects.filter(chromosome__iexact=data_list[1]).exists():
@@ -75,7 +73,7 @@ def parse_csv(file_path):
         if Position.objects.filter(pos__iexact=data_list[2]).exists():
             position_obj = Position.objects.filter(pos__iexact=data_list[2]).last()
         else:
-            position_obj = Position.objects.create_new_position(data_list)
+            position_obj = Position.objects.create_new_position(data_list[2])
             data_dict_ids["positionID_id"] = position_obj
 
         if Filter.objects.filter(filter__iexact=data_list[5]).exists():
@@ -84,27 +82,31 @@ def parse_csv(file_path):
             filter_obj = Filter.objects.create_new_filter(data_list[5])
             data_dict_ids["filterID_id"] = filter_obj
 
-        if VariantInSample.objects.filter(chromosome__iexact=data_list[1]).exists():
-            variant_in_sample_obj = Chromosome.objects.filter(
-                chromosome__iexact=data_list[1]
+        if VariantInSample.objects.filter(af__iexact=data_list[9]).exists():
+            variant_in_sample_obj = VariantInSample.objects.filter(
+                af__iexact=data_list[9]
             ).last()
         else:
-            variant_in_sample_obj = Chromosome.objects.create_new_chromosome(data_list)
+            variant_in_sample_obj = (
+                VariantInSample.objects.create_new_variant_in_sample(data_list)
+            )
             data_dict_ids["variant_in_sampleID_id"] = variant_in_sample_obj
 
         if Gene.objects.filter(gene__iexact=data_list[1]).exists():
             gene_obj = Gene.objects.filter(gene__iexact=data_list[10]).last()
         else:
-            gene_obj = Chromosome.objects.create_new_gene(data_list[10])
+            gene_obj = Gene.objects.create_new_gene(data_list[10])
             data_dict_ids["geneID_id"] = gene_obj
 
         if Effect.objects.filter(effect__iexact=data_list[11]).exists():
             effect_obj = Effect.objects.filter(effect__iexact=data_list[11]).last()
         else:
-            effect_obj = Effect.objects.create_new_effect(data_list[11])
+            effect_obj = Effect.objects.create_new_effect(data_list)
             data_dict_ids["effectID_id"] = effect_obj
+
+        data_dict_ids["sampleID_id"] = data_list[0]
 
         if Variant.objects.filter(ref__iexact=data_list[3]).exists():
             Variant.objects.filter(ref__iexact=data_list[3]).last()
         else:
-            Variant.objects.create_new_variant(data_list[3], data_dict_ids)
+            Variant.objects.create_new_variant(data_list, data_dict_ids)
