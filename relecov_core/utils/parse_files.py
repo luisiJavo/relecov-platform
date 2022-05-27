@@ -105,10 +105,6 @@ def parse_csv(file_path):
             data_dict_ids["effectID_id"] = effect_obj
 
         if Variant.objects.filter(ref__iexact=data_list[3]).exists():
-            # variant_obj = 
             Variant.objects.filter(ref__iexact=data_list[3]).last()
         else:
-            # variant_obj = 
-            Variant.objects.create_new_variant(
-                data_list[3], data_dict_ids
-            )
+            Variant.objects.create_new_variant(data_list[3], data_dict_ids)
