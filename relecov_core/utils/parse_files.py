@@ -2,7 +2,9 @@ from relecov_core.models import (
     Variant,
     VariantInSample,
     Chromosome,
+    ChromosomeManager,
     Position,
+    PositionManager,
     Filter,
     Gene,
     Effect,
@@ -62,6 +64,7 @@ def parse_csv(file_path):
 
     for line in lines[1:]:
         data_list = line.strip().split(",")
+
         if Chromosome.objects.filter(chromosome__iexact=data_list[1]).exists():
             chromosome_obj = Chromosome.objects.filter(
                 chromosome__iexact=data_list[1]
@@ -73,7 +76,7 @@ def parse_csv(file_path):
         if Position.objects.filter(pos__iexact=data_list[2]).exists():
             position_obj = Position.objects.filter(pos__iexact=data_list[2]).last()
         else:
-            position_obj = Position.objects.create_new_position(data_list[2])
+            position_obj = Position.objects.create_new_position(data_list)
             data_dict_ids["positionID_id"] = position_obj
 
         if Filter.objects.filter(filter__iexact=data_list[5]).exists():
@@ -105,8 +108,9 @@ def parse_csv(file_path):
             data_dict_ids["effectID_id"] = effect_obj
 
         data_dict_ids["sampleID_id"] = data_list[0]
-
+        """
         if Variant.objects.filter(ref__iexact=data_list[3]).exists():
             Variant.objects.filter(ref__iexact=data_list[3]).last()
         else:
             Variant.objects.create_new_variant(data_list, data_dict_ids)
+        """
