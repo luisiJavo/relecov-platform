@@ -1,3 +1,4 @@
+import json
 from relecov_core.models import (
     Variant,
     VariantInSample,
@@ -49,6 +50,52 @@ def parse_csv_into_list_of_dicts(file_path):
 
 
 def parse_csv(file_path):
+    list_of_dictionaries = []
+
+    with open(file_path) as fh:
+        lines = fh.readlines()
+
+    for line in lines[1:]:
+        data_dict_from_long_table = {}
+        data_list = line.strip().split(",")
+
+        data_dict_from_long_table["Chromosome"] = {"chromosome": data_list[1]}
+
+        data_dict_from_long_table["Position"] = {
+            "pos": data_list[2],
+            "nucleotide": data_list[4],
+        }
+
+        data_dict_from_long_table["Filter"] = {"filter": data_list[5]}
+
+        data_dict_from_long_table["VariantInSample"] = {
+            "dp": data_list[6],
+            "ref_dp": data_list[7],
+            "alt_dp": data_list[8],
+            "af": data_list[9],
+        }
+
+        data_dict_from_long_table["Gene"] = {"gene": data_list[10]}
+
+        data_dict_from_long_table["Effect"] = {
+            "effect": data_list[11],
+            "hgvs_c": data_list[12],
+            "hgvs_p": data_list[13],
+            "hgvs_p_1_letter": data_list[14],
+        }
+
+        data_dict_from_long_table["Variant"] = {"ref": data_list[3]}
+
+        data_dict_from_long_table["Sample"] = {"sample": data_list[0]}
+
+        list_of_dictionaries.append(data_dict_from_long_table)
+
+    generated_json = json.dumps(list_of_dictionaries)
+
+    return generated_json
+
+
+def parse_csv_create_a_dictionary(file_path):
     data_dict_ids = {}
     data_dict_data = {}
 
