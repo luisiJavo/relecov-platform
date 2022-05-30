@@ -1,10 +1,8 @@
 from relecov_core.models import (
-    Variant,
+    # Variant,
     VariantInSample,
     Chromosome,
-    ChromosomeManager,
     Position,
-    PositionManager,
     Filter,
     Gene,
     Effect,
