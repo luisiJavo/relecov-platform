@@ -1,3 +1,4 @@
+import json
 from relecov_core.models import (
     Variant,
     VariantInSample,
@@ -49,14 +50,54 @@ def parse_csv_into_list_of_dicts(file_path):
 
 
 def parse_csv(file_path):
-    """
-    fields => SAMPLE(0), CHROM(1), POS(2), REF(3), ALT(4),
-    FILTER(5), DP(6),  REF_DP(7), ALT_DP(8), AF(9), GENE(10),
-    EFFECT(11), HGVS_C(12), HGVS_P(13), HGVS_P1LETTER(14),
-    CALLER(15), LINEAGE(16)
-    """
+    list_of_dictionaries = []
+
+    with open(file_path) as fh:
+        lines = fh.readlines()
+
+    for line in lines[1:]:
+        data_dict_from_long_table = {}
+        data_list = line.strip().split(",")
+
+        data_dict_from_long_table["Chromosome"] = {"chromosome": data_list[1]}
+
+        data_dict_from_long_table["Position"] = {
+            "pos": data_list[2],
+            "nucleotide": data_list[4],
+        }
+
+        data_dict_from_long_table["Filter"] = {"filter": data_list[5]}
+
+        data_dict_from_long_table["VariantInSample"] = {
+            "dp": data_list[6],
+            "ref_dp": data_list[7],
+            "alt_dp": data_list[8],
+            "af": data_list[9],
+        }
+
+        data_dict_from_long_table["Gene"] = {"gene": data_list[10]}
+
+        data_dict_from_long_table["Effect"] = {
+            "effect": data_list[11],
+            "hgvs_c": data_list[12],
+            "hgvs_p": data_list[13],
+            "hgvs_p_1_letter": data_list[14],
+        }
+
+        data_dict_from_long_table["Variant"] = {"ref": data_list[3]}
+
+        data_dict_from_long_table["Sample"] = {"sample": data_list[0]}
+
+        list_of_dictionaries.append(data_dict_from_long_table)
+
+    generated_json = json.dumps(list_of_dictionaries)
+
+    return generated_json
+
+
+def parse_csv_create_a_dictionary(file_path):
     data_dict_ids = {}
-    data_dict = {}
+    data_dict_data = {}
 
     with open(file_path) as fh:
         lines = fh.readlines()
@@ -75,9 +116,9 @@ def parse_csv(file_path):
         if Position.objects.filter(pos__iexact=data_list[2]).exists():
             position_obj = Position.objects.filter(pos__iexact=data_list[2]).last()
         else:
-            data_dict["pos"] = data_list[2]
-            data_dict["nucleotide"] = data_list[4]
-            position_obj = Position.objects.create_new_position(data_dict)
+            data_dict_data["pos"] = data_list[2]
+            data_dict_data["nucleotide"] = data_list[4]
+            position_obj = Position.objects.create_new_position(data_dict_data)
         data_dict_ids["positionID_id"] = position_obj
 
         if Filter.objects.filter(filter__iexact=data_list[5]).exists():
@@ -91,13 +132,13 @@ def parse_csv(file_path):
                 af__iexact=data_list[9]
             ).last()
         else:
-            data_dict["dp"] = data_list[6]
-            data_dict["ref_dp"] = data_list[7]
-            data_dict["alt_dp"] = data_list[8]
-            data_dict["af"] = data_list[9]
+            data_dict_data["dp"] = data_list[6]
+            data_dict_data["ref_dp"] = data_list[7]
+            data_dict_data["alt_dp"] = data_list[8]
+            data_dict_data["af"] = data_list[9]
 
             variant_in_sample_obj = (
-                VariantInSample.objects.create_new_variant_in_sample(data_dict)
+                VariantInSample.objects.create_new_variant_in_sample(data_dict_data)
             )
         data_dict_ids["variant_in_sampleID_id"] = variant_in_sample_obj
 
@@ -110,11 +151,11 @@ def parse_csv(file_path):
         if Effect.objects.filter(effect__iexact=data_list[11]).exists():
             effect_obj = Effect.objects.filter(effect__iexact=data_list[11]).last()
         else:
-            data_dict["effect"] = (data_list[11],)
-            data_dict["hgvs_c"] = (data_list[12],)
-            data_dict["hgvs_p"] = (data_list[13],)
-            data_dict["hgvs_p_1_letter"] = (data_list[14],)
-            effect_obj = Effect.objects.create_new_effect(data_dict)
+            data_dict_data["effect"] = (data_list[11],)
+            data_dict_data["hgvs_c"] = (data_list[12],)
+            data_dict_data["hgvs_p"] = (data_list[13],)
+            data_dict_data["hgvs_p_1_letter"] = (data_list[14],)
+            effect_obj = Effect.objects.create_new_effect(data_dict_data)
         data_dict_ids["effectID_id"] = effect_obj
 
         if Sample.objects.filter(
