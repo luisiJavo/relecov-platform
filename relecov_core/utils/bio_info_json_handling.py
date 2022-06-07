@@ -13,16 +13,16 @@ from relecov_core.models import (
 )
 from relecov_core.utils.generic_functions import store_file, get_configuration_value
 from relecov_core.core_config import (
-    SCHEMAS_UPLOAD_FOLDER,
+    # SCHEMAS_UPLOAD_FOLDER,
     BIOINFO_UPLOAD_FOLDER,
     ERROR_INVALID_JSON,
-    ERROR_INVALID_SCHEMA,
-    ERROR_SCHEMA_ALREADY_LOADED,
-    SCHEMA_SUCCESSFUL_LOAD,
+    # ERROR_INVALID_SCHEMA,
+    # ERROR_SCHEMA_ALREADY_LOADED,
+    # SCHEMA_SUCCESSFUL_LOAD,
     ERROR_SCHEMA_ID_NOT_DEFINED,
     ERROR_SCHEMA_NOT_DEFINED,
     HEADING_SCHEMA_DISPLAY,
-    MAIN_SCHEMA_STRUCTURE,
+    # MAIN_SCHEMA_STRUCTURE,
     NO_SELECTED_LABEL_WAS_DONE,
 )
 
