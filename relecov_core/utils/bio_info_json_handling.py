@@ -1,4 +1,4 @@
-from dataclasses import field
+# from dataclasses import field
 import json
 import re
 import os
@@ -26,7 +26,8 @@ from relecov_core.core_config import (
     # MAIN_SCHEMA_STRUCTURE,
     NO_SELECTED_LABEL_WAS_DONE,
 )
-from django.db import models
+
+# from django.db import models
 
 
 def fetch_info_meta_visualization(schema_obj):
@@ -236,7 +237,6 @@ def remove_existing_default_schema(schema_name, apps_name):
     return
 
 
-####################bioinfo file#####################################
 def load_bioinfo_file(json_file):
     """Store json file in the defined folder and store information in database"""
     data = {}
@@ -286,6 +286,7 @@ def process_bioinfo_file(json_file, user, apps_name):
     bioinfo_data = load_bioinfo_file(json_file)
     list_of_samples = bioinfo_data["full_bioinfo"].keys()
     print(list_of_samples_values)
+    print(list_of_samples)
     for sample in bioinfo_data["full_bioinfo"]:
         list_of_samples_values = bioinfo_data["full_bioinfo"][sample].values()
         list_of_samples_properties = bioinfo_data["full_bioinfo"][sample].keys()
@@ -306,6 +307,3 @@ def process_bioinfo_file(json_file, user, apps_name):
     """
     return {"SUCCESS": SCHEMA_SUCCESSFUL_LOAD}
     """
-
-
-####################end bioinfo file#####################################
