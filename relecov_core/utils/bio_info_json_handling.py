@@ -1,3 +1,4 @@
+from dataclasses import field
 import json
 import re
 import os
@@ -25,6 +26,7 @@ from relecov_core.core_config import (
     # MAIN_SCHEMA_STRUCTURE,
     NO_SELECTED_LABEL_WAS_DONE,
 )
+from django.db import models
 
 
 def fetch_info_meta_visualization(schema_obj):
@@ -146,17 +148,6 @@ def get_schema_obj_from_id(schema_id):
     return None
 
 
-def load_bioinfo_file(json_file):
-    """Store json file in the defined folder and store information in database"""
-    data = {}
-    try:
-        data["full_bioinfo"] = json.load(json_file)
-    except json.decoder.JSONDecodeError:
-        return {"ERROR": ERROR_INVALID_JSON}
-    data["file_name"] = store_file(json_file, BIOINFO_UPLOAD_FOLDER)
-    return data
-
-
 def check_heading_valid_json(schema_data, m_structure):
     """Check if json have at least the main structure"""
     for item in m_structure:
@@ -231,6 +222,32 @@ def store_schema_properties(schema_obj, s_properties, required):
     return {"SUCCESS": ""}
 
 
+def remove_existing_default_schema(schema_name, apps_name):
+    """Remove the tag for default schema for the given schema name"""
+    if Schema.objects.filter(
+        schema_name__iexact=schema_name, schema_apps_name=apps_name, schema_default=True
+    ).exists():
+        schema_obj = Schema.objects.filter(
+            schema_name__iexact=schema_name,
+            schema_apps_name=apps_name,
+            schema_default=True,
+        ).last()
+        schema_obj.update_default(False)
+    return
+
+
+####################bioinfo file#####################################
+def load_bioinfo_file(json_file):
+    """Store json file in the defined folder and store information in database"""
+    data = {}
+    try:
+        data["full_bioinfo"] = json.load(json_file)
+    except json.decoder.JSONDecodeError:
+        return {"ERROR": ERROR_INVALID_JSON}
+    data["file_name"] = store_file(json_file, BIOINFO_UPLOAD_FOLDER)
+    return data
+
+
 def store_bioinfo_fields(schema_obj, s_properties):
     """Store the fields to be used for saving analysis information"""
     for prop_key in s_properties.keys():
@@ -261,67 +278,34 @@ def store_bioinfo_fields(schema_obj, s_properties):
     return {"SUCCESS": ""}
 
 
-def remove_existing_default_schema(schema_name, apps_name):
-    """Remove the tag for default schema for the given schema name"""
-    if Schema.objects.filter(
-        schema_name__iexact=schema_name, schema_apps_name=apps_name, schema_default=True
-    ).exists():
-        schema_obj = Schema.objects.filter(
-            schema_name__iexact=schema_name,
-            schema_apps_name=apps_name,
-            schema_default=True,
-        ).last()
-        schema_obj.update_default(False)
-    return
-
-
 def process_bioinfo_file(json_file, user, apps_name):
     """Check json file and store in database"""
     list_of_samples = []
+    list_of_samples_values = []
+    list_of_samples_properties = []
     bioinfo_data = load_bioinfo_file(json_file)
-    # print(bioinfo_data["full_bioinfo"].keys())
-    for s_objs in bioinfo_data["full_bioinfo"]:
-        list_of_samples.append(s_objs)
-    # print(list_of_samples)
-    print(bioinfo_data["full_bioinfo"][list_of_samples[2]]["variant_calling_params"])
-    if "ERROR" in bioinfo_data:
-        return bioinfo_data
-    # store root data of json schema
-    # if not check_heading_valid_json(schema_data["full_schema"], MAIN_SCHEMA_STRUCTURE):
-    #    return {"ERROR": ERROR_INVALID_SCHEMA}
-    # schema_name = schema_data["full_schema"]["schema"]
+    list_of_samples = bioinfo_data["full_bioinfo"].keys()
+    print(list_of_samples_values)
+    for sample in bioinfo_data["full_bioinfo"]:
+        list_of_samples_values = bioinfo_data["full_bioinfo"][sample].values()
+        list_of_samples_properties = bioinfo_data["full_bioinfo"][sample].keys()
+        print(list_of_samples_properties)
+
+        for property in list_of_samples_properties:
+
+            schema_id = Schema.objects.get(schema_default=1)
+
+            instance = BioinfoProcessField.objects.create(
+                property_name=property,
+                label_name="labela",
+                classificationID=Classification.objects.get(class_name="Sequencing"),
+            )
+            instance.schemaID.add(schema_id)
+            instance.save()
+        break
     """
-    if default == "on":
-        remove_existing_default_schema(schema_name, apps_name)
-        default = True
-    else:
-        default = False
-    if Schema.objects.filter(
-        schema_name__iexact=schema_name,
-        schema_version__iexact=version,
-        schema_apps_name__exact=apps_name,
-    ).exists():
-        return {"ERROR": ERROR_SCHEMA_ALREADY_LOADED}
-    data = {
-        "schema_name": schema_name,
-        "file_name": schema_data["file_name"],
-        "schema_version": version,
-        "schema_default": default,
-        "schema_app_name": apps_name,
-        "user_name": user,
-    }
-    new_schema = Schema.objects.create_new_schema(data)
-    result = store_schema_properties(
-        new_schema,
-        schema_data["full_schema"]["properties"],
-        schema_data["full_schema"]["required"],
-    )
-    if "ERROR" in result:
-        return result
-    s_fields = store_bioinfo_fields(
-        new_schema, schema_data["full_schema"]["properties"]
-    )
-    if "ERROR" in s_fields:
-        return s_fields
     return {"SUCCESS": SCHEMA_SUCCESSFUL_LOAD}
     """
+
+
+####################end bioinfo file#####################################
