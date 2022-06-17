@@ -1,4 +1,5 @@
 import json
+"""
 from relecov_core.models import (
     Variant,
     VariantInSample,
@@ -9,7 +10,7 @@ from relecov_core.models import (
     Effect,
     Sample,
 )
-
+"""
 
 def parse_csv_into_list_of_dicts(file_path):
     """
