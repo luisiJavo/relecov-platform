@@ -1,4 +1,6 @@
 import json
+
+"""
 from relecov_core.models import (
     Variant,
     VariantInSample,
@@ -9,6 +11,7 @@ from relecov_core.models import (
     Effect,
     Sample,
 )
+"""
 
 
 def parse_csv_into_list_of_dicts(file_path):
@@ -95,6 +98,7 @@ def parse_csv(file_path):
     return generated_json
 
 
+"""
 def parse_csv_create_a_dictionary(file_path):
     data_dict_ids = {}
     data_dict_data = {}
@@ -169,3 +173,4 @@ def parse_csv_create_a_dictionary(file_path):
             Variant.objects.filter(ref__iexact=data_list[3]).last()
         else:
             Variant.objects.create_new_variant(data_list[3], data_dict_ids)
+"""
