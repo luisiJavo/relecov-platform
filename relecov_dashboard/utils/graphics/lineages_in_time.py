@@ -5,11 +5,12 @@ import json
 import dash_html_components as html
 
 # import plotly.express as px
-
+"""
 from relecov_core.core_config import (
     BIOINFO_UPLOAD_FOLDER,
     ERROR_INVALID_JSON,
 )
+"""
 
 
 def parse_json_file(json_file):
