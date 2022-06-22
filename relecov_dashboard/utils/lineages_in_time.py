@@ -5,10 +5,12 @@ import dash_core_components as dcc
 import dash_html_components as html
 import plotly.express as px
 
+"""
 from relecov_core.core_config import (
     BIOINFO_UPLOAD_FOLDER,
     ERROR_INVALID_JSON,
 )
+"""
 
 
 def generate_random_sequences():
