@@ -2,7 +2,7 @@ import json
 
 # import pandas as pd
 # import dash_core_components as dcc
-import dash_html_components as html
+# import dash_html_components as html
 
 # import plotly.express as px
 """
@@ -20,20 +20,20 @@ def parse_csv(file_path):
     EFFECT(11), HGVS_C(12), HGVS_P(13), HGVS_P1LETTER(14),
     CALLER(15), LINEAGE(16)
     """
-    data_array = []  # one field per position
-    headers = []
+    # data_array = []  # one field per position
+    # headers = []
 
-    variant_data = []
-    variant_fields = ["pos", "ref", "alt", "dp", "ref_dp", "alt_dp", "af"]
-    variant_pos = [2, 3, 4, 6, 7, 8, 9]
+    # variant_data = []
+    # variant_fields = ["pos", "ref", "alt", "dp", "ref_dp", "alt_dp", "af"]
+    # variant_pos = [2, 3, 4, 6, 7, 8, 9]
 
-    effect_fields = ["effect", "hgvs_c", "hgvs_p", "hgvs_p_1_letter"]
-    effect_pos = [11, 12, 13, 14]
+    # effect_fields = ["effect", "hgvs_c", "hgvs_p", "hgvs_p_1_letter"]
+    # effect_pos = [11, 12, 13, 14]
 
     with open(file_path) as fh:
         lines = fh.readlines()
 
-    headers = lines[0].split(",")
+    # headers = lines[0].split(",")
 
     """
         data_dict = {"variant_dict": {}, "effect_dict": {}}
