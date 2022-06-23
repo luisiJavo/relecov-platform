@@ -1,4 +1,8 @@
 import json
+from os import minor
+import os
+
+from django.conf import settings
 import dash_core_components as dcc
 import dash_html_components as html
 from django_plotly_dash import DjangoDash
@@ -56,25 +60,23 @@ def set_dataframe_needle_plot(lines_from_long_table):  # , sample
     af_list = []
     effect_list = []
     gene_list = []
-    sample = 214821
+    sample = "220685"
     df = {}
 
     for line in lines_from_long_table[1:]:
         data_array = line.split(",")
-        if data_array[0] is sample:
+        if data_array[0] == "220685":
             pos_list.append(data_array[2])
             af_list.append(data_array[9])
             effect_list.append(data_array[11])
             gene_list.append(data_array[10])
-    len()
+
     df["x"] = pos_list
     df["y"] = af_list
     df["domains"] = [
-        {"name": "PI3K_p85B", "coord": "32-107"},
-        {"name": "PI3K_rbd", "coord": "173-292"},
-        {"name": "PI3K_C2", "coord": "350-485"},
-        {"name": "PI3Ka", "coord": "519-704"},
-        {"name": "PI3_PI4_kinase", "coord": "796-1015"},
+        {"name": "orf1a", "coord": "265-13468"},
+        {"name": "orf1a", "coord": "265-21563"},
+        {"name": "Spike", "coord": "21563-24524"},
     ]
     df["mutationGroups"] = effect_list
 
@@ -107,13 +109,11 @@ def create_graphic(data_frame):
 
 
 def create_needle_plot_graph():
+    needle_data = os.path.join(
+        settings.BASE_DIR, "relecov_core", "docs", "variants_long_table_last.csv"
+    )
+    mdata = set_dataframe_needle_plot(parse_csv(needle_data))
     app = DjangoDash("needle_plot")
-
-    data = urlreq.urlopen("https://git.io/needle_PIK3CA.json").read().decode("utf-8")
-
-    mdata = json.loads(data)
-    # mdata = df
-
     app.layout = html.Div(
         children=[
             "Show or hide range slider",
@@ -122,7 +122,7 @@ def create_needle_plot_graph():
                 options=[{"label": "Show", "value": 1}, {"label": "Hide", "value": 0}],
                 clearable=False,
                 multi=False,
-                value=0,
+                value=1,
                 style={"width": "400px"},
             ),
             html.Div(
