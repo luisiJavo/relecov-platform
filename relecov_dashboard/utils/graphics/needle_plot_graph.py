@@ -1,16 +1,10 @@
 import json
-
-# import pandas as pd
-# import dash_core_components as dcc
-# import dash_html_components as html
-
-# import plotly.express as px
-"""
-from relecov_core.core_config import (
-    BIOINFO_UPLOAD_FOLDER,
-    ERROR_INVALID_JSON,
-)
-"""
+import dash_core_components as dcc
+import dash_html_components as html
+from django_plotly_dash import DjangoDash
+from dash.dependencies import Input, Output
+import urllib.request as urlreq
+import dash_bio as dashbio
 
 
 def parse_csv(file_path):
@@ -110,3 +104,38 @@ def create_graphic(data_frame):
     # data = parse_json_file()
     # dataframe = set_dataframe()
     pass
+
+
+def create_needle_plot_graph():
+    app = DjangoDash("needle_plot")
+
+    data = urlreq.urlopen("https://git.io/needle_PIK3CA.json").read().decode("utf-8")
+
+    mdata = json.loads(data)
+    # mdata = df
+
+    app.layout = html.Div(
+        children=[
+            "Show or hide range slider",
+            dcc.Dropdown(
+                id="default-needleplot-rangeslider",
+                options=[{"label": "Show", "value": 1}, {"label": "Hide", "value": 0}],
+                clearable=False,
+                multi=False,
+                value=0,
+                style={"width": "400px"},
+            ),
+            html.Div(
+                children=dashbio.NeedlePlot(
+                    width="auto", id="dashbio-default-needleplot", mutationData=mdata
+                ),
+            ),
+        ],
+    )
+
+    @app.callback(
+        Output("dashbio-default-needleplot", "rangeSlider"),
+        Input("default-needleplot-rangeslider", "value"),
+    )
+    def update_needleplot(show_rangeslider):
+        return True if show_rangeslider else False
