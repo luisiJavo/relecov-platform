@@ -1,13 +1,10 @@
 import json
-from os import minor
 import os
-
 from django.conf import settings
 import dash_core_components as dcc
 import dash_html_components as html
 from django_plotly_dash import DjangoDash
 from dash.dependencies import Input, Output
-import urllib.request as urlreq
 import dash_bio as dashbio
 
 
@@ -60,7 +57,7 @@ def set_dataframe_needle_plot(lines_from_long_table):  # , sample
     af_list = []
     effect_list = []
     gene_list = []
-    sample = "220685"
+    # sample = "220685"
     df = {}
 
     for line in lines_from_long_table[1:]:
