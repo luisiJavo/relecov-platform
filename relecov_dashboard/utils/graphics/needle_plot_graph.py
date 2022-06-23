@@ -118,7 +118,7 @@ def get_list_of_dict_of_samples_from_long_table(lines):
         dict_of_samples = {}
         data_array = line.split(",")
         if (
-            len(list_of_samples) is 0
+            len(list_of_samples) == 0
             or {"label": data_array[0], "value": data_array[0]} not in list_of_samples
         ):
             dict_of_samples["label"] = data_array[0]
