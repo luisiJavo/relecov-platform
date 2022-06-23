@@ -48,7 +48,7 @@ def parse_csv(file_path):
     return lines
 
 
-def set_dataframe_needle_plot(lines_from_long_table):  # , sample
+def set_dataframe_needle_plot(lines_from_long_table, sample):  # , sample
     """
     This function receives a python dictionary, a list of selected fields and sets a dataframe from fields_selected_list to represent the graph
     dataframe structure(dict) { x: [], y: [], domains: [], mutationGroups: [],}
@@ -57,12 +57,13 @@ def set_dataframe_needle_plot(lines_from_long_table):  # , sample
     af_list = []
     effect_list = []
     gene_list = []
-    # sample = "220685"
+    if sample is None:
+        sample = "220685"
     df = {}
 
     for line in lines_from_long_table[1:]:
         data_array = line.split(",")
-        if data_array[0] == "220685":
+        if data_array[0] == sample:
             pos_list.append(data_array[2])
             af_list.append(data_array[9])
             effect_list.append(data_array[11])
@@ -85,8 +86,9 @@ def parse_json_file(json_file):
     This function loads a json file and returns a python dictionary.
     """
     json_parsed = {}
-    f = open(json_file)
-    json_parsed["data"] = json.load(f)
+    # f = open(json_file)
+    with open(json_file) as f:
+        json_parsed["data"] = json.load(f)
 
     return json_parsed
 
@@ -105,11 +107,36 @@ def create_graphic(data_frame):
     pass
 
 
-def create_needle_plot_graph():
+def get_list_of_dict_of_samples_from_long_table(lines):
+    """
+    This function receives parsed file from parse_csv().
+    Returns a a list of dictionaries of samples [{"label": "220685", "value": "220685"}]
+    """
+
+    list_of_samples = []
+    for line in lines[1:]:
+        dict_of_samples = {}
+        data_array = line.split(",")
+        if (
+            len(list_of_samples) is 0
+            or {"label": data_array[0], "value": data_array[0]} not in list_of_samples
+        ):
+            dict_of_samples["label"] = data_array[0]
+            dict_of_samples["value"] = data_array[0]
+            list_of_samples.append(dict_of_samples)
+
+    return list_of_samples
+
+
+def create_needle_plot_graph(sample):
+    """ """
     needle_data = os.path.join(
         settings.BASE_DIR, "relecov_core", "docs", "variants_long_table_last.csv"
     )
-    mdata = set_dataframe_needle_plot(parse_csv(needle_data))
+    dict_of_samples = get_list_of_dict_of_samples_from_long_table(
+        parse_csv(needle_data)
+    )
+    mdata = set_dataframe_needle_plot(parse_csv(needle_data), sample)
     app = DjangoDash("needle_plot")
     app.layout = html.Div(
         children=[
@@ -120,6 +147,15 @@ def create_needle_plot_graph():
                 clearable=False,
                 multi=False,
                 value=1,
+                style={"width": "400px"},
+            ),
+            "Select a Sample",
+            dcc.Dropdown(
+                id="default-needleplot-select",
+                options=dict_of_samples,
+                clearable=False,
+                multi=False,
+                value=sample,
                 style={"width": "400px"},
             ),
             html.Div(
@@ -133,6 +169,10 @@ def create_needle_plot_graph():
     @app.callback(
         Output("dashbio-default-needleplot", "rangeSlider"),
         Input("default-needleplot-rangeslider", "value"),
+        Input("default-needleplot-select", "value"),
     )
-    def update_needleplot(show_rangeslider):
-        return True if show_rangeslider else False
+    def update_needleplot(show_rangeslider, select):
+        print(show_rangeslider)
+        print(select)
+        create_needle_plot_graph(select)
+        # return True if show_rangeslider else False
