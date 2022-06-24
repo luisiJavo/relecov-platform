@@ -1,7 +1,5 @@
-from cProfile import label
 import json
 import os
-import pandas as pd
 from django.conf import settings
 import dash_core_components as dcc
 import dash_html_components as html
