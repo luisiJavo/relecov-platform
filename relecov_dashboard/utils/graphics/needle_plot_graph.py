@@ -1,5 +1,7 @@
+from cProfile import label
 import json
 import os
+import pandas as pd
 from django.conf import settings
 import dash_core_components as dcc
 import dash_html_components as html
@@ -48,6 +50,10 @@ def parse_csv(file_path):
     return lines
 
 
+def set_dataframe_pandas(lines_from_long_table, sample):
+    pass
+
+
 def set_dataframe_needle_plot(lines_from_long_table, sample):  # , sample
     """
     This function receives a python dictionary, a list of selected fields and sets a dataframe from fields_selected_list to represent the graph
@@ -70,11 +76,21 @@ def set_dataframe_needle_plot(lines_from_long_table, sample):  # , sample
             gene_list.append(data_array[10])
 
     df["x"] = pos_list
+    df["xlabel"] = {"x": "xAxis"}
+
     df["y"] = af_list
     df["domains"] = [
         {"name": "orf1a", "coord": "265-13468"},
-        {"name": "orf1a", "coord": "265-21563"},
-        {"name": "Spike", "coord": "21563-24524"},
+        {"name": "orf1b", "coord": "13468-21555"},
+        {"name": "Spike", "coord": "21563-25384"},
+        {"name": "orf3a", "coord": "25393-26220"},
+        {"name": "E", "coord": "26245-26472"},
+        {"name": "M", "coord": "26523-27191"},
+        {"name": "orf6", "coord": "27202-27387"},
+        {"name": "orf7a", "coord": "27394-27759"},
+        {"name": "orf8", "coord": "27894-28259"},
+        {"name": "N", "coord": "28274-29533"},
+        {"name": "orf10", "coord": "29558-29674"},
     ]
     df["mutationGroups"] = effect_list
 
@@ -160,7 +176,11 @@ def create_needle_plot_graph(sample):
             ),
             html.Div(
                 children=dashbio.NeedlePlot(
-                    width="auto", id="dashbio-default-needleplot", mutationData=mdata
+                    width="auto",
+                    id="dashbio-default-needleplot",
+                    xlabel="Genome Position",
+                    ylabel="Allele Frequency ",
+                    mutationData=mdata,
                 ),
             ),
         ],
