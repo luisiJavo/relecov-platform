@@ -166,8 +166,22 @@ def create_needle_plot_graph(sample):
         ],
     )
 
+    """
     @app.callback(
-        Output("dashbio-default-needleplot", "rangeSlider"),
+        [
+        Output("dashbio-default-needleplot", "mutationData"),
+        Output("dashbio-default-select", "select"),
+        ],
+        [
+        Input("default-needleplot-rangeslider", "value"),
+        Input("default-needleplot-select", "value"),
+        ]
+    )
+    """
+
+    @app.callback(
+        Output("dashbio-default-needleplot", "mutationData"),
+        # Output("dashbio-default-select", "select"),
         Input("default-needleplot-rangeslider", "value"),
         Input("default-needleplot-select", "value"),
     )
@@ -175,4 +189,7 @@ def create_needle_plot_graph(sample):
         print(show_rangeslider)
         print(select)
         create_needle_plot_graph(select)
+        mdata = set_dataframe_needle_plot(parse_csv(needle_data), select)
+        mutationData = mdata
+        return mutationData
         # return True if show_rangeslider else False
