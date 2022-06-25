@@ -1,9 +1,17 @@
 import json
 import os
 from django.conf import settings
+
 import dash_core_components as dcc
+
+# from dash import dcc
+
 import dash_html_components as html
+
+# from dash import ctx
 from django_plotly_dash import DjangoDash
+
+# from dash import ctx
 from dash.dependencies import Input, Output
 import dash_bio as dashbio
 
@@ -156,7 +164,7 @@ def create_needle_plot_graph(sample):
         children=[
             "Show or hide range slider",
             dcc.Dropdown(
-                id="default-needleplot-rangeslider",
+                id="needleplot-rangeslider",
                 options=[{"label": "Show", "value": 1}, {"label": "Hide", "value": 0}],
                 clearable=False,
                 multi=False,
@@ -165,7 +173,7 @@ def create_needle_plot_graph(sample):
             ),
             "Select a Sample",
             dcc.Dropdown(
-                id="default-needleplot-select",
+                id="needleplot-select-sample",
                 options=dict_of_samples,
                 clearable=False,
                 multi=False,
@@ -175,7 +183,7 @@ def create_needle_plot_graph(sample):
             html.Div(
                 children=dashbio.NeedlePlot(
                     width="auto",
-                    id="dashbio-default-needleplot",
+                    id="dashbio-needleplot",
                     xlabel="Genome Position",
                     ylabel="Allele Frequency ",
                     mutationData=mdata,
@@ -184,30 +192,21 @@ def create_needle_plot_graph(sample):
         ],
     )
 
-    """
     @app.callback(
-        [
-        Output("dashbio-default-needleplot", "mutationData"),
-        Output("dashbio-default-select", "select"),
-        ],
-        [
-        Input("default-needleplot-rangeslider", "value"),
-        Input("default-needleplot-select", "value"),
-        ]
+        Output("dashbio-needleplot", "mutationData"),
+        Input("needleplot-select-sample", "value"),
     )
-    """
-
-    @app.callback(
-        Output("dashbio-default-needleplot", "mutationData"),
-        # Output("dashbio-default-select", "select"),
-        Input("default-needleplot-rangeslider", "value"),
-        Input("default-needleplot-select", "value"),
-    )
-    def update_needleplot(show_rangeslider, select):
-        print(show_rangeslider)
+    def update_sample(select):
         print(select)
         create_needle_plot_graph(select)
         mdata = set_dataframe_needle_plot(parse_csv(needle_data), select)
         mutationData = mdata
         return mutationData
-        # return True if show_rangeslider else False
+
+    @app.callback(
+        Output("dashbio-needleplot", "rangeSlider"),
+        Input("needleplot-rangeslider", "value"),
+    )
+    def update_range_slider(range_slider_value):
+        print(range_slider_value)
+        return True if range_slider_value else False
