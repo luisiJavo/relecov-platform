@@ -1,9 +1,17 @@
 import json
 import os
 from django.conf import settings
+
 import dash_core_components as dcc
+
+# from dash import dcc
+
 import dash_html_components as html
+
+# from dash import ctx
 from django_plotly_dash import DjangoDash
+
+# from dash import ctx
 from dash.dependencies import Input, Output
 import dash_bio as dashbio
 
@@ -48,6 +56,10 @@ def parse_csv(file_path):
     return lines
 
 
+def set_dataframe_pandas(lines_from_long_table, sample):
+    pass
+
+
 def set_dataframe_needle_plot(lines_from_long_table, sample):  # , sample
     """
     This function receives a python dictionary, a list of selected fields and sets a dataframe from fields_selected_list to represent the graph
@@ -70,11 +82,21 @@ def set_dataframe_needle_plot(lines_from_long_table, sample):  # , sample
             gene_list.append(data_array[10])
 
     df["x"] = pos_list
+    df["xlabel"] = {"x": "xAxis"}
+
     df["y"] = af_list
     df["domains"] = [
         {"name": "orf1a", "coord": "265-13468"},
-        {"name": "orf1a", "coord": "265-21563"},
-        {"name": "Spike", "coord": "21563-24524"},
+        {"name": "orf1b", "coord": "13468-21555"},
+        {"name": "Spike", "coord": "21563-25384"},
+        {"name": "orf3a", "coord": "25393-26220"},
+        {"name": "E", "coord": "26245-26472"},
+        {"name": "M", "coord": "26523-27191"},
+        {"name": "orf6", "coord": "27202-27387"},
+        {"name": "orf7a", "coord": "27394-27759"},
+        {"name": "orf8", "coord": "27894-28259"},
+        {"name": "N", "coord": "28274-29533"},
+        {"name": "orf10", "coord": "29558-29674"},
     ]
     df["mutationGroups"] = effect_list
 
@@ -142,7 +164,7 @@ def create_needle_plot_graph(sample):
         children=[
             "Show or hide range slider",
             dcc.Dropdown(
-                id="default-needleplot-rangeslider",
+                id="needleplot-rangeslider",
                 options=[{"label": "Show", "value": 1}, {"label": "Hide", "value": 0}],
                 clearable=False,
                 multi=False,
@@ -151,7 +173,7 @@ def create_needle_plot_graph(sample):
             ),
             "Select a Sample",
             dcc.Dropdown(
-                id="default-needleplot-select",
+                id="needleplot-select-sample",
                 options=dict_of_samples,
                 clearable=False,
                 multi=False,
@@ -160,36 +182,31 @@ def create_needle_plot_graph(sample):
             ),
             html.Div(
                 children=dashbio.NeedlePlot(
-                    width="auto", id="dashbio-default-needleplot", mutationData=mdata
+                    width="auto",
+                    id="dashbio-needleplot",
+                    xlabel="Genome Position",
+                    ylabel="Allele Frequency ",
+                    mutationData=mdata,
                 ),
             ),
         ],
     )
 
-    """
     @app.callback(
-        [
-        Output("dashbio-default-needleplot", "mutationData"),
-        Output("dashbio-default-select", "select"),
-        ],
-        [
-        Input("default-needleplot-rangeslider", "value"),
-        Input("default-needleplot-select", "value"),
-        ]
+        Output("dashbio-needleplot", "mutationData"),
+        Input("needleplot-select-sample", "value"),
     )
-    """
-
-    @app.callback(
-        Output("dashbio-default-needleplot", "mutationData"),
-        # Output("dashbio-default-select", "select"),
-        Input("default-needleplot-rangeslider", "value"),
-        Input("default-needleplot-select", "value"),
-    )
-    def update_needleplot(show_rangeslider, select):
-        print(show_rangeslider)
+    def update_sample(select):
         print(select)
         create_needle_plot_graph(select)
         mdata = set_dataframe_needle_plot(parse_csv(needle_data), select)
         mutationData = mdata
         return mutationData
-        # return True if show_rangeslider else False
+
+    @app.callback(
+        Output("dashbio-needleplot", "rangeSlider"),
+        Input("needleplot-rangeslider", "value"),
+    )
+    def update_range_slider(range_slider_value):
+        print(range_slider_value)
+        return True if range_slider_value else False
