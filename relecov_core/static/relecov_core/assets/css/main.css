@@ -208,6 +208,7 @@ section {
   padding: 15px 0;
   transition: all 0.5s;
   z-index: 997;
+  background-color: white;
 }
 .header.sticked {
   background: var(--color-white);
