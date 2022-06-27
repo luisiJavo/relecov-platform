@@ -56,10 +56,6 @@ def parse_csv(file_path):
     return lines
 
 
-def set_dataframe_pandas(lines_from_long_table, sample):
-    pass
-
-
 def set_dataframe_needle_plot(lines_from_long_table, sample):  # , sample
     """
     This function receives a python dictionary, a list of selected fields and sets a dataframe from fields_selected_list to represent the graph
@@ -70,7 +66,8 @@ def set_dataframe_needle_plot(lines_from_long_table, sample):  # , sample
     effect_list = []
     gene_list = []
     if sample is None:
-        sample = "220685"
+        first_line = lines_from_long_table[1].split(",")
+        sample = first_line[0]
     df = {}
 
     for line in lines_from_long_table[1:]:
@@ -82,8 +79,6 @@ def set_dataframe_needle_plot(lines_from_long_table, sample):  # , sample
             gene_list.append(data_array[10])
 
     df["x"] = pos_list
-    df["xlabel"] = {"x": "xAxis"}
-
     df["y"] = af_list
     df["domains"] = [
         {"name": "orf1a", "coord": "265-13468"},
@@ -151,7 +146,6 @@ def get_list_of_dict_of_samples_from_long_table(lines):
 
 
 def create_needle_plot_graph(sample):
-    """ """
     needle_data = os.path.join(
         settings.BASE_DIR, "relecov_core", "docs", "variants_long_table_last.csv"
     )
@@ -169,7 +163,7 @@ def create_needle_plot_graph(sample):
                 clearable=False,
                 multi=False,
                 value=1,
-                style={"width": "400px"},
+                # style={"width": "400px"},
             ),
             "Select a Sample",
             dcc.Dropdown(
@@ -178,7 +172,7 @@ def create_needle_plot_graph(sample):
                 clearable=False,
                 multi=False,
                 value=sample,
-                style={"width": "400px"},
+                # style={"width": "400px"},
             ),
             html.Div(
                 children=dashbio.NeedlePlot(
@@ -187,6 +181,51 @@ def create_needle_plot_graph(sample):
                     xlabel="Genome Position",
                     ylabel="Allele Frequency ",
                     mutationData=mdata,
+                    domainStyle={
+                        # "textangle": "45",
+                        "displayMinorDomains": True,
+                        "domainColor": [
+                            "#FFDD00",
+                            "#00FFDD",
+                            "#0F0F0F",
+                            "#D3D3D3",
+                            "#FFDD00",
+                            "#00FFDD",
+                            "#0F0F0F",
+                            "#D3D3D3",
+                            "#FFDD00",
+                            "#00FFDD",
+                            "#0F0F0F",
+                        ],
+                    },
+                    needleStyle={
+                        "stemColor": "#444",
+                        "stemThickness": 0.5,
+                        "stemConstHeight": False,
+                        "headSize": 5,
+                        "headColor": [
+                            "#e41a1c",
+                            "#377eb8",
+                            "#4daf4a",
+                            "#984ea3",
+                            "#ff7f00",
+                            "#ffff33",
+                            "#a65628",
+                            "#f781bf",
+                            "#999999",
+                            "#e41a1c",
+                            "#377eb8",
+                            "#4daf4a",
+                            "#984ea3",
+                            "#ff7f00",
+                            "#ffff33",
+                            "#a65628",
+                            "#f781bf",
+                            "#999999",
+                            "#e41a1c",
+                        ],
+                        "headSymbol": "circle",
+                    },
                 ),
             ),
         ],
@@ -196,10 +235,10 @@ def create_needle_plot_graph(sample):
         Output("dashbio-needleplot", "mutationData"),
         Input("needleplot-select-sample", "value"),
     )
-    def update_sample(select):
-        print(select)
-        create_needle_plot_graph(select)
-        mdata = set_dataframe_needle_plot(parse_csv(needle_data), select)
+    def update_sample(selected_sample):
+        print(selected_sample)
+        create_needle_plot_graph(selected_sample)
+        mdata = set_dataframe_needle_plot(parse_csv(needle_data), selected_sample)
         mutationData = mdata
         return mutationData
 

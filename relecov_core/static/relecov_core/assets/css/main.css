@@ -19,6 +19,10 @@ a {
   color: var(--color-links);
   text-decoration: none;
 }
+.dashboard_text{
+  color: var(--bs-gray-600);
+  text-decoration: none;
+}
 
 a:hover {
   color: var(--color-links-hover);
@@ -208,6 +212,7 @@ section {
   padding: 15px 0;
   transition: all 0.5s;
   z-index: 997;
+  background-color: white;
 }
 .header.sticked {
   background: var(--color-white);
