@@ -4,16 +4,12 @@
 {%load plotly_dash%}
 
 {% block content %}
-<br><br><br><br><br><br><br><br>
-
-<div class="container d-flex flex-column text-center">
-  {% include "relecov_dashboard/variantSideBar.html" %}
-</div>
-<div class="container-fluid" style="width:auto;margin-left: 17%;">
+<br><br><br><br><br><br>
+<div class="container-fluid" style="text-align: center;">
         
-        <div class="card d-inline-flex p-2 m-2" style="width: 45%">
+        <div class="card d-inline-flex p-2 m-1" style="width: 35%">
             <img src="{% static 'relecov_dashboard/img/lineageBarStack.png' %}" class="card-img-top" alt="needle plot" style="width: 70%">
-            <div class="card-body">
+            <div class="card-body" style="text-align: left;">
               <h5 class="card-title">Samples info</h5>
               <p class="card-text">
                 <ul>
@@ -26,9 +22,9 @@
             </div>
           </div>
 
-          <div class="card d-inline-flex p-2 m-2" style="width: 45%">
+          <div class="card d-inline-flex p-2 m-1" style="width: 35%">
             <img src="{% static 'relecov_dashboard/img/needlePlot.png' %}" class="card-img-top" alt="molecular 3D" style="width: 70%">
-            <div class="card-body">
+            <div class="card-body" style="text-align: left;">
               <h5 class="card-title">Sequences</h5>
               <p class="card-text">
                 <ul>
@@ -41,9 +37,9 @@
             </div>
           </div>
 
-          <div class="card d-inline-flex p-2 m-2" style="width: 45%">
+          <div class="card d-inline-flex p-2 m-1" style="width: 35%">
             <img src="{% static 'relecov_dashboard/img/molecular3D.png' %}" class="card-img-top" alt="needle plot" style="width: 48%">
-            <div class="card-body">
+            <div class="card-body" style="text-align: left;">
               <h5 class="card-title">Diagnostic</h5>
               <p class="card-text">
                 <ul>
@@ -54,11 +50,9 @@
               <a href="/dashboard/molecular3D" class="btn btn-primary">Go to graph</a>
             </div>
           </div>
-          <br><br>
-          <!---->
-          <div class="card d-inline-flex p-2 m-1" style="width: 45%">
+          <div class="card d-inline-flex p-2 m-1" style="width: 35%">
             <img src="{% static 'relecov_dashboard/img/molecular3D.png' %}" class="card-img-top" alt="needle plot" style="width:48%">
-            <div class="card-body">
+            <div class="card-body" style="text-align: left;">
               <h5 class="card-title">Other????</h5>
               <p class="card-text">
                 <ul>
@@ -69,5 +63,5 @@
               <a href="#" class="btn btn-primary">Go to graph</a>
             </div>
     </div>
-    
+    <br><br><br><br>
 {% endblock %}

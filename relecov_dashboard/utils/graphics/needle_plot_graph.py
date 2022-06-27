@@ -236,7 +236,6 @@ def create_needle_plot_graph(sample):
         Input("needleplot-select-sample", "value"),
     )
     def update_sample(selected_sample):
-        print(selected_sample)
         create_needle_plot_graph(selected_sample)
         mdata = set_dataframe_needle_plot(parse_csv(needle_data), selected_sample)
         mutationData = mdata
@@ -247,5 +246,4 @@ def create_needle_plot_graph(sample):
         Input("needleplot-rangeslider", "value"),
     )
     def update_range_slider(range_slider_value):
-        print(range_slider_value)
         return True if range_slider_value else False

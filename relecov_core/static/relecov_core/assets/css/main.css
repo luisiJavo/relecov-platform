@@ -19,10 +19,6 @@ a {
   color: var(--color-links);
   text-decoration: none;
 }
-.dashboard_text{
-  color: var(--bs-gray-600);
-  text-decoration: none;
-}
 
 a:hover {
   color: var(--color-links-hover);
