@@ -4,67 +4,64 @@
 {%load plotly_dash%}
 
 {% block content %}
-<br><br><br><br><br><br><br><br>
-
-<div class="container-fluid" style="width:auto;">
+<br><br><br><br><br><br>
+<div class="container-fluid" style="text-align: center;">
         
-        <div class="card d-inline-flex p-2 m-2" style="width: 45%">
+        <div class="card d-inline-flex p-2 m-1" style="width: 35%">
             <img src="{% static 'relecov_dashboard/img/lineageBarStack.png' %}" class="card-img-top" alt="needle plot" style="width: 70%">
-            <div class="card-body">
-              <h5 class="card-title">Lineages VOC</h5>
+            <div class="card-body" style="text-align: left;">
+              <h5 class="card-title">Samples info</h5>
               <p class="card-text">
                 <ul>
-                  <li>graph by time</li>
-                  <li>Graph by Autonomous Community</li>
-                  <li>Table to filter and download</li>
+                  <li>consectetur adipiscing elit</li>
+                  <li>euismod nibh ut</li>
+                  <li>felis condimentum</li>
                 </ul>
               </p>
-              <a href="/dashboard/lineagesInTime" class="btn btn-primary">Go to graph</a>
+              <a href="#" class="btn btn-primary">Go to graph</a>
             </div>
           </div>
 
-          <div class="card d-inline-flex p-2 m-2" style="width: 45%">
+          <div class="card d-inline-flex p-2 m-1" style="width: 35%">
             <img src="{% static 'relecov_dashboard/img/needlePlot.png' %}" class="card-img-top" alt="molecular 3D" style="width: 70%">
-            <div class="card-body">
-              <h5 class="card-title">Lineages</h5>
+            <div class="card-body" style="text-align: left;">
+              <h5 class="card-title">Sequences</h5>
               <p class="card-text">
                 <ul>
-                  <li>graph by time</li>
-                  <li>Graph by Autonomous Community</li>
-                  <li>Table to filter and download</li>
+                  <li>pellentesque at risus</li>
+                  <li>malesuada egestas libero/li>
+                  <li>tristique purus ac</li>
                 </ul>
               </p>
               <a href="/dashboard/needlePlot" class="btn btn-primary">Go to graph</a>
             </div>
           </div>
 
-          <div class="card d-inline-flex p-2 m-2" style="width: 45%">
+          <div class="card d-inline-flex p-2 m-1" style="width: 35%">
             <img src="{% static 'relecov_dashboard/img/molecular3D.png' %}" class="card-img-top" alt="needle plot" style="width: 48%">
-            <div class="card-body">
-              <h5 class="card-title">Mutations in Lineages</h5>
+            <div class="card-body" style="text-align: left;">
+              <h5 class="card-title">Diagnostic</h5>
               <p class="card-text">
                 <ul>
-                  <li>needle plots</li>
-                  <li>table to filter and output the data in table</li>
+                  <li>Interdum et malesuada </li>
+                  <li>fames ac ante </li>
                 </ul>
               </p>
               <a href="/dashboard/molecular3D" class="btn btn-primary">Go to graph</a>
             </div>
           </div>
-          <br><br>
-          <!---->
-          <div class="card d-inline-flex p-2 m-1" style="width: 45%">
+          <div class="card d-inline-flex p-2 m-1" style="width: 35%">
             <img src="{% static 'relecov_dashboard/img/molecular3D.png' %}" class="card-img-top" alt="needle plot" style="width:48%">
-            <div class="card-body">
-              <h5 class="card-title">Spike mutations</h5>
+            <div class="card-body" style="text-align: left;">
+              <h5 class="card-title">Other????</h5>
               <p class="card-text">
                 <ul>
-                  <li>Tables with graphs</li>
-                  <li>Protein modeling plots</li>
+                  <li>sed dignissim mi</li>
+                  <li>Curabitur ac risus</li>
                 </ul>
               </p>
               <a href="#" class="btn btn-primary">Go to graph</a>
             </div>
     </div>
-    
+    <br><br><br><br>
 {% endblock %}
