@@ -210,6 +210,11 @@ section {
   z-index: 997;
   background-color: white;
 }
+.header2 {
+  padding: 15px 0;
+  background-color: white;
+  margin-bottom: 300px;
+}
 .header.sticked {
   background: var(--color-white);
   box-shadow: 0px 2px 20px rgba(var(--color-secondary-rgb), 0.1);
