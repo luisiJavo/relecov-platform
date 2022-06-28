@@ -1,7 +1,7 @@
-import os
+# import os
 import pandas as pd
 
-from django.conf import settings
+# from django.conf import settings
 from django_plotly_dash import DjangoDash
 from dash.dependencies import Input, Output
 
