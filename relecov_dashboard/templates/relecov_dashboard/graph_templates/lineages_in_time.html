@@ -1,15 +1,8 @@
-{% extends 'relecov_core/base.html' %}
-
 {% load static %}
 {%load plotly_dash%}
 
 {% block content %}
-<br><br><br><br><br><br>
-    <div class="container d-flex flex-column text-center">
-        {% include "relecov_dashboard/variantSideBar.html" %}
-    </div>
-    <br>
-    <div class="container-fluid d-flex flex-column" style="width:auto;margin-left: 17%;">
-        {% plotly_app name="TestVariantGraph" ratio=1 %}
+    <div class="container-fluid d-flex flex-column" style="width:auto;margin-left: 1%;">
+        {% plotly_app name="TestVariantGraph" ratio=0.6 %}
     </div>
 {% endblock %}

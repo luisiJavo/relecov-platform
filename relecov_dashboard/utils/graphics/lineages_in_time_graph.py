@@ -146,9 +146,12 @@ def create_lineage_in_time_graph():
 def create_test_variant_graph(selected_range):
     max_weeks = 0
     df = set_dataframe_range_slider(get_variant_data(), selected_range)
+    list_of_weeks = []
 
     for week in df["Week"].unique():
         max_weeks += 1
+        list_of_weeks.append(week.strip())
+    print(list_of_weeks)
 
     fig = px.bar(df, x="Week", y="Sequences", color="Variant", barmode="stack")
 
@@ -156,11 +159,11 @@ def create_test_variant_graph(selected_range):
         className="card",
         children=[
             html.Div(
-                className="card-body bg-light",
+                className="card-body bg-dark",
                 children=[
                     html.H1(
                         className="card-title",
-                        children="Dummy test values for Linages in Spain",
+                        children="Linages in Spain",
                     ),
                     html.Div(
                         className="card-text",
@@ -182,12 +185,15 @@ def create_test_variant_graph(selected_range):
             html.Br(),
             html.Div(
                 children=dcc.RangeSlider(
+                    id="week-slider",
                     min=df["Week"].min(),
                     max=max_weeks,
                     step="1",
-                    value=[int(df["Week"].min()), max_weeks],
+                    value=[1, 19],
+                    # value=[int(df["Week"].min()), max_weeks],
                     marks={str(week): str(week) for week in df["Week"].unique()},
-                    id="week-slider",
+                    # marks={list_of_weeks[idx]:{"label":list_of_weeks[idx]} for idx in range(len(list_of_weeks))},
+                    # marks={str(week):str(week) for week in list_of_weeks},
                 ),
             ),
             html.Div(
@@ -217,6 +223,6 @@ def create_test_variant_graph(selected_range):
                     )
                 ],
             ),
-            # html.Div(children=generate_table(df_table),),
+            # html.Div(children=generate_table(df_table)),
         ],
     )
