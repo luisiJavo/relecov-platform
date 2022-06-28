@@ -147,7 +147,6 @@ def create_test_variant_graph(selected_range):
     max_weeks = 0
     df = set_dataframe_range_slider(get_variant_data(), selected_range)
     list_of_weeks = []
-    idx = 0
 
     for week in df["Week"].unique():
         max_weeks += 1
