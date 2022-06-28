@@ -147,11 +147,11 @@ def create_test_variant_graph(selected_range):
     max_weeks = 0
     df = set_dataframe_range_slider(get_variant_data(), selected_range)
     list_of_weeks = []
+    idx = 0
 
     for week in df["Week"].unique():
         max_weeks += 1
         list_of_weeks.append(week.strip())
-    print(list_of_weeks)
 
     fig = px.bar(df, x="Week", y="Sequences", color="Variant", barmode="stack")
 
@@ -186,14 +186,21 @@ def create_test_variant_graph(selected_range):
             html.Div(
                 children=dcc.RangeSlider(
                     id="week-slider",
-                    min=df["Week"].min(),
+                    min=1,  # df["Week"].min(),
                     max=max_weeks,
-                    step="1",
+                    step=None,
                     value=[1, 19],
                     # value=[int(df["Week"].min()), max_weeks],
-                    marks={str(week): str(week) for week in df["Week"].unique()},
+                    # marks={str(week): str(week) for week in df["Week"].unique()},
                     # marks={list_of_weeks[idx]:{"label":list_of_weeks[idx]} for idx in range(len(list_of_weeks))},
                     # marks={str(week):str(week) for week in list_of_weeks},
+                    marks={
+                        str(list_of_weeks[idx]): {
+                            "label": "{}º Week".format(list_of_weeks[idx]),
+                            "style": {"transform": "rotate(45deg)", "margin": "5px"},
+                        }
+                        for idx in range(len(list_of_weeks))
+                    },
                 ),
             ),
             html.Div(
