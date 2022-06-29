@@ -11,7 +11,6 @@ Mutation table under needle plot
 import dash
 import dash_table
 from dash.dependencies import Input, Output
-# import dash_bio as dashbio
 import dash_core_components as dcc
 import dash_html_components as html
 
