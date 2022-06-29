@@ -39,6 +39,10 @@ def read_data(input_file: str, file_extension: str = 'csv') -> pd.DataFrame:
     return df
 
 def process_df(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Process pd.DataFrame object, selecting specific columns and renaming then as required
+    (maybe usefull for translations)
+    """
     translate_dicc = {
         'SAMPLE':'SAMPLE',
         'POS':'POS',
