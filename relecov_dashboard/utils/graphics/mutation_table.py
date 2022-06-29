@@ -90,14 +90,14 @@ app.layout = html.Div(
             style={"width": "400px"},
             placeholder="Mutation effect",
         ),
-        dcc.Dropdown(
-            id="needleplot-select-sample",
-            options=[{'label':i, 'value': i} for i in sample_ids],
-            clearable=False,
-            multi=False,
-            value=sample_id,
-            style={"width": "400px"},
-        ),
+        # dcc.Dropdown(
+        #     id="needleplot-select-sample",
+        #     options=[{'label':i, 'value': i} for i in sample_ids],
+        #     clearable=False,
+        #     multi=False,
+        #     value=sample_id,
+        #     style={"width": "400px"},
+        # ),
         html.Br(),
         dash_table.DataTable(
             id="mutation_table",
