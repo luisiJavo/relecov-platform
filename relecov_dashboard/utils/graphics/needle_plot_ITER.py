@@ -1,21 +1,11 @@
 import json
 import os
 from django.conf import settings
-
 import dash_core_components as dcc
-
-# from dash import dcc
-
 import dash_html_components as html
-
-# from dash import ctx
-# from django_plotly_dash import DjangoDash
-from dash import Dash
-
-# from dash import ctx
+from django_plotly_dash import DjangoDash
 from dash.dependencies import Input, Output
 import dash_bio as dashbio
-
 import pandas as pd
 
 
@@ -26,35 +16,8 @@ def parse_csv(file_path):
     EFFECT(11), HGVS_C(12), HGVS_P(13), HGVS_P1LETTER(14),
     CALLER(15), LINEAGE(16)
     """
-    # data_array = []  # one field per position
-    # headers = []
-
-    # variant_data = []
-    # variant_fields = ["pos", "ref", "alt", "dp", "ref_dp", "alt_dp", "af"]
-    # variant_pos = [2, 3, 4, 6, 7, 8, 9]
-
-    # effect_fields = ["effect", "hgvs_c", "hgvs_p", "hgvs_p_1_letter"]
-    # effect_pos = [11, 12, 13, 14]
-
     df = pd.read_csv(file_path, sep=",")
 
-    # headers = lines[0].split(",")
-
-    """
-        data_dict = {"variant_dict": {}, "effect_dict": {}}
-        for iv in range(len(variant_fields)):
-            data_dict["variant_dict"][variant_fields[iv]] = data_array[variant_pos[iv]]
-        # effect_dict = {}
-        for ix in range(len(effect_fields)):
-            data_dict["effect_dict"][effect_fields[ix]] = data_array[effect_pos[ix]]
-        data_dict["filter"] = data_array[5]
-        data_dict["chromosome"] = data_array[1]
-        data_dict["sample"] = data_array[0]
-        data_dict["caller"] = data_array[15]
-        data_dict["lineage_dict"] = {"lineage": data_array[16], "week": data_array[17]}
-        data_dict["gene"] = data_array[10]
-        variant_data.append(data_dict)
-    """
     return df
 
 
@@ -123,7 +86,6 @@ def get_list_of_dict_of_lineages_from_long_table(df):
     This function receives parsed file from parse_csv().
     Returns a list of dictionaries of lineages [{"label": "B.1.177.57", "value": "B.1.177.57"}]
     """
-
     unique_lineages = df.LINEAGE.unique()
     list_of_lineages = []
     for lin in unique_lineages:
@@ -144,7 +106,7 @@ def create_needle_plot_graph(lineage):
     )
     mdata = set_dataframe_needle_plot(parse_csv(needle_data), lineage)
     # app = DjangoDash("needle_plot")
-    app = Dash("needle_plot")
+    app = DjangoDash("needle_plot")
     app.layout = html.Div(
         children=[
             "Show or hide range slider",
