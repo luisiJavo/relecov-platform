@@ -28,7 +28,7 @@ def set_dataframe_needle_plot(df, lineage):
     """
     if lineage is None:
         first_line = df.iloc[0]
-        lineage = first_line.at[0, 'LINEAGE']
+        lineage = first_line.at[0, "LINEAGE"]
 
     filter_df = df[df.LINEAGE == lineage]
 
@@ -49,7 +49,7 @@ def set_dataframe_needle_plot(df, lineage):
         "x": filter_df.POS.to_list(),
         "y": filter_df.AF.to_list(),
         "domains": DOMAINS,
-        "mutationGroups": filter_df.EFFECT.to_list()
+        "mutationGroups": filter_df.EFFECT.to_list(),
     }
 
     return plot_df
@@ -89,10 +89,7 @@ def get_list_of_dict_of_lineages_from_long_table(df):
     unique_lineages = df.LINEAGE.unique()
     list_of_lineages = []
     for lin in unique_lineages:
-        list_of_lineages.append({
-            'label': lin,
-            'value': lin
-        })
+        list_of_lineages.append({"label": lin, "value": lin})
 
     return list_of_lineages
 
