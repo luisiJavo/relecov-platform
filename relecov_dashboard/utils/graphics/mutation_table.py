@@ -39,33 +39,31 @@ def read_mutation_data(input_file: str, file_extension: str = "csv") -> pd.DataF
     return df
 
 
-def process_mutation_df(df: pd.DataFrame) -> pd.DataFrame:
+def process_mutation_df(df: pd.DataFrame, renaming_dict: dict = None) -> pd.DataFrame:
     """
     Process pd.DataFrame object, selecting specific columns and renaming then as required
     (maybe usefull for translations)
     """
-    translate_dicc = {
-        "SAMPLE": "SAMPLE",
-        "POS": "POS",
-        "HGVS_P": "MUTATION",
-        "AF": "AF",
-        "EFFECT": "EFFECT",
-        "GENE": "GENE",
-        "LINEAGE": "LINEAGE",
-    }
+    if renaming_dict is None and type(renaming_dict) != dict:
+        renaming_dict = {
+            "SAMPLE": "SAMPLE",
+            "POS": "POS",
+            "HGVS_P": "MUTATION",
+            "AF": "AF",
+            "EFFECT": "EFFECT",
+            "GENE": "GENE",
+            "LINEAGE": "LINEAGE",
+        }
+
     # Rename and select columns
-    df = df[translate_dicc.keys()]  # select specific keys
-    df = df.rename(columns=translate_dicc)  # rename to the required output names
+    df = df[renaming_dict.keys()]  # select specific keys
+    df = df.rename(columns=renaming_dict)  # rename to the required output names
 
     return df
 
 
-def create_mutation_table(input_file, sample_id):
+def create_mutation_table(df: pd.DataFrame, sample_id: int):
     # ---- Set up ----
-    # Read data
-    df = read_mutation_data(input_file, file_extension="csv")
-    df = process_mutation_df(df)
-
     # Read some extra values
     all_effects = list(df["EFFECT"].unique())
     all_genes = list(df["GENE"].unique())
@@ -197,6 +195,10 @@ if __name__ == "__main__":
     )
     sample_id = 214821
 
+    # Read data
+    df = read_mutation_data(input_file, file_extension="csv")
+    df = process_mutation_df(df)
+
     # App
-    app = create_mutation_table(input_file, sample_id)
+    app = create_mutation_table(df, sample_id)
     app.run_server(debug=True)
