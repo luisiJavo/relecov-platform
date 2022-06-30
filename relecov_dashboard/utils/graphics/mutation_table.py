@@ -21,7 +21,7 @@ import json
 
 def read_data(input_file: str, file_extension: str = "csv") -> pd.DataFrame:
     """
-    Read data, either in CSV or JSON format.
+    Read mutation data, either in CSV or JSON format.
     If in JSON format, the JSON must follow a structure of [{'pk': {'atr1':'z'} }]
     Returns a pandas dataframe object
     """
@@ -47,7 +47,7 @@ def process_df(df: pd.DataFrame) -> pd.DataFrame:
     translate_dicc = {
         "SAMPLE": "SAMPLE",
         "POS": "POS",
-        "HGVS_P": "HGVS_P",
+        "HGVS_P": "MUTATION",
         "AF": "AF",
         "EFFECT": "EFFECT",
         "GENE": "GENE",
@@ -182,10 +182,10 @@ def create_mutation_table(input_file, sample_id):
             data = data.loc[
                 selected_rows,
             ]
-            muts = "; ".join(data["HGVS_P"].to_list())
+            muts = "; ".join(data["MUTATION"].to_list())
             return "Selected mutations: " + muts
         else:
-            return "Click the table"
+            return None
 
     return app
 
