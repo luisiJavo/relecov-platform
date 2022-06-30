@@ -69,7 +69,7 @@ def create_mutation_table(input_file, sample_id):
     # Read some extra values
     all_effects = list(df["EFFECT"].unique())
     all_genes = list(df["GENE"].unique())
-    sample_ids = list(df["SAMPLE"].unique())
+    all_sample_ids = list(df["SAMPLE"].unique())
 
     # ---- Dash app ----
     app = dash.Dash(__name__)
@@ -86,7 +86,7 @@ def create_mutation_table(input_file, sample_id):
                 children=[
                     dcc.Dropdown(
                         id="needleplot-select-sample",  # TODO: Share this button with the needleplot
-                        options=[{"label": i, "value": i} for i in sample_ids],
+                        options=[{"label": i, "value": i} for i in all_sample_ids],
                         clearable=False,
                         multi=False,
                         value=sample_id,
