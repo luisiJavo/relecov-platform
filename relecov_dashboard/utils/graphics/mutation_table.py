@@ -19,7 +19,7 @@ import pandas as pd
 import json
 
 
-def read_data(input_file: str, file_extension: str = "csv") -> pd.DataFrame:
+def read_mutation_data(input_file: str, file_extension: str = "csv") -> pd.DataFrame:
     """
     Read mutation data, either in CSV or JSON format.
     If in JSON format, the JSON must follow a structure of [{'pk': {'atr1':'z'} }]
@@ -39,7 +39,7 @@ def read_data(input_file: str, file_extension: str = "csv") -> pd.DataFrame:
     return df
 
 
-def process_df(df: pd.DataFrame) -> pd.DataFrame:
+def process_mutation_df(df: pd.DataFrame) -> pd.DataFrame:
     """
     Process pd.DataFrame object, selecting specific columns and renaming then as required
     (maybe usefull for translations)
@@ -63,8 +63,8 @@ def process_df(df: pd.DataFrame) -> pd.DataFrame:
 def create_mutation_table(input_file, sample_id):
     # ---- Set up ----
     # Read data
-    df = read_data(input_file, file_extension="csv")
-    df = process_df(df)
+    df = read_mutation_data(input_file, file_extension="csv")
+    df = process_mutation_df(df)
 
     # Read some extra values
     all_effects = list(df["EFFECT"].unique())
