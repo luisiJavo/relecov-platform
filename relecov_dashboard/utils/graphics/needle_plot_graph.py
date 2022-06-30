@@ -3,15 +3,8 @@ import os
 from django.conf import settings
 
 import dash_core_components as dcc
-
-# from dash import dcc
-
 import dash_html_components as html
-
-# from dash import ctx
 from django_plotly_dash import DjangoDash
-
-# from dash import ctx
 from dash.dependencies import Input, Output
 import dash_bio as dashbio
 
@@ -154,25 +147,46 @@ def create_needle_plot_graph(sample):
     )
     mdata = set_dataframe_needle_plot(parse_csv(needle_data), sample)
     app = DjangoDash("needle_plot")
+
     app.layout = html.Div(
         children=[
-            "Show or hide range slider",
-            dcc.Dropdown(
-                id="needleplot-rangeslider",
-                options=[{"label": "Show", "value": 1}, {"label": "Hide", "value": 0}],
-                clearable=False,
-                multi=False,
-                value=1,
-                # style={"width": "400px"},
-            ),
-            "Select a Sample",
-            dcc.Dropdown(
-                id="needleplot-select-sample",
-                options=dict_of_samples,
-                clearable=False,
-                multi=False,
-                value=sample,
-                # style={"width": "400px"},
+            html.Div(
+                children=[
+                    html.Div(
+                        children=[
+                            "Show or hide range slider",
+                            dcc.Dropdown(
+                                id="needleplot-rangeslider",
+                                options=[
+                                    {"label": "Show", "value": 1},
+                                    {"label": "Hide", "value": 0},
+                                ],
+                                clearable=False,
+                                multi=False,
+                                value=1,
+                                style={"width": "150px", "margin-right": "30px"},
+                            ),
+                        ]
+                    ),
+                    html.Div(
+                        children=[
+                            "Select a Sample",
+                            dcc.Dropdown(
+                                id="needleplot-select-sample",
+                                options=dict_of_samples,
+                                clearable=False,
+                                multi=False,
+                                value=sample,
+                                style={"width": "150px"},
+                            ),
+                        ]
+                    ),
+                ],
+                style={
+                    "display": "flex",
+                    "justify-content": "start",
+                    "align-items": "flex-start",
+                },
             ),
             html.Div(
                 children=dashbio.NeedlePlot(
@@ -228,7 +242,7 @@ def create_needle_plot_graph(sample):
                     },
                 ),
             ),
-        ],
+        ]
     )
 
     @app.callback(
@@ -236,7 +250,6 @@ def create_needle_plot_graph(sample):
         Input("needleplot-select-sample", "value"),
     )
     def update_sample(selected_sample):
-        print(selected_sample)
         create_needle_plot_graph(selected_sample)
         mdata = set_dataframe_needle_plot(parse_csv(needle_data), selected_sample)
         mutationData = mdata
@@ -247,5 +260,4 @@ def create_needle_plot_graph(sample):
         Input("needleplot-rangeslider", "value"),
     )
     def update_range_slider(range_slider_value):
-        print(range_slider_value)
         return True if range_slider_value else False
