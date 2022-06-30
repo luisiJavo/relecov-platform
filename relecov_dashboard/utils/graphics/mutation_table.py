@@ -68,14 +68,15 @@ def create_mutation_table(sample):
 input_file = (
     "/home/usuario/Proyectos/relecov/relecov-platform/data/variants_long_table.csv"
 )
-sample_id = "214821"
+sample_id = 214821
 
 # Read data
 df = read_data(input_file, file_extension="csv")
 df = process_df(df)
 
 # Read some extra values
-effects = list(df["EFFECT"].unique())
+all_effects = list(df["EFFECT"].unique())
+all_genes = list(df["GENE"].unique())
 sample_ids = list(df["SAMPLE"].unique())
 
 
@@ -85,23 +86,41 @@ app = dash.Dash(__name__)
 app.layout = html.Div(
     children=[
         html.P(id="mutation_table-message"),
-        dcc.Dropdown(
-            id="mutation_table-effect_dropdown",
-            options=[{"label": i, "value": i} for i in effects],
-            clearable=False,
-            multi=True,
-            value=1,
-            style={"width": "400px"},
-            placeholder="Mutation effect",
+        html.Div(
+            style={
+                "display": "flex",
+                "justify-content": "start",
+                "align-items": "flex-start",
+            },
+            children=[
+                dcc.Dropdown(
+                    id="mutation_table-effect_dropdown",
+                    options=[{"label": i, "value": i} for i in all_effects],
+                    clearable=False,
+                    multi=True,
+                    value=None,
+                    style={"width": "200px", "margin-right": "30px"},
+                    placeholder="Filter effect",
+                ),
+                dcc.Dropdown(
+                    id="mutation_table-gene_dropdown",
+                    options=[{"label": i, "value": i} for i in all_genes],
+                    clearable=False,
+                    multi=True,
+                    value=None,
+                    style={"width": "200px", "margin-right": "30px"},
+                    placeholder="Filter genes",
+                ),
+                dcc.Dropdown(
+                    id="needleplot-select-sample",
+                    options=[{"label": i, "value": i} for i in sample_ids],
+                    clearable=False,
+                    multi=False,
+                    value=sample_id,
+                    style={"width": "200px", "margin-right": "30px"},
+                ),
+            ],
         ),
-        # dcc.Dropdown(
-        #     id="needleplot-select-sample",
-        #     options=[{'label':i, 'value': i} for i in sample_ids],
-        #     clearable=False,
-        #     multi=False,
-        #     value=sample_id,
-        #     style={"width": "400px"},
-        # ),
         html.Br(),
         dash_table.DataTable(
             id="mutation_table",
@@ -112,32 +131,50 @@ app.layout = html.Div(
 )
 
 
+def update_selected_effects(data: pd.DataFrame, selected_effects: list):
+    if (
+        selected_effects
+        and type(selected_effects) == list
+        and len(selected_effects) >= 1
+    ):
+        data = data[data["EFFECT"].isin(selected_effects)]
+    return data
+
+
+def update_selected_sample(data: pd.DataFrame, selected_sample: int):
+    if selected_sample and type(selected_sample) == int:
+        data = data[data["SAMPLE"].isin([selected_sample])]
+    return data
+
+
+def update_selected_genes(data: pd.DataFrame, selected_genes: int):
+    if selected_genes and type(selected_genes) == list and len(selected_genes) >= 1:
+        data = data[data["GENE"].isin(selected_genes)]
+    return data
+
+
 @app.callback(
     Output("mutation_table", "data"),
+    Input("needleplot-select-sample", "value"),
     Input("mutation_table-effect_dropdown", "value"),
+    Input("mutation_table-gene_dropdown", "value"),
 )
-def update_selected_effects(selected_effects):
+def update_graph(
+    sample: str, effects: list, genes: list
+):  # Order of arguments MUST be the same as in the callback function
     data = df
-    if type(selected_effects) == list and len(selected_effects) >= 1:
-        data = data[data["EFFECT"].isin(selected_effects)]
+    data = update_selected_effects(data, effects)
+    data = update_selected_sample(data, sample)
+    data = update_selected_genes(data, genes)
+
     return data.to_dict("records")
-
-
-# @app.callback(
-#     Output("mutation_table", "data"),
-#     Input("needleplot-select-sample", "value"),
-# )
-# def update_selected_sample(selected_sample):
-#     data = df
-#     if type(selected_sample) == str:
-#         data = data[data['SAMPLE'].isin([selected_sample])]
-#     return data.to_dict('records')
 
 
 @app.callback(
     Output("mutation_table-message", "children"), Input("mutation_table", "active_cell")
 )
 def show_clicks(active_cell):
+    # TODO: Influence needle plot, maybe highlighting the mutation (?)
     if active_cell:
         return str(active_cell)
     else:
