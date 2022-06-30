@@ -85,7 +85,7 @@ def create_mutation_table(input_file, sample_id):
                 },
                 children=[
                     dcc.Dropdown(
-                        id="needleplot-select-sample",
+                        id="needleplot-select-sample",  # TODO: Share this button with the needleplot
                         options=[{"label": i, "value": i} for i in sample_ids],
                         clearable=False,
                         multi=False,
