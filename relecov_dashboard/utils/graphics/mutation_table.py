@@ -7,16 +7,16 @@ Mutation table under needle plot
 """
 
 
-# Dash libs
-import dash
-import dash_table
+import os
+import pandas as pd
+import json
+
+from django.conf import settings
 from dash.dependencies import Input, Output
 import dash_core_components as dcc
 import dash_html_components as html
-
-# Other libs
-import pandas as pd
-import json
+from django_plotly_dash import DjangoDash
+import dash_table
 
 
 def read_mutation_data(input_file: str, file_extension: str = "csv") -> pd.DataFrame:
@@ -62,143 +62,93 @@ def process_mutation_df(df: pd.DataFrame, renaming_dict: dict = None) -> pd.Data
     return df
 
 
-def create_mutation_table(df: pd.DataFrame, sample_id: int):
+
+def create_mutation_table(sample):
+    # pass
+
     # ---- Set up ----
+    # Input
+    """
+    input_file = (
+        "/home/usuario/Proyectos/relecov/relecov-platform/data/variants_long_table.csv"
+    )
+    """
+    input_file = os.path.join(
+        settings.BASE_DIR, "relecov_core", "docs", "variants_long_table_last.csv"
+    )
+    # sample_id = "214821"
+
+    # Read data
+    df = read_data(input_file, file_extension="csv")
+    df = process_df(df)
+
     # Read some extra values
-    all_effects = list(df["EFFECT"].unique())
-    all_genes = list(df["GENE"].unique())
-    all_sample_ids = list(df["SAMPLE"].unique())
+    effects = list(df["EFFECT"].unique())
+    # sample_ids = list(df["SAMPLE"].unique())
 
     # ---- Dash app ----
-    app = dash.Dash(__name__)
+    # app = dash.Dash(__name__)
+    app = DjangoDash("mutation_table")
 
     app.layout = html.Div(
         children=[
             html.P(id="mutation_table-message"),
-            html.Div(
-                style={
-                    "display": "flex",
-                    "justify-content": "start",
-                    "align-items": "flex-start",
-                },
-                children=[
-                    dcc.Dropdown(
-                        id="needleplot-select-sample",  # TODO: Share this button with the needleplot
-                        options=[{"label": i, "value": i} for i in all_sample_ids],
-                        clearable=False,
-                        multi=False,
-                        value=sample_id,
-                        style={"width": "200px", "margin-right": "30px"},
-                    ),
-                    dcc.Dropdown(
-                        id="mutation_table-gene_dropdown",
-                        options=[{"label": i, "value": i} for i in all_genes],
-                        clearable=False,
-                        multi=True,
-                        value=None,
-                        style={"width": "200px", "margin-right": "30px"},
-                        placeholder="Filter genes",
-                    ),
-                    dcc.Dropdown(
-                        id="mutation_table-effect_dropdown",
-                        options=[{"label": i, "value": i} for i in all_effects],
-                        clearable=False,
-                        multi=True,
-                        value=None,
-                        style={"width": "300px", "margin-right": "30px"},
-                        placeholder="Filter effect",
-                    ),
-                ],
+            dcc.Dropdown(
+                id="mutation_table-effect_dropdown",
+                options=[{"label": i, "value": i} for i in effects],
+                clearable=False,
+                multi=True,
+                value=1,
+                style={"width": "400px"},
+                placeholder="Mutation effect",
             ),
+            # dcc.Dropdown(
+            #     id="needleplot-select-sample",
+            #     options=[{'label':i, 'value': i} for i in sample_ids],
+            #     clearable=False,
+            #     multi=False,
+            #     value=sample_id,
+            #     style={"width": "400px"},
+            # ),
             html.Br(),
             dash_table.DataTable(
                 id="mutation_table",
                 data=df.to_dict("records"),
                 columns=[{"name": i, "id": i} for i in df.columns],
-                page_action="native",
-                page_current=0,
-                page_size=10,
-                sort_action="native",
-                sort_mode="multi",
-                row_selectable="multi",
-                style_cell_conditional=[
-                    {"if": {"column_id": c}, "textAlign": "center"} for c in df.columns
-                ],
-                style_header={
-                    "backgroundColor": "#34568B",
-                    "color": "white",
-                    "fontWeight": "bold",
-                },
-                style_as_list_view=False,  # controls if column lines appear
             ),
         ]
     )
 
-    def update_selected_effects(data: pd.DataFrame, selected_effects: list):
-        if (
-            selected_effects
-            and type(selected_effects) == list
-            and len(selected_effects) >= 1
-        ):
-            data = data[data["EFFECT"].isin(selected_effects)]
-        return data
-
-    def update_selected_sample(data: pd.DataFrame, selected_sample: int):
-        if selected_sample and type(selected_sample) == int:
-            data = data[data["SAMPLE"].isin([selected_sample])]
-        return data
-
-    def update_selected_genes(data: pd.DataFrame, selected_genes: int):
-        if selected_genes and type(selected_genes) == list and len(selected_genes) >= 1:
-            data = data[data["GENE"].isin(selected_genes)]
-        return data
-
     @app.callback(
         Output("mutation_table", "data"),
-        Input("needleplot-select-sample", "value"),
         Input("mutation_table-effect_dropdown", "value"),
-        Input("mutation_table-gene_dropdown", "value"),
     )
-    def update_graph(
-        sample: str, effects: list, genes: list
-    ):  # Order of arguments MUST be the same as in the callback function
+    def update_selected_effects(selected_effects):
         data = df
-        data = update_selected_effects(data, effects)
-        data = update_selected_sample(data, sample)
-        data = update_selected_genes(data, genes)
-
+        if type(selected_effects) == list and len(selected_effects) >= 1:
+            data = data[data["EFFECT"].isin(selected_effects)]
         return data.to_dict("records")
+
+    # @app.callback(
+    #     Output("mutation_table", "data"),
+    #     Input("needleplot-select-sample", "value"),
+    # )
+    # def update_selected_sample(selected_sample):
+    #     data = df
+    #     if type(selected_sample) == str:
+    #         data = data[data['SAMPLE'].isin([selected_sample])]
+    #     return data.to_dict('records')
 
     @app.callback(
         Output("mutation_table-message", "children"),
-        Input("mutation_table", "derived_virtual_selected_rows"),
+        Input("mutation_table", "active_cell"),
     )
-    def get_selected_rows(selected_rows):
-        # Can be interesting to highlight mutations in needle plot
-        if selected_rows:
-            data = df
-            data = data.loc[
-                selected_rows,
-            ]
-            muts = "; ".join(data["MUTATION"].to_list())
-            return "Selected mutations: " + muts
+    def show_clicks(active_cell):
+        if active_cell:
+            return str(active_cell)
         else:
-            return None
+            return "Click the table"
 
-    return app
+    if __name__ == "__main__":
+        app.run_server(debug=True)
 
-
-if __name__ == "__main__":
-    # Input
-    input_file = (
-        "/home/usuario/Proyectos/relecov/relecov-platform/data/variants_long_table.csv"
-    )
-    sample_id = 214821
-
-    # Read data
-    df = read_mutation_data(input_file, file_extension="csv")
-    df = process_mutation_df(df)
-
-    # App
-    app = create_mutation_table(df, sample_id)
-    app.run_server(debug=True)

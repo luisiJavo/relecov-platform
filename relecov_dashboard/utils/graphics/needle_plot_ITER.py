@@ -94,7 +94,7 @@ def get_list_of_dict_of_lineages_from_long_table(df):
     return list_of_lineages
 
 
-def create_needle_plot_graph(lineage):
+def create_needle_plot_graph_ITER(lineage):
     needle_data = os.path.join(
         settings.BASE_DIR, "relecov_core", "docs", "variants_long_table_last.csv"
     )
@@ -103,7 +103,7 @@ def create_needle_plot_graph(lineage):
     )
     mdata = set_dataframe_needle_plot(parse_csv(needle_data), lineage)
     # app = DjangoDash("needle_plot")
-    app = DjangoDash("needle_plot")
+    app = DjangoDash("needle_plot_ITER")
     app.layout = html.Div(
         children=[
             "Show or hide range slider",
@@ -187,7 +187,7 @@ def create_needle_plot_graph(lineage):
     )
     def update_sample(selected_lineage):
         print(selected_lineage)
-        create_needle_plot_graph(selected_lineage)
+        create_needle_plot_graph_ITER(selected_lineage)
         mdata = set_dataframe_needle_plot(parse_csv(needle_data), selected_lineage)
         mutation_data = mdata
         return mutation_data

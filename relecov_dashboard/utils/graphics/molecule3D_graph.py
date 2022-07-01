@@ -3,12 +3,12 @@ import pandas as pd
 
 # from django.conf import settings
 from django_plotly_dash import DjangoDash
+import dash_table
 from dash.dependencies import Input, Output
 
 import dash_bio as dashbio
 import dash_html_components as html
 from dash_bio.utils import PdbParser, create_mol3d_style
-import dash_table
 
 
 def create_molecule3D_graph():
