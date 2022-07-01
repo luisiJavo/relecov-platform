@@ -62,7 +62,6 @@ def process_mutation_df(df: pd.DataFrame, renaming_dict: dict = None) -> pd.Data
     return df
 
 
-
 def create_mutation_table(sample):
     # pass
 
@@ -79,8 +78,8 @@ def create_mutation_table(sample):
     # sample_id = "214821"
 
     # Read data
-    df = read_data(input_file, file_extension="csv")
-    df = process_df(df)
+    df = read_mutation_data(input_file, file_extension="csv")
+    df = process_mutation_df(df)
 
     # Read some extra values
     effects = list(df["EFFECT"].unique())
@@ -151,4 +150,3 @@ def create_mutation_table(sample):
 
     if __name__ == "__main__":
         app.run_server(debug=True)
-
