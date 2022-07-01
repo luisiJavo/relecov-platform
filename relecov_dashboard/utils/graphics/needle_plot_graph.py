@@ -73,20 +73,14 @@ def set_dataframe_needle_plot(lines_from_long_table, sample):  # , sample
 
     df["x"] = pos_list
     df["y"] = af_list
+    df["mutationGroups"] = effect_list
     df["domains"] = [
         {"name": "orf1a", "coord": "265-13468"},
         {"name": "orf1b", "coord": "13468-21555"},
         {"name": "Spike", "coord": "21563-25384"},
         {"name": "orf3a", "coord": "25393-26220"},
         {"name": "E", "coord": "26245-26472"},
-        {"name": "M", "coord": "26523-27191"},
-        {"name": "orf6", "coord": "27202-27387"},
-        {"name": "orf7a", "coord": "27394-27759"},
-        {"name": "orf8", "coord": "27894-28259"},
-        {"name": "N", "coord": "28274-29533"},
-        {"name": "orf10", "coord": "29558-29674"},
     ]
-    df["mutationGroups"] = effect_list
 
     return df
 
@@ -192,53 +186,11 @@ def create_needle_plot_graph(sample):
                 children=dashbio.NeedlePlot(
                     width="auto",
                     id="dashbio-needleplot",
+                    mutationData=mdata,
                     xlabel="Genome Position",
                     ylabel="Allele Frequency ",
-                    mutationData=mdata,
                     domainStyle={
-                        # "textangle": "45",
                         "displayMinorDomains": True,
-                        "domainColor": [
-                            "#FFDD00",
-                            "#00FFDD",
-                            "#0F0F0F",
-                            "#D3D3D3",
-                            "#FFDD00",
-                            "#00FFDD",
-                            "#0F0F0F",
-                            "#D3D3D3",
-                            "#FFDD00",
-                            "#00FFDD",
-                            "#0F0F0F",
-                        ],
-                    },
-                    needleStyle={
-                        "stemColor": "#444",
-                        "stemThickness": 0.5,
-                        "stemConstHeight": False,
-                        "headSize": 5,
-                        "headColor": [
-                            "#e41a1c",
-                            "#377eb8",
-                            "#4daf4a",
-                            "#984ea3",
-                            "#ff7f00",
-                            "#ffff33",
-                            "#a65628",
-                            "#f781bf",
-                            "#999999",
-                            "#e41a1c",
-                            "#377eb8",
-                            "#4daf4a",
-                            "#984ea3",
-                            "#ff7f00",
-                            "#ffff33",
-                            "#a65628",
-                            "#f781bf",
-                            "#999999",
-                            "#e41a1c",
-                        ],
-                        "headSymbol": "circle",
                     },
                 ),
             ),
