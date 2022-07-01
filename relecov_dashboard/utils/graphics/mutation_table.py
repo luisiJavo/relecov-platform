@@ -7,32 +7,16 @@ Mutation table under needle plot
 """
 
 
-# Dash libs
 import os
+import pandas as pd
+import json
 
 from django.conf import settings
-
-# import dash
-
-"""
-from django_plotly_dash import DjangoDash
-from dash.dependencies import Input, Output
-
-import dash_bio as dashbio
-import dash_html_components as html
-from dash_bio.utils import PdbParser, create_mol3d_style
-import dash_table
-"""
-
 from dash.dependencies import Input, Output
 import dash_core_components as dcc
 import dash_html_components as html
 from django_plotly_dash import DjangoDash
 import dash_table
-
-# Other libs
-import pandas as pd
-import json
 
 
 def read_data(input_file: str, file_extension: str = "csv") -> pd.DataFrame:
@@ -88,7 +72,7 @@ def create_mutation_table(sample):
     input_file = os.path.join(
         settings.BASE_DIR, "relecov_core", "docs", "variants_long_table_last.csv"
     )
-    sample_id = "214821"
+    # sample_id = "214821"
 
     # Read data
     df = read_data(input_file, file_extension="csv")
@@ -96,7 +80,7 @@ def create_mutation_table(sample):
 
     # Read some extra values
     effects = list(df["EFFECT"].unique())
-    sample_ids = list(df["SAMPLE"].unique())
+    # sample_ids = list(df["SAMPLE"].unique())
 
     # ---- Dash app ----
     # app = dash.Dash(__name__)
@@ -161,6 +145,5 @@ def create_mutation_table(sample):
         else:
             return "Click the table"
 
-
-if __name__ == "__main__":
-    app.run_server(debug=True)
+    if __name__ == "__main__":
+        app.run_server(debug=True)
