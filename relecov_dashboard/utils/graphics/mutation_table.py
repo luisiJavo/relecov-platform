@@ -19,9 +19,9 @@ from django_plotly_dash import DjangoDash
 import dash_table
 
 
-def read_data(input_file: str, file_extension: str = "csv") -> pd.DataFrame:
+def read_mutation_data(input_file: str, file_extension: str = "csv") -> pd.DataFrame:
     """
-    Read data, either in CSV or JSON format.
+    Read mutation data, either in CSV or JSON format.
     If in JSON format, the JSON must follow a structure of [{'pk': {'atr1':'z'} }]
     Returns a pandas dataframe object
     """
@@ -39,24 +39,28 @@ def read_data(input_file: str, file_extension: str = "csv") -> pd.DataFrame:
     return df
 
 
-def process_df(df: pd.DataFrame) -> pd.DataFrame:
+def process_mutation_df(df: pd.DataFrame, renaming_dict: dict = None) -> pd.DataFrame:
     """
     Process pd.DataFrame object, selecting specific columns and renaming then as required
     (maybe usefull for translations)
     """
-    translate_dicc = {
-        "SAMPLE": "SAMPLE",
-        "POS": "POS",
-        "AF": "AF",
-        "EFFECT": "EFFECT",
-        "GENE": "GENE",
-        "LINEAGE": "LINEAGE",
-    }
+    if renaming_dict is None and type(renaming_dict) != dict:
+        renaming_dict = {
+            "SAMPLE": "SAMPLE",
+            "POS": "POS",
+            "HGVS_P": "MUTATION",
+            "AF": "AF",
+            "EFFECT": "EFFECT",
+            "GENE": "GENE",
+            "LINEAGE": "LINEAGE",
+        }
+
     # Rename and select columns
-    df = df[translate_dicc.keys()]  # select specific keys
-    df = df.rename(columns=translate_dicc)  # rename to the required output names
+    df = df[renaming_dict.keys()]  # select specific keys
+    df = df.rename(columns=renaming_dict)  # rename to the required output names
 
     return df
+
 
 
 def create_mutation_table(sample):
@@ -147,3 +151,4 @@ def create_mutation_table(sample):
 
     if __name__ == "__main__":
         app.run_server(debug=True)
+
