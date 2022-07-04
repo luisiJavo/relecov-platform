@@ -95,7 +95,6 @@ def get_list_of_dict_of_lineages_from_long_table(df):
 
 
 def create_needle_plot_graph_ITER(lineage):
-    
     needle_data = os.path.join(
         settings.BASE_DIR, "relecov_core", "docs", "variants_long_table_last.csv"
     )
@@ -110,7 +109,6 @@ def create_needle_plot_graph_ITER(lineage):
             html.Div(children="Dash: A web application framework for your data.")
         ],
     ),
-    
     app.layout = html.Div(
         children=[
             "Show or hide range slider",
