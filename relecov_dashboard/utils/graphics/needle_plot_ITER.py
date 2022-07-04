@@ -95,7 +95,7 @@ def get_list_of_dict_of_lineages_from_long_table(df):
 
 
 def create_needle_plot_graph_ITER(lineage):
-    """
+    
     needle_data = os.path.join(
         settings.BASE_DIR, "relecov_core", "docs", "variants_long_table_last.csv"
     )
@@ -103,19 +103,18 @@ def create_needle_plot_graph_ITER(lineage):
         parse_csv(needle_data)
     )
     mdata = set_dataframe_needle_plot(parse_csv(needle_data), lineage)
-    """
     app = DjangoDash("needle_ITER")
     app.layout = html.Div(
         children=[
             html.H1(children="Hello Dash"),
             html.Div(
-                children="""
+                children=
         Dash: A web application framework for your data.
-        """
+
             ),
         ]
     )
-    """
+    
     app.layout = html.Div(
         children=[
             "Show or hide range slider",
@@ -211,4 +210,3 @@ def create_needle_plot_graph_ITER(lineage):
     def update_range_slider(range_slider_value):
         print(range_slider_value)
         return True if range_slider_value else False
-    """
