@@ -102,8 +102,15 @@ def create_needle_plot_graph_ITER(lineage):
         parse_csv(needle_data)
     )
     mdata = set_dataframe_needle_plot(parse_csv(needle_data), lineage)
-    # app = DjangoDash("needle_plot")
-    app = DjangoDash("needle_plot_ITER")
+    app = DjangoDash("needle_ITER")
+    app.layout = (
+        html.Div(
+            children=[
+                html.H1(children="Hello Dash"),
+                html.Div(children="Dash: A web application framework for your data."),
+            ],
+        ),
+    )
     app.layout = html.Div(
         children=[
             "Show or hide range slider",
