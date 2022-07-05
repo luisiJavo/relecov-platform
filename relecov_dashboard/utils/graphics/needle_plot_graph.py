@@ -140,6 +140,7 @@ def create_needle_plot_graph(sample):
         parse_csv(needle_data)
     )
     mdata = set_dataframe_needle_plot(parse_csv(needle_data), sample)
+
     app = DjangoDash("needle_plot")
 
     app.layout = html.Div(
