@@ -1,0 +1,15 @@
+{% extends 'relecov_core/base.html' %}
+
+{% load static %}
+{%load plotly_dash%}
+
+{% block content %}
+<br><br><br><br><br><br><br><br>
+  <!--<div class="container d-flex flex-column text-center">
+       
+    </div>-->
+        <br>
+        <div class="container text-center" style="">
+            {% plotly_app name="needle_plot" ratio=2 %}
+        </div>
+{% endblock %}
