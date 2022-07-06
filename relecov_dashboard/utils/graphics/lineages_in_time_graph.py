@@ -10,13 +10,6 @@ from django_plotly_dash import DjangoDash
 from dash.dependencies import Input, Output
 from relecov_core.utils.parse_files import parse_csv_into_list_of_dicts
 
-"""
-from relecov_core.core_config import (
-    BIOINFO_UPLOAD_FOLDER,
-    ERROR_INVALID_JSON,
-)
-"""
-
 
 def generate_random_sequences():
     sequence_list = []
@@ -57,11 +50,8 @@ def generate_weeks():
 
 def parse_json_file(json_file):
     data = {}
-    # try:
     data = json.loads(json_file)
-    # except json.decoder.JSONDecodeError:
-    #    return {"ERROR": ERROR_INVALID_JSON}
-    # data["file_name"] = store_file(json_file, BIOINFO_UPLOAD_FOLDER)
+
     return data
 
 
@@ -190,9 +180,6 @@ def create_test_variant_graph(selected_range):
                     step=None,
                     value=[1, 19],
                     # value=[int(df["Week"].min()), max_weeks],
-                    # marks={str(week): str(week) for week in df["Week"].unique()},
-                    # marks={list_of_weeks[idx]:{"label":list_of_weeks[idx]} for idx in range(len(list_of_weeks))},
-                    # marks={str(week):str(week) for week in list_of_weeks},
                     marks={
                         str(list_of_weeks[idx]): {
                             "label": "{}º Week".format(list_of_weeks[idx]),

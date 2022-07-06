@@ -63,19 +63,11 @@ def process_mutation_df(df: pd.DataFrame, renaming_dict: dict = None) -> pd.Data
 
 
 def create_mutation_table(sample):
-    # pass
+    PAGE_SIZE = 20
 
-    # ---- Set up ----
-    # Input
-    """
-    input_file = (
-        "/home/usuario/Proyectos/relecov/relecov-platform/data/variants_long_table.csv"
-    )
-    """
     input_file = os.path.join(
         settings.BASE_DIR, "relecov_core", "docs", "variants_long_table_last.csv"
     )
-    # sample_id = "214821"
 
     # Read data
     df = read_mutation_data(input_file, file_extension="csv")
@@ -83,10 +75,7 @@ def create_mutation_table(sample):
 
     # Read some extra values
     effects = list(df["EFFECT"].unique())
-    # sample_ids = list(df["SAMPLE"].unique())
 
-    # ---- Dash app ----
-    # app = dash.Dash(__name__)
     app = DjangoDash("mutation_table")
 
     app.layout = html.Div(
@@ -101,19 +90,14 @@ def create_mutation_table(sample):
                 style={"width": "400px"},
                 placeholder="Mutation effect",
             ),
-            # dcc.Dropdown(
-            #     id="needleplot-select-sample",
-            #     options=[{'label':i, 'value': i} for i in sample_ids],
-            #     clearable=False,
-            #     multi=False,
-            #     value=sample_id,
-            #     style={"width": "400px"},
-            # ),
             html.Br(),
             dash_table.DataTable(
                 id="mutation_table",
                 data=df.to_dict("records"),
                 columns=[{"name": i, "id": i} for i in df.columns],
+                page_current=0,
+                page_size=PAGE_SIZE,
+                page_action="custom",
             ),
         ]
     )
@@ -127,16 +111,6 @@ def create_mutation_table(sample):
         if type(selected_effects) == list and len(selected_effects) >= 1:
             data = data[data["EFFECT"].isin(selected_effects)]
         return data.to_dict("records")
-
-    # @app.callback(
-    #     Output("mutation_table", "data"),
-    #     Input("needleplot-select-sample", "value"),
-    # )
-    # def update_selected_sample(selected_sample):
-    #     data = df
-    #     if type(selected_sample) == str:
-    #         data = data[data['SAMPLE'].isin([selected_sample])]
-    #     return data.to_dict('records')
 
     @app.callback(
         Output("mutation_table-message", "children"),
