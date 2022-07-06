@@ -25,7 +25,7 @@ def parse_json_file(json_file):
     This function loads a json file and returns a python dictionary.
     """
     json_parsed = {}
-    with open(json_file , encoding='utf-8') as f:
+    with open(json_file, encoding="utf-8") as f:
         json_parsed["data"] = json.load(f)
 
     return json_parsed
