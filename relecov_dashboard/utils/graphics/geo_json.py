@@ -1,6 +1,6 @@
 from collections import Counter
 import os
-from urllib.request import urlopen
+# from urllib.request import urlopen
 import pandas as pd
 import json
 import plotly.express as px
@@ -125,7 +125,6 @@ def get_list_of_dict_of_lineages_from_long_table(df):
     return list_of_lineages
 
 
-###############################3
 def create_json(lineage):
     """
     csv_file = os.path.join(
