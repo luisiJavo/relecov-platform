@@ -131,7 +131,7 @@ def create_json(lineage):
 
     with open(geojson_file) as geo_json:
         counties = json.load(geo_json)
-    
+
     csv_file = os.path.join(
         settings.BASE_DIR, "relecov_core", "docs", "variants_long_table_last.csv"
     )
