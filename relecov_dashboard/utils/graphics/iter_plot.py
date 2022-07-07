@@ -72,15 +72,6 @@ def get_list_of_keys(json_parsed):
     return list_of_keys
 
 
-def create_graphic(data_frame):
-    """
-    This function represents a graph from a dataframe
-    """
-    # data = parse_json_file()
-    # dataframe = set_dataframe()
-    pass
-
-
 def get_list_of_dict_of_lineages_from_long_table(df):
     """
     This function receives parsed file from parse_csv().
@@ -138,6 +129,7 @@ def create_needle_plot_graph_ITER(lineage):
                     xlabel="Genome Position",
                     ylabel="Allele Frequency ",
                     mutationData=mdata,
+                    rangeSlider=True,
                     domainStyle={
                         # "textangle": "45",
                         "displayMinorDomains": True,

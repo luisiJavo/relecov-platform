@@ -1,0 +1,18 @@
+{% extends 'relecov_core/base.html' %}
+{% load static %}
+
+{% block content %}
+<br><br><br><br><br><br>
+<div class="card" style="text-align:center;margin-left:1%;margin-right:1%">
+    <div class="card-body border">
+        {% include "relecov_dashboard/graph_templates/mutation_heatmap.html"%}
+    </div>
+    <div class="card-body border">
+        {% include "relecov_dashboard/graph_templates/needle_plot.html"%}
+    </div>
+    <div class="card-body border">
+        {% include "relecov_dashboard/graph_templates/mutation_table.html"%}
+    </div>
+</div>
+<br><br><br><br>
+{% endblock %}

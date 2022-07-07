@@ -107,7 +107,6 @@ def set_dataframe_geo_plot(df, lineage):
         lineage = first_line.at[0, "Lineage"]
 
     filter_df = df[df.Lineage == lineage]
-    # print(filter_df)
 
     return filter_df
 

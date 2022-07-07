@@ -16,40 +16,14 @@ def parse_csv(file_path):
     EFFECT(11), HGVS_C(12), HGVS_P(13), HGVS_P1LETTER(14),
     CALLER(15), LINEAGE(16)
     """
-    # data_array = []  # one field per position
-    # headers = []
-
-    # variant_data = []
-    # variant_fields = ["pos", "ref", "alt", "dp", "ref_dp", "alt_dp", "af"]
-    # variant_pos = [2, 3, 4, 6, 7, 8, 9]
-
-    # effect_fields = ["effect", "hgvs_c", "hgvs_p", "hgvs_p_1_letter"]
-    # effect_pos = [11, 12, 13, 14]
 
     with open(file_path) as fh:
         lines = fh.readlines()
 
-    # headers = lines[0].split(",")
-
-    """
-        data_dict = {"variant_dict": {}, "effect_dict": {}}
-        for iv in range(len(variant_fields)):
-            data_dict["variant_dict"][variant_fields[iv]] = data_array[variant_pos[iv]]
-        # effect_dict = {}
-        for ix in range(len(effect_fields)):
-            data_dict["effect_dict"][effect_fields[ix]] = data_array[effect_pos[ix]]
-        data_dict["filter"] = data_array[5]
-        data_dict["chromosome"] = data_array[1]
-        data_dict["sample"] = data_array[0]
-        data_dict["caller"] = data_array[15]
-        data_dict["lineage_dict"] = {"lineage": data_array[16], "week": data_array[17]}
-        data_dict["gene"] = data_array[10]
-        variant_data.append(data_dict)
-    """
     return lines
 
 
-def set_dataframe_needle_plot(lines_from_long_table, sample):  # , sample
+def set_dataframe_needle_plot(lines_from_long_table, sample):
     """
     This function receives a python dictionary, a list of selected fields and sets a dataframe from fields_selected_list to represent the graph
     dataframe structure(dict) { x: [], y: [], domains: [], mutationGroups: [],}
@@ -80,7 +54,26 @@ def set_dataframe_needle_plot(lines_from_long_table, sample):  # , sample
         {"name": "Spike", "coord": "21563-25384"},
         {"name": "orf3a", "coord": "25393-26220"},
         {"name": "E", "coord": "26245-26472"},
+        {"name": "M", "coord": "26523-27191"},
+        {"name": "orf6", "coord": "27202-27387"},
+        {"name": "orf7a", "coord": "27394-27759"},
+        {"name": "orf8", "coord": "27894-28259"},
+        {"name": "N", "coord": "28274-29533"},
+        {"name": "orf10", "coord": "29558-29674"},
     ]
+    """
+    {"name": "orf1a", "coord": "265-13468"},
+    {"name": "orf1b", "coord": "13468-21555"},
+    {"name": "Spike", "coord": "21563-25384"},
+    {"name": "orf3a", "coord": "25393-26220"},
+    {"name": "E", "coord": "26245-26472"},
+    {"name": "M", "coord": "26523-27191"},
+    {"name": "orf6", "coord": "27202-27387"},
+    {"name": "orf7a", "coord": "27394-27759"},
+    {"name": "orf8", "coord": "27894-28259"},
+    {"name": "N", "coord": "28274-29533"},
+    {"name": "orf10", "coord": "29558-29674"}
+    """
 
     return df
 
@@ -100,15 +93,6 @@ def parse_json_file(json_file):
 def get_list_of_keys(json_parsed):
     list_of_keys = list(json_parsed["data"].keys())
     return list_of_keys
-
-
-def create_graphic(data_frame):
-    """
-    This function represents a graph from a dataframe
-    """
-    # data = parse_json_file()
-    # dataframe = set_dataframe()
-    pass
 
 
 def get_list_of_dict_of_samples_from_long_table(lines):
@@ -140,6 +124,7 @@ def create_needle_plot_graph(sample):
         parse_csv(needle_data)
     )
     mdata = set_dataframe_needle_plot(parse_csv(needle_data), sample)
+    print(mdata)
 
     app = DjangoDash("needle_plot")
 
@@ -186,8 +171,12 @@ def create_needle_plot_graph(sample):
             html.Div(
                 children=dashbio.NeedlePlot(
                     width="auto",
+                    # height="auto",
+                    margin={"t": 100, "l": 20, "r": 400, "b": 40},
+                    # clickData=["265","29674"],
                     id="dashbio-needleplot",
                     mutationData=mdata,
+                    rangeSlider=False,
                     xlabel="Genome Position",
                     ylabel="Allele Frequency ",
                     domainStyle={
