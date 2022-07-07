@@ -23,7 +23,7 @@ def parse_csv(file_path):
     return lines
 
 
-def set_dataframe_needle_plot(lines_from_long_table, sample):  # , sample
+def set_dataframe_needle_plot(lines_from_long_table, sample):
     """
     This function receives a python dictionary, a list of selected fields and sets a dataframe from fields_selected_list to represent the graph
     dataframe structure(dict) { x: [], y: [], domains: [], mutationGroups: [],}
@@ -54,7 +54,26 @@ def set_dataframe_needle_plot(lines_from_long_table, sample):  # , sample
         {"name": "Spike", "coord": "21563-25384"},
         {"name": "orf3a", "coord": "25393-26220"},
         {"name": "E", "coord": "26245-26472"},
+        {"name": "M", "coord": "26523-27191"},
+        {"name": "orf6", "coord": "27202-27387"},
+        {"name": "orf7a", "coord": "27394-27759"},
+        {"name": "orf8", "coord": "27894-28259"},
+        {"name": "N", "coord": "28274-29533"},
+        {"name": "orf10", "coord": "29558-29674"},
     ]
+    """
+    {"name": "orf1a", "coord": "265-13468"},
+    {"name": "orf1b", "coord": "13468-21555"},
+    {"name": "Spike", "coord": "21563-25384"},
+    {"name": "orf3a", "coord": "25393-26220"},
+    {"name": "E", "coord": "26245-26472"},
+    {"name": "M", "coord": "26523-27191"},
+    {"name": "orf6", "coord": "27202-27387"},
+    {"name": "orf7a", "coord": "27394-27759"},
+    {"name": "orf8", "coord": "27894-28259"},
+    {"name": "N", "coord": "28274-29533"},
+    {"name": "orf10", "coord": "29558-29674"}
+    """
 
     return df
 
@@ -105,6 +124,7 @@ def create_needle_plot_graph(sample):
         parse_csv(needle_data)
     )
     mdata = set_dataframe_needle_plot(parse_csv(needle_data), sample)
+    print(mdata)
 
     app = DjangoDash("needle_plot")
 
@@ -151,8 +171,12 @@ def create_needle_plot_graph(sample):
             html.Div(
                 children=dashbio.NeedlePlot(
                     width="auto",
+                    # height="auto",
+                    margin={"t": 100, "l": 20, "r": 400, "b": 40},
+                    # clickData=["265","29674"],
                     id="dashbio-needleplot",
                     mutationData=mdata,
+                    rangeSlider=False,
                     xlabel="Genome Position",
                     ylabel="Allele Frequency ",
                     domainStyle={

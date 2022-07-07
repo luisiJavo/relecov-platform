@@ -129,6 +129,7 @@ def create_needle_plot_graph_ITER(lineage):
                     xlabel="Genome Position",
                     ylabel="Allele Frequency ",
                     mutationData=mdata,
+                    rangeSlider=True,
                     domainStyle={
                         # "textangle": "45",
                         "displayMinorDomains": True,
