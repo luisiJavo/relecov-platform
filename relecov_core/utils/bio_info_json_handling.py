@@ -256,8 +256,10 @@ def store_bioinfo_fields(schema_obj, s_properties):
             match = re.search(r"(\w+) fields", data["classification"])
             if not match:
                 continue
+            """
             classification = match.group(1).strip()
             # create new entr in Classification table in not exists
+
             if Classification.objects.filter(
                 class_name__iexact=classification
             ).exists():
@@ -274,7 +276,7 @@ def store_bioinfo_fields(schema_obj, s_properties):
             fields["label_name"] = data["label"]
             n_field = BioinfoProcessField.objects.create_new_field(fields)
             n_field.schemaID.add(schema_obj)
-
+            """
     return {"SUCCESS": ""}
 
 
@@ -291,7 +293,7 @@ def process_bioinfo_file(json_file, user, apps_name):
         list_of_samples_values = bioinfo_data["full_bioinfo"][sample].values()
         list_of_samples_properties = bioinfo_data["full_bioinfo"][sample].keys()
         print(list_of_samples_properties)
-
+        """
         for property in list_of_samples_properties:
 
             schema_id = Schema.objects.get(schema_default=1)
@@ -304,6 +306,7 @@ def process_bioinfo_file(json_file, user, apps_name):
             instance.schemaID.add(schema_id)
             instance.save()
         break
+    """
     """
     return {"SUCCESS": SCHEMA_SUCCESSFUL_LOAD}
     """
