@@ -5,8 +5,8 @@ import os
 from django.db import DataError
 from django.conf import settings
 from relecov_core.models import (
-    BioinfoProcessField,
-    Classification,
+    # BioinfoProcessField,
+    # Classification,
     MetadataVisualization,
     PropertyOptions,
     Schema,
