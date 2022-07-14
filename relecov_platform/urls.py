@@ -32,4 +32,5 @@ urlpatterns = [
     path("swagger/", schema_view.with_ui("swagger", cache_timeout=0)),
     # user accounts
     path("accounts/", include("django.contrib.auth.urls")),
+    # path('markdownx/', include('markdownx.urls')),
 ]
