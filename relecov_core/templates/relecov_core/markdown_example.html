@@ -1,5 +1,7 @@
-<div class="container">
-    <h1>{{ markeddownexample.title }}</h1>
-    <p>{{ markeddownexample.formatted_markdown|safe }}</p>
+{% load static %}
+<div class="post">
+    <h1>
+        <a href="#">{{ markdown_test.title }}</a>
+    </h1>
+    <p>{{ markdown_test.content|safe }}</p>
 </div>
-
