@@ -3,18 +3,76 @@
 
 
 {% block content %}
-<section id="relecov-platform" class="hero-animated d-flex align-items-center">
-    <div class="container d-flex flex-column justify-content-center align-items-center text-center position-relative" data-aos="zoom-out">
-        {% for document in documents %}
-        {{ document }}
-        <div class="card bg-dark text-white" style="text-align: center;">
-            <img src="{% static 'relecov_core/img/under_construction.png' %}" class="card-img mt-5" alt="under construction image" style="width: 35%;margin-left: 30%">
-            <div class="card-img-overlay">
-                <h3 class="card-title">{{ document.title }}</h3>
-                <h4 class="card-subtitle">{{ document.abstract }}</h4>
+<br><br><br><br><br><br>
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-light">
+            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+                <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                    <span class="fs-5 d-none d-sm-inline">relecov-platform Documentation</span>
+                </a>
+                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                    <!--<li class="nav-item">
+                        <a href="#" class="nav-link align-middle px-0">
+                            <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Home</span>
+                        </a>
+                    </li>-->
+                    <li>
+                        <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                            <i class="fs-4 bi bi-gear-wide-connected"></i> <span class="ms-1 d-none d-sm-inline">Intranet</span> 
+                        </a>
+                        <ul class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
+                            <li class="w-100">
+                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Login</span></a>
+                            </li>
+                            <li>
+                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Access to</span></a>
+                            </li>
+                            <div class="dropdown">
+                                <a class="dropdown-toggle" type="button" id="dropdownIntranetTools" data-bs-toggle="dropdown" aria-expanded="false">
+                                  Intranet tools
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownIntranetTools">
+                                  <li><a href="#" class="dropdown-item" type="button">Form Metadata Labs</a></li>
+                                  <li><a href="#"  class="dropdown-item" type="button">Upload Status</a></li>
+                                  <li><a href="#"  class="dropdown-item" type="button">Results Info</a></li>
+                                  <li><a href="#"  class="dropdown-item" type="button">Downloads</a></li>
+                                </ul>
+                              </div>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
+                            <i class="fs-4 bi-bootstrap"></i> <span class="ms-1 d-none d-sm-inline">Bootstrap</span></a>
+                        <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
+                            <li class="w-100">
+                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Item</span> 1</a>
+                            </li>
+                            <li>
+                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Item</span> 2</a>
+                            </li>
+                        </ul>
+                    </li>
             </div>
         </div>
-        {% endfor %}
+        
+        <div class="col py-3">
+            <!--content-->
+            <section id="relecov-platform" class="hero-animated d-flex align-items-center">
+                <div class="container d-flex flex-column justify-content-center align-items-center text-center position-relative" data-aos="zoom-out">
+                    {{ html_visualization|safe}}
+                    <div class="card bg-dark text-white" style="text-align: center;">
+                        <div class="card-img-overlay">
+                            <h3 class="card-title"></h3>
+                            <h4 class="card-subtitle"></h4>
+                        </div>
+                    </div>
+                </div>
+            </section>
+<!--end of content-->
+        </div>
     </div>
-</section>
+</div>
+
 {% endblock%}
+
