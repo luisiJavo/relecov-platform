@@ -1,5 +1,5 @@
 # <QueryDict: {'csrfmiddlewaretoken': ['9aFH0i0CpMRqBMO1ARh8AgWXR82w4LipM1XdGUqAPgZy7mRKv3CnXah5GZ4wFFvB'],
-# 'hospital_name': ['nombre hospital'], 'admin_email': ['admin mail'], 
+# 'hospital_name': ['nombre hospital'], 'admin_email': ['admin mail'],
 # 'admin_telephone': ['654123211'], 'admin_position': ['Mega boss']}>
 
 
