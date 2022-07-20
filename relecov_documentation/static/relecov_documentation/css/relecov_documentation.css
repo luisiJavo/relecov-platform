@@ -1,0 +1,19 @@
+p {
+    line-height: 1;
+    color: black;
+}
+
+H1 {
+    color:green;
+    background-color: lightgray;
+}
+
+code {
+    color: green;
+    margin-left: 1%;
+}
+
+ul {
+    list-style-type: square;
+    margin-left: 1%;
+}
