@@ -32,7 +32,7 @@ In the central part of the screen, a table will be displayed showing us all the 
 at the moment only the administrator, recently created in the previous step.
 To add a new user we will click on the ADD USER button.
 
-<img_long>![relecov-platform admin add user 2](../../static/relecov_documentation/img/admin_panel_add_user2.png)</img_long>
+![relecov-platform admin add user 2](../../static/relecov_documentation/img/admin_panel_add_user2.png)
 
 ![relecov-platform admin add user 3](../../static/relecov_documentation/img/admin_panel_add_user3.png)
 

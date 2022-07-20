@@ -10,12 +10,10 @@ H1 {
 
 code {
     color: green;
+    margin-left: 1%;
 }
 
 ul {
     list-style-type: square;
-}
-
-.img_long {
-    width: fit-content;
+    margin-left: 1%;
 }
