@@ -2,4 +2,4 @@
 
 In the navigation bar we must click on the Intranet button.
 
-![relecov-platform navbar]("img/admin_panel_add_user1.png")
+![relecov-platform navbar](../../static/relecov_documentation/img/relecov_platform_navbar.png)
