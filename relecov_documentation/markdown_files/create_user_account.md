@@ -1,9 +1,10 @@
-# Login
+# How to create an user account
 
-<red>The next steps are only for administrators.</red>
-
+### <red>The next steps are only for administrators.</red>
 
 Contact the relecov-platform application administrator to provide you with a username and password.
+
+#### **First step**
 
 First of all we must create a superuser, which will be the administrator (admin).
 We will do this through the terminal using the command:
@@ -14,15 +15,18 @@ We will do this through the terminal using the command:
 - Username.
 - Email address. 
 - Password.
+
 After this step we will have defined the administrator of the relecov-platform application.
 
-In the next step, We must navigate to our website, for example http://relecov-platform.isciiides.es 
-then We add /admin at the end of the URL, so
-then We will see the next URL: http://relecov-platform.isciiides.es/admin.
+#### **Second step**
 
-Django will show us the administration panel of the application
+We must navigate to our website, for example http://relecov-platform.isciiides.es 
+then We add /admin at the end of the URL, so then We will see the next URL: http://relecov-platform.isciiides.es/admin.
+
+Django will show us the administration panel of the application.
 
 ![relecov-platform admin main page](../../static/relecov_documentation/img/admin_panel_main.png)
+
 In the left panel we will click on Users
 
 ![relecov-platform admin add user 1](../../static/relecov_documentation/img/admin_panel_add_user1.png)
@@ -34,9 +38,11 @@ To add a new user we will click on the ADD USER button.
 
 ![relecov-platform admin add user 2](../../static/relecov_documentation/img/admin_panel_add_user2.png)
 
+Fill username and password fields correctly and click on SAVE button.
+
 ![relecov-platform admin add user 3](../../static/relecov_documentation/img/admin_panel_add_user3.png)
 
-Later we can complete more information about the users:
+After clicking on the SAVE button, we will see another form where we can enter more detailed information about the user, in addition to managing the permissions that the user will have.
 
 **Personal info:**
    -  First name
