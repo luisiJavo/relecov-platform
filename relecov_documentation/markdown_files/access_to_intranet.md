@@ -27,3 +27,17 @@ The application will show us the home page of the intranet.
 On the left we will see a side panel with the available utilities
 
 ![relecov-platform login intranet](../../static/relecov_documentation/img/intranet_side_bar.png)
+
+Available utilities
+
+- Form Metadata Labs
+    - Submit Data
+    - Contributor Info
+- Upload Status
+    - Upload to ENA
+    - Upload to GISAID
+- Results Info
+    - Received
+    - Processed
+- Downloads
+    - Results Download
