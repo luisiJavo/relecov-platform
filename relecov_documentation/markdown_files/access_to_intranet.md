@@ -15,7 +15,6 @@ We must enter our username and password, and finally click on Submit credentials
 
 ![relecov-platform login intranet](../../static/relecov_documentation/img/login_intranet.png)
 
-
 After entering our credentials correctly, the application will take us back to the home page.
 In the upper right corner we will see our username and the logout button
 
