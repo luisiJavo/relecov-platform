@@ -5,7 +5,7 @@ The following chapters will show you the way that this information must be set i
 
 You must login as "admin" user to see the configuration Menu.
 
-![configuration_menu](img/configuration_menu.png)
+![configuration_menu](./img/configuration_menu.png)
 
 Note. That this menu is only available when login with user name as admin.
 
@@ -21,7 +21,7 @@ For your convenience we have kept a schema for relecov in conf folder. Of course
 
 ![upload_schema](img/upload_schema.png)
 
-In the form select the relecov schema file, write the version of the schema and click on the Default schema button to define that this schema will be used as default settings.
+In the form select the **relecov schema file**, write the **version** of the schema and click on the **Default schema** button to define that this schema will be used as default settings.
 
 Keep in mind that it is allowed to define as many schemas as you wish but only one must be the default one from where information must be filled.
 
@@ -35,11 +35,16 @@ Once the schema is loaded you can see the schemas defined in your system when cl
 
 Any schema is available for download, in json format, by click on the download button.
 
-If you want to know more information about any schema, click on the desired schema name to get a table with all properties defined for this schema.
+If you want to see more detail information about any schema, click on the desired schema name to get a table with all properties defined for this schema.
 
 ![show_detail_schema](img/show_detail_schema.png)
- 
 
+Use the search field, to look for a specific string or you can sort any column selecting the small rows in each column.
+
+If you wish you can download the table in excel or csv format using the buttons located at the button of the table.
+
+
+![show_export_schema](img/show_export_schema.png)
 
 ## Metadata
 
