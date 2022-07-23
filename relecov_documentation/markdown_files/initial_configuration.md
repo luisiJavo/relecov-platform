@@ -10,11 +10,12 @@ You must login as "admin" user to see the configuration Menu.
 Note. That this menu is only available when login with user name as admin.
 
 ## Table of Contents
+
 1. [Schema](#schema)
 2. [Metadata](#metadata)
 
 
-## Schema
+# Schema
 The first step is to load the relecov schema into database.
 
 For your convenience we have kept a schema for relecov in conf folder. Of course you can upload your own schema, but be aware that it could run into issues, because as we design "relecov platform" to be flexible, we have not tested any single scenario.
@@ -39,16 +40,56 @@ If you want to see more detail information about any schema, click on the desire
 
 ![show_detail_schema](img/show_detail_schema.png)
 
-Use the search field, to look for a specific string or you can sort any column selecting the small rows in each column.
+Use the search field, to look for a specific string or you can sort any column selecting the small arrows in each column.
 
-If you wish you can download the table in excel or csv format using the buttons located at the button of the table.
+If you wish you can download the table in excel or in csv format using the buttons located at the bottom of the table.
 
 
 ![show_export_schema](img/show_export_schema.png)
 
-## Metadata
+After you have define the schema go to next chapter **Metadata**.
 
+# Metadata
 
+To define the Metadata fields, select from the top menu Configuration --> Metadata Visualization.
+You will get a form to define the fields that will show later on when uploading samples metadata.
 
-## Example
-pepe
+You can see that there is already fill with information.
+
+![form_select_metadata_fields](img/form_select_metadata_fields.png)
+
+This settings are collected from 2 different sources:
+* relecov schema loaded in the previous chapter. When all fields that has the fill mode property to "sample" are showed.
+* template_for_metadata_form.txt, which is located in conf folder. From this file the "Position in the form" is collected and presented in the table.
+
+In order to reduce the time for typing information that is related to all samples, we have split the fields in 2 tabs.
+* Fields for Sample
+* Fields for batch
+
+We recommend to keep the settings as they are, but of course you can change the order of visualization, if a field is showed, or it the field apply to all samples or it must be set for each one.
+
+Apply the selected fields by clicking on the submit button. As result you will get the confirmation window.
+
+![sucessful_metadata_selection](img/sucessful_metadata_selection.png)
+
+At this point you have defined the fields that are required to upload your sample metadata to the platform.
+
+Only one metadata form allowed to be defined, For that reason the next time that you select in the menu Configuration --> Metadata Visualization, you not longer see the previous form for selecting the fields but a new window where you can see the selected fields.
+
+By default the "Fields for sample" tab is open. From here you can see the metadata fields that have to be filled each time for each sample.
+
+![show_metadata_sample](img/show_metadata_sample.png)
+
+To select the fields that you have to write once for all sample, click on the "Fields for batch" tab.
+
+As before you can sort the information by clicking on the small arrows in the column names.
+
+![show_metadata_batch](img/show_metadata_batch.png)
+
+As mention, only one metadata form can be defined in the system, so in case you need to set different fields, you need first to delete the existing one.
+
+For doing it, click on the Delete Fields tab.
+
+![show_metadata_delete](img/show_metadata_delete.png)
+
+As you see there is a Warning message indicating that this action cannot be reverted. Once it is deleted it cannot be recover. To define new fields, repeat the definition process again.
