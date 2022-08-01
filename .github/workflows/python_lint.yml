@@ -23,10 +23,7 @@ jobs:
         run: pip install flake8
       - name: Run flake8
         run: "flake8 --format github"
-        with:
-          checkName: 'flake8_py3'   # NOTE: this needs to be the same as the job name
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
 
   black_lint:
     runs-on: ubuntu-latest
