@@ -22,8 +22,8 @@ jobs:
       - name: Install flake8
         run: pip install flake8
       - name: Run flake8
-        run: flake8 --bug-report && flake8 --exit-code
-        
+        run: flake8
+
   black_lint:
     runs-on: ubuntu-latest
     steps:
