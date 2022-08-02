@@ -14,9 +14,9 @@ class BothHttpAndHttpsSchemaGenerator(OpenAPISchemaGenerator):
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="iSkyLIMS API",
+        title="RELECOV API",
         default_version="v0.0.1",
-        description="iSkyLIMS API",
+        description="Relecov Platform API",
     ),
     generator_class=BothHttpAndHttpsSchemaGenerator,
     public=True,
