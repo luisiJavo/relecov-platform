@@ -5,13 +5,5 @@ DB_PASS='<your_passwd>'
 DB_SERVER_IP='<IP_db_server>'
 DB_PORT=3306
 
-### Settings required for sending emails
-
-EMAIL_HOST_SERVER='<mail_host>'
-EMAIL_PORT='<mail_port>'
-EMAIL_HOST_USER=''
-EMAIL_HOST_PASSWORD=''
-EMAIL_USE_TLS='False'
-
 ### Settings required for accessing relecov-platform
 LOCAL_SERVER_IP='<Relecov_IP>'
