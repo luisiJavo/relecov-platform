@@ -2,8 +2,9 @@
 {% load static %}
 
 {% block content %}
+{% include "relecov_dashboard/sidebar_templates/variantSideBar.html" %}
 <br><br><br><br><br><br>
-<div class="card" style="text-align:center;margin-left:1%;margin-right:1%">
+<div class="card" style="text-align:center;margin-left:15%;margin-right:1%">
   <div class="card-body border">
     {% include "relecov_dashboard/graph_templates/lineage_variation_over_time.html"%}
   </div>
