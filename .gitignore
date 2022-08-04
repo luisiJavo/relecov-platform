@@ -9,10 +9,7 @@ migrations/
 virtualenv/
 manage.py
 install_settings.txt
-relecov_platform/settings.py
-relecov_platform/asgi.py
-relecov_platform/routing.py
-relecov_platform/wsgi.py
+relecov_platform/
 documents/
 
 # C extensions
