@@ -76,7 +76,7 @@ WSGI_APPLICATION = "relecov_platform.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "USER": "relecov",
+        "USER": "birbigaming",
         "PASSWORD": "0xfa0xff",
         "PORT": "3306",
         "NAME": "relecov",
