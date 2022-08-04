@@ -1,0 +1,8 @@
+{% load static %}
+{%load plotly_dash%}
+
+{% block content %}
+    <div class="container text-center">
+        {% plotly_app name="geo_json" ratio=0.50 %}
+    </div>
+{% endblock %}

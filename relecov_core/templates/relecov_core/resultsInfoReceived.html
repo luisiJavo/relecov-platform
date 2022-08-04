@@ -1,0 +1,16 @@
+{% extends "relecov_core/base.html"%}
+{% load static %}
+{% block content %}
+    {%include "relecov_core/intranetSidebar.html"%}
+    <section style="width: 70%;margin-left: 20%">
+        <div class="container d-flex flex-column text-center position-relative">
+            <br><br>
+            <div class="card bg-dark text-white" style="text-align: center;">
+                <img src="{% static 'relecov_core/img/under_construction.png' %}" class="card-img mt-5" alt="under construction image" style="width: 45%;margin-left: 20%" >
+                <div class="card-img-overlay">
+                <h5 class="card-title">Results Info Received</h5>
+                </div>
+            </div>
+        </div>
+    </section>        
+{% endblock %}

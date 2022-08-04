@@ -1,0 +1,8 @@
+{% load static %}
+{%load plotly_dash%}
+
+{% block content %}
+<div class="container text-center">
+    {% plotly_app name="needle_ITER" ratio=1 %}
+</div>
+{% endblock %}

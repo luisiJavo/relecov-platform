@@ -1,0 +1,93 @@
+{% load static %}
+<!-- Template Sidebars CSS File -->
+<link href="{% static 'relecov_dashboard/dashboard/css/style_mod2.css' %}" rel="stylesheet">
+
+<!-- ======= Dash board Sidebar ======= -->
+<aside id="sidebar" class="sidebar visible">
+    <h4>Variant Dashboard</h4>
+    <ul class="sidebar-nav" id="sidebar-nav">
+        <li class="nav-item">
+            <a class="nav-link collapse" data-bs-target="#lineagesVOC-nav" data-bs-toggle="collapse" href="/#">
+                <i class="bi bi-grid"></i><span>Linages VOC</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="lineagesVOC-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="/dashboard/lineages">
+                        <i class="bi bi-circle"></i><span>Mutation Heatmap</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/dashboard/lineages">
+                        <i class="bi bi-circle"></i><span>Mutation Needle Plot</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/dashboard/lineages">
+                        <i class="bi bi-circle"></i><span>Mutation Effect Table</span>
+                    </a>
+                </li>
+            </ul>
+        </li><!-- End Linages VOC Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#lineages-nav" data-bs-toggle="collapse" href="/dashboard/lineages">
+                <i class="bi bi-menu-button-wide"></i><span>Lineages</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="lineages-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="/dashboard/lineages">
+                        <i class="bi bi-circle"></i><span>Lineage variation over time</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/dashboard/lineages">
+                        <i class="bi bi-circle"></i><span>Lineage by CCAA</span>
+                    </a>
+                </li>
+            </ul>
+        </li><!-- End lineage nav-->
+
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#mutations-nav" data-bs-toggle="collapse" href="/dashboard/mutationsInLineages">
+                <i class="bi bi-gem"></i><span>Mutations in Lineages</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="mutations-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="/dashboard/lineages">
+                        <i class="bi bi-circle"></i><span>Mutation Heatmap</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/dashboard/lineages">
+                        <i class="bi bi-circle"></i><span>Mutation Needle Plot</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/dashboard/lineages">
+                        <i class="bi bi-circle"></i><span>Mutation Effect Table</span>
+                    </a>
+                </li>
+            </ul>
+        </li><!-- End Mutations in Lineages Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#spike-nav" data-bs-toggle="collapse" href="/dashboard/spikeMutations">
+                <i class="bi bi-gem"></i><span>Spike Mutations</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="spike-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="/dashboard/lineages">
+                        <i class="bi bi-circle"></i><span>Spike Mutation 1</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/dashboard/lineages">
+                        <i class="bi bi-circle"></i><span>Spike Mutation 2</span>
+                    </a>
+                </li>
+            </ul>
+        </li><!-- End Spike Mutations Nav -->
+    </ul>
+    <i class="bi bi-list mobile-nav-toggle d-none"></i>
+</aside><!-- End Dash board Sidebar-->

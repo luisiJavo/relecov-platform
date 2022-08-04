@@ -3,6 +3,15 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+#
+migrations/
+# static/
+virtualenv/
+manage.py
+install_settings.txt
+relecov_platform/
+documents/
+
 # C extensions
 *.so
 
