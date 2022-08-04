@@ -1,6 +1,6 @@
-from dash.dependencies import Input, Output
+# from dash.dependencies import Input, Output
 import dash_daq as daq
-import dash_core_components as dcc
+# import dash_core_components as dcc
 import dash_html_components as html
 from django_plotly_dash import DjangoDash
 
@@ -35,6 +35,6 @@ def create_medium_gauge():
             )
         )
     )
-    fig.update_layout(transition_duration=500)
+    # fig.update_layout(transition_duration=500)
 
-    return fig
+    # return fig
