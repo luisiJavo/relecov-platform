@@ -4,7 +4,12 @@
 {%load plotly_dash%}
 
 {% block content %}
+<br><br><br><br><br><br>
     <div class="container text-center" style="">
         {% plotly_app name="gauge_test" ratio=1 %}
+    </div>
+
+    <div class="container text-center" style="">
+        {% plotly_app name="gauge_medium" ratio=1 %}
     </div>
 {% endblock %}
