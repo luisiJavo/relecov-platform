@@ -1,4 +1,4 @@
-from collections import Counter
+# from collections import Counter
 import os
 import pandas as pd
 import json
@@ -45,6 +45,7 @@ def preprocess_json_data_with_csv(json_data, csv_data):
         lineage_count_dict[lineage] = dict(Counter(lineage_dict[lineage]))
     """
     # Modify CCAA dictionary to values in JSON file
+    """
     ccaa_dict = {
         "Unassigned": 0,
         "Andalucía": 1,
@@ -68,6 +69,7 @@ def preprocess_json_data_with_csv(json_data, csv_data):
         "Asturias": 18,
         "Comunidad Valenciana": 19,
     }
+    """
     """
     lineage_by_ccaa_df = pd.DataFrame(
         columns=["ID", "CCAA", "Lineage", "Count"]
@@ -127,8 +129,8 @@ def create_json(lineage):
     csv_file = os.path.join(
         settings.BASE_DIR, "relecov_core", "docs", "variants_long_table_last.csv"
     )
-    with open(csv_file) as f:
-        csv_data = parse_csv(f)
+    # with open(csv_file) as f:
+    #    csv_data = parse_csv(f)
 
     json_file = os.path.join(
         settings.BASE_DIR,
@@ -136,7 +138,7 @@ def create_json(lineage):
         "docs",
         "processed_metadata_lab_20220208_20220613.json",
     )
-    json_data = parse_json_file(json_file)
+    # json_data = parse_json_file(json_file)
 
     dict_of_samples = get_list_of_dict_of_lineages_from_long_table(csv_data)
     ldata = set_dataframe_geo_plot(
