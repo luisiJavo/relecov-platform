@@ -1,14 +1,14 @@
 # from collections import Counter
-import os
+# import os
 import pandas as pd
-import json
-import plotly.express as px
+# import json
+# import plotly.express as px
 
-import dash_core_components as dcc
-import dash_html_components as html
-from django_plotly_dash import DjangoDash
-from dash.dependencies import Input, Output
-from relecov_platform import settings
+# import dash_core_components as dcc
+# import dash_html_components as html
+# from django_plotly_dash import DjangoDash
+# from dash.dependencies import Input, Output
+# from relecov_platform import settings
 
 from relecov_core.models import Sample
 from django.db import connection
@@ -22,10 +22,10 @@ def query_to_database():
 
 """
 def preprocess_json_data_with_csv(json_data, csv_data):
-    
+
     # This function counts the number of samples for each CCAA for a certain lineage.
-    
-    
+
+
     lineage_dict = dict()
     for sample_data in json_data["data"]:
         if not csv_data[
@@ -93,7 +93,7 @@ def preprocess_json_data_with_csv(json_data, csv_data):
 
 """
 def set_dataframe_geo_plot(df, lineage):
-    
+
     # This function receives a python dictionary, a list of selected fields and sets a dataframe from fields_selected_list
     # to represent the graph dataframe structure(dict) { x: [], y: [], domains: [], mutationGroups: [],}
 
@@ -107,7 +107,7 @@ def set_dataframe_geo_plot(df, lineage):
 """
 """
 def get_list_of_dict_of_lineages_from_long_table(df):
-    
+
     # This function receives parsed file from parse_csv().
     # Returns a list of dictionaries of lineages [{"label": "B.1.177.57", "value": "B.1.177.57"}]
 
