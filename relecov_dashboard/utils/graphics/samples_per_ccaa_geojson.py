@@ -20,11 +20,12 @@ def query_to_database():
     print(df.loc[0])
 
 
+"""
 def preprocess_json_data_with_csv(json_data, csv_data):
-    """
-    This function counts the number of samples for each CCAA for a certain lineage.
-    """
-    """
+    
+    # This function counts the number of samples for each CCAA for a certain lineage.
+    
+    
     lineage_dict = dict()
     for sample_data in json_data["data"]:
         if not csv_data[
@@ -43,9 +44,9 @@ def preprocess_json_data_with_csv(json_data, csv_data):
     lineage_count_dict = dict()
     for lineage in lineage_dict:
         lineage_count_dict[lineage] = dict(Counter(lineage_dict[lineage]))
-    """
-    # Modify CCAA dictionary to values in JSON file
-    """
+"""
+# Modify CCAA dictionary to values in JSON file
+"""
     ccaa_dict = {
         "Unassigned": 0,
         "Andalucía": 1,
@@ -69,13 +70,13 @@ def preprocess_json_data_with_csv(json_data, csv_data):
         "Asturias": 18,
         "Comunidad Valenciana": 19,
     }
-    """
-    """
+"""
+"""
     lineage_by_ccaa_df = pd.DataFrame(
         columns=["ID", "CCAA", "Lineage", "Count"]
     ).astype(dtype={"Count": "int64"})
-    """
-    """
+"""
+"""
     for lineage in lineage_count_dict:
         for ccaa in lineage_count_dict[lineage]:
             lineage_by_ccaa_df = lineage_by_ccaa_df.append(
@@ -88,14 +89,14 @@ def preprocess_json_data_with_csv(json_data, csv_data):
                 ignore_index=True,
             )
     return lineage_by_ccaa_df
-    """
+"""
 
-
+"""
 def set_dataframe_geo_plot(df, lineage):
-    """
-    This function receives a python dictionary, a list of selected fields and sets a dataframe from fields_selected_list
-    to represent the graph dataframe structure(dict) { x: [], y: [], domains: [], mutationGroups: [],}
-    """
+    
+    # This function receives a python dictionary, a list of selected fields and sets a dataframe from fields_selected_list
+    # to represent the graph dataframe structure(dict) { x: [], y: [], domains: [], mutationGroups: [],}
+
     if lineage is None:
         first_line = df.iloc[0]
         lineage = first_line.at[0, "Lineage"]
@@ -103,13 +104,13 @@ def set_dataframe_geo_plot(df, lineage):
     filter_df = df[df.Lineage == lineage]
 
     return filter_df
-
-
+"""
+"""
 def get_list_of_dict_of_lineages_from_long_table(df):
-    """
-    This function receives parsed file from parse_csv().
-    Returns a list of dictionaries of lineages [{"label": "B.1.177.57", "value": "B.1.177.57"}]
-    """
+    
+    # This function receives parsed file from parse_csv().
+    # Returns a list of dictionaries of lineages [{"label": "B.1.177.57", "value": "B.1.177.57"}]
+
     unique_lineages = df.LINEAGE.unique()
     list_of_lineages = []
     for lin in unique_lineages:
@@ -204,3 +205,4 @@ def create_json(lineage):
         )
         fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
         return fig
+"""
