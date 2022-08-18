@@ -1,12 +1,11 @@
 {% extends 'relecov_core/base.html' %}
-
 {% load static %}
-{%load plotly_dash%}
-
 {% block content %}
+
+{% include "relecov_dashboard/sidebar/methodologySideBar.html"%}
 <br><br><br><br><br><br>
 <div class="container-fluid" style="text-align: center;">
-        
+
         <div class="card d-inline-flex p-2 m-1" style="width: 35%">
             <img src="{% static 'relecov_dashboard/img/lineageBarStack.png' %}" class="card-img-top" alt="needle plot" style="width: 70%">
             <div class="card-body" style="text-align: left;">
