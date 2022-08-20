@@ -58,13 +58,6 @@
                                                 <input class="form-control" type="file" required accept=".gff, .gf3" id="gffFile", name="gffFile">
                                             </div>
                                             <br>
-                                            <div class="col-md-9">
-                                                <div class="form-floating">
-                                                    <input class="form-control" type="text" required id="schemaVersion", name="schemaVersion"  placeholder="Schema version">
-                                                    <label for="schemaVersion">Organism GFF version</label>
-                                                </div>
-                                            </div>
-                                            <br>
                                             <div hidden class="spinner-border text-success" role="status" id="spinner">
                                                 <span class="visually-hidden">Loading...</span>
                                             </div>
@@ -94,15 +87,17 @@
                                                 <thead>
                                                     <tr>
                                                         <th scope="col">Organism name</th>
-                                                        <th scope="col">Annotation version</th>
+                                                        <th scope="col">Organism Annotation version</th>
+                                                        <th scope="col">Spec version</th>
                                                         <th scope="col">Sequence region</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    {% for id, name, version, seq in annotations %}
+                                                    {% for id, name, version, s_version, seq in annotations %}
                                                         <tr>
                                                             <td><a href="/annotationDisplay={{id}}">{{name}}</a></td>
                                                             <td>{{version}}</td>
+                                                            <td>{{s_version}}</td>
                                                             <td>{{seq}}</td>
                                                     {% endfor %}
                                                 </tbody>
