@@ -96,3 +96,17 @@ For doing it, click on the Delete Fields tab.
 As you see there is a Warning message indicating that this action cannot be reverted. Once it is deleted it cannot be recover. To define new fields, repeat the definition process again.
 
 # Annotation
+
+Annotation file for virus organism in a **gff** format is required when loading variant long table, later on.
+
+You can upload the annotation file, in gff format that you need for you project. For your convenience we have stored on the "conf" folder named "NC_045512.2.gff".
+
+For uploading this file or the one you need select **Virues Annotation** from the Configuation menu.
+![show_form_annotations](img/form_annotations.png)
+
+Select the file and submit your request.
+
+To see the already loaded files click on the Show Annotations tab.
+![show_form_annotations](img/list_organism_annotations.png)
+
+If you want to known the gene annotation for a specific organism click on the organism name to open a new window which has these information.
