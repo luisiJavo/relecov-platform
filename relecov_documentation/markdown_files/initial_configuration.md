@@ -13,6 +13,7 @@ Note. That this menu is only available when login with user name as admin.
 
 1. [Schema](#schema)
 2. [Metadata](#metadata)
+3. [Annotation](#Annotation)
 
 
 # Schema
@@ -93,3 +94,5 @@ For doing it, click on the Delete Fields tab.
 ![show_metadata_delete](img/show_metadata_delete.png)
 
 As you see there is a Warning message indicating that this action cannot be reverted. Once it is deleted it cannot be recover. To define new fields, repeat the definition process again.
+
+# Annotation
