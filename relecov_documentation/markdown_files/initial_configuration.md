@@ -107,6 +107,6 @@ For uploading this file or the one you need select **Virues Annotation** from th
 Select the file and submit your request.
 
 To see the already loaded files click on the Show Annotations tab.
-![show_form_annotations](img/list_organism_annotations.png)
+![show_form_annotations](img/list_annotations.png)
 
 If you want to known the gene annotation for a specific organism click on the organism name to open a new window which has these information.
