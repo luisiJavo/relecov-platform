@@ -8,6 +8,8 @@ from dash.dependencies import Input, Output
 import dash_bio as dashbio
 import pandas as pd
 
+import urllib.request as urlreq
+
 
 def parse_csv(file_path):
     """
@@ -93,15 +95,12 @@ def create_needle_plot_graph_ITER(lineage):
         parse_csv(needle_data)
     )
     mdata = set_dataframe_needle_plot(parse_csv(needle_data), lineage)
+
+    data = urlreq.urlopen("https://git.io/needle_PIK3CA.json").read().decode("utf-8")
+
+    mdata = json.loads(data)
     app = DjangoDash("needle_ITER")
-    app.layout = (
-        html.Div(
-            children=[
-                html.H1(children="Hello Dash"),
-                html.Div(children="Dash: A web application framework for your data."),
-            ],
-        ),
-    )
+
     app.layout = html.Div(
         children=[
             "Show or hide range slider",
@@ -122,63 +121,62 @@ def create_needle_plot_graph_ITER(lineage):
                 value=lineage,
                 # style={"width": "400px"},
             ),
-            html.Div(
-                children=dashbio.NeedlePlot(
-                    width="auto",
-                    id="dashbio-needleplot",
-                    xlabel="Genome Position",
-                    ylabel="Allele Frequency ",
-                    mutationData=mdata,
-                    rangeSlider=True,
-                    domainStyle={
-                        # "textangle": "45",
-                        "displayMinorDomains": True,
-                        "domainColor": [
-                            "#FFDD00",
-                            "#00FFDD",
-                            "#0F0F0F",
-                            "#D3D3D3",
-                            "#FFDD00",
-                            "#00FFDD",
-                            "#0F0F0F",
-                            "#D3D3D3",
-                            "#FFDD00",
-                            "#00FFDD",
-                            "#0F0F0F",
-                        ],
-                    },
-                    needleStyle={
-                        "stemColor": "#444",
-                        "stemThickness": 0.5,
-                        "stemConstHeight": False,
-                        "headSize": 5,
-                        "headColor": [
-                            "#e41a1c",
-                            "#377eb8",
-                            "#4daf4a",
-                            "#984ea3",
-                            "#ff7f00",
-                            "#ffff33",
-                            "#a65628",
-                            "#f781bf",
-                            "#999999",
-                            "#e41a1c",
-                            "#377eb8",
-                            "#4daf4a",
-                            "#984ea3",
-                            "#ff7f00",
-                            "#ffff33",
-                            "#a65628",
-                            "#f781bf",
-                            "#999999",
-                            "#e41a1c",
-                        ],
-                        "headSymbol": "circle",
-                    },
-                ),
+            dashbio.NeedlePlot(
+                width="auto",
+                id="dashbio-needleplot",
+                xlabel="Genome Position",
+                ylabel="Allele Frequency ",
+                mutationData=mdata,
+                rangeSlider=True,
+                domainStyle={
+                    # "textangle": "45",
+                    "displayMinorDomains": True,
+                    "domainColor": [
+                        "#FFDD00",
+                        "#00FFDD",
+                        "#0F0F0F",
+                        "#D3D3D3",
+                        "#FFDD00",
+                        "#00FFDD",
+                        "#0F0F0F",
+                        "#D3D3D3",
+                        "#FFDD00",
+                        "#00FFDD",
+                        "#0F0F0F",
+                    ],
+                },
+                needleStyle={
+                    "stemColor": "#444",
+                    "stemThickness": 0.5,
+                    "stemConstHeight": False,
+                    "headSize": 5,
+                    "headColor": [
+                        "#e41a1c",
+                        "#377eb8",
+                        "#4daf4a",
+                        "#984ea3",
+                        "#ff7f00",
+                        "#ffff33",
+                        "#a65628",
+                        "#f781bf",
+                        "#999999",
+                        "#e41a1c",
+                        "#377eb8",
+                        "#4daf4a",
+                        "#984ea3",
+                        "#ff7f00",
+                        "#ffff33",
+                        "#a65628",
+                        "#f781bf",
+                        "#999999",
+                        "#e41a1c",
+                    ],
+                    "headSymbol": "circle",
+                },
             ),
-        ],
+        ]
     )
+    # import pdb; pdb.set_trace()
 
     @app.callback(
         Output("dashbio-needleplot", "mutationData"),
@@ -186,6 +184,7 @@ def create_needle_plot_graph_ITER(lineage):
     )
     def update_sample(selected_lineage):
         print(selected_lineage)
+
         create_needle_plot_graph_ITER(selected_lineage)
         mdata = set_dataframe_needle_plot(parse_csv(needle_data), selected_lineage)
         mutation_data = mdata
@@ -196,5 +195,5 @@ def create_needle_plot_graph_ITER(lineage):
         Input("needleplot-rangeslider", "value"),
     )
     def update_range_slider(range_slider_value):
-        print(range_slider_value)
+        print("valor de range ", range_slider_value)
         return True if range_slider_value else False
