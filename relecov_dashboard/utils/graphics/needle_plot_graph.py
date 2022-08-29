@@ -1,15 +1,17 @@
 import json
-import os
-from django.conf import settings
 
+# import os
+# from django.conf import settings
+"""
 import dash_core_components as dcc
 import dash_html_components as html
 from django_plotly_dash import DjangoDash
 from dash.dependencies import Input, Output
 import dash_bio as dashbio
+"""
 from relecov_core.core_config import (
     ERROR_CHROMOSOME_DOES_NOT_EXIST,
-    ERROR_GENE_NOT_DEFINED_IN_DATABASE,
+    # ERROR_GENE_NOT_DEFINED_IN_DATABASE,
 )
 from relecov_core.models import (
     Chromosome,
@@ -245,7 +247,7 @@ def create_needle_plot_graph(sample):
     )
     mdata = set_dataframe_needle_plot(parse_csv(needle_data), sample)
     print(mdata)
-    
+
     app = DjangoDash("needle_plot")
 
     app.layout = html.Div(
