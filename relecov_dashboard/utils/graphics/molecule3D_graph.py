@@ -8,7 +8,6 @@ from dash.dependencies import Input, Output
 
 import dash_bio as dashbio
 import dash_html_components as html
-# from dash import html
 from dash_bio.utils import PdbParser, create_mol3d_style
 
 
