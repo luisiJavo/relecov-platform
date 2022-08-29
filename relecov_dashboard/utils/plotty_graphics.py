@@ -29,3 +29,7 @@ def histogram_graphic(d_frame, option):
     # Getting HTML needed to render the plot.
     plot_div = plot({"data": graphs, "layout": layout}, output_type="div")
     return plot_div
+
+
+def pie_graphic(d_frame, option):
+    return
