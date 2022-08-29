@@ -18,7 +18,7 @@ from relecov_core.models import (
     Gene,
     OrganismAnnotation,
     Sample,
-    Variant,
+    # Variant,
     VariantAnnotation,
     VariantInSample,
 )
