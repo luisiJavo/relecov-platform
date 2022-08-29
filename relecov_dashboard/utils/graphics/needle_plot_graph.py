@@ -245,7 +245,7 @@ def create_needle_plot_graph(sample):
     )
     mdata = set_dataframe_needle_plot(parse_csv(needle_data), sample)
     print(mdata)
-    """
+    
     app = DjangoDash("needle_plot")
 
     app.layout = html.Div(
@@ -323,3 +323,4 @@ def create_needle_plot_graph(sample):
     )
     def update_range_slider(range_slider_value):
         return True if range_slider_value else False
+    """
