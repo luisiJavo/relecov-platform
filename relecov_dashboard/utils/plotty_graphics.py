@@ -4,10 +4,7 @@ from plotly.offline import plot
 import plotly.express as px
 
 
-def histogram_graphic(
-    d_frame,
-    option,
-):
+def histogram_graphic(d_frame, option):
     graphs = []
     graphs.append(
         px.histogram(
