@@ -1,58 +1,31 @@
 {% extends 'relecov_core/base.html' %}
+
+
 {% load static %}
+{%load plotly_dash%}
+<link href="{% static 'relecov_dashboard/dashboard/css/style_mod2.css' %}" rel="stylesheet">
 {% block content %}
-
-{% include "relecov_dashboard/methodologySideBar.html"%}
 <br><br><br><br><br><br>
+
 <div class="container-fluid" style="text-align: center;">
-    <div class="card d-inline-flex p-2 m-1" style="width: 75%;">
-
-    <div class="container">
+    <div class="card d-inline-flex p-2 m-1" style="width: 95%;" >
         <div class="row">
-            <div class="col">
-                <div class="card">
-                    <div class="card-header"><h3 style="text-align:center">Laboratories in Project</h3> </div>
-                    <div class="card-body  text-center">
-                        <p class="card-text">Plottly Gauge for the number of Institutions/Laboratories involved in project</p>
-                    </div>     <!-- end card body  -->
-                </div> <!-- end card  -->
+            <div class="col-md-4">
+                <div class="container text-center">
+                      {% plotly_app name="never_used_fields" ratio=1 %}
+                </div>
             </div> <!-- end col -->
-            <div class="col">
-                <div class="card">
-                    <div class="card-header"><h3 style="text-align:center">Processed Parameters</h3> </div>
-                    <div class="card-body  text-center">
-                        <p class="card-text">Plottly Gauge for the number of Processed Parameters</p>
-                    </div>     <!-- end card body  -->
-                </div> <!-- end card  -->
+            <div class="col-md-4">
+                <div class="container text-center">
+                      {% plotly_app name="param_not_empty" ratio=1 %}
+                </div>
             </div> <!-- end col -->
-        </div> <!-- end row-->
-        <div class="row">
-            <div class="col">
-                <div class="card">
-                    <div class="card-header"><h3 style="text-align:center">Samples received in the last 30 days</h3> </div>
-                    <div class="card-body  text-center">
-                        <p class="card-text">Plottly linear graphic</p>
-                    </div>     <!-- end card body  -->
-                </div> <!-- end card  -->
+            <div class="col-md-4">
+                <div class="container text-center">
+                      <p>More graphics to come ;-)</p>
+                </div>
             </div> <!-- end col -->
-            <div class="col">
-                <div class="card">
-                    <div class="card-header"><h3 style="text-align:center">Sequencer usage</h3> </div>
-                    <div class="card-body  text-center">
-                        <p class="card-text">Plottly Gauge for the Sequencers</p>
-                    </div>     <!-- end card body  -->
-                </div> <!-- end card  -->
-            </div> <!-- end col -->
-            <div class="col">
-                <div class="card">
-                    <div class="card-header"><h3 style="text-align:center">Artic version</h3> </div>
-                    <div class="card-body  text-center">
-                        <p class="card-text">Plottly histogram for number of sample and artic version</p>
-                    </div>     <!-- end card body  -->
-                </div> <!-- end card  -->
-            </div> <!-- end col -->
-        </div> <!-- end row-->
-    </div> <!-- end continer-->
+        </div> <!-- end row -->
+    </div> <!-- end card -->
 </div>
-
 {% endblock %}
