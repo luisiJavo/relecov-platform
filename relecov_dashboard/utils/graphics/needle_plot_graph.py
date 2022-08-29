@@ -7,38 +7,50 @@ import dash_html_components as html
 from django_plotly_dash import DjangoDash
 from dash.dependencies import Input, Output
 import dash_bio as dashbio
-from relecov_core.core_config import ERROR_CHROMOSOME_DOES_NOT_EXIST, ERROR_GENE_NOT_DEFINED_IN_DATABASE
-from relecov_core.models import Chromosome, Gene, OrganismAnnotation, Sample, Variant, VariantAnnotation, VariantInSample
+from relecov_core.core_config import (
+    ERROR_CHROMOSOME_DOES_NOT_EXIST,
+    ERROR_GENE_NOT_DEFINED_IN_DATABASE,
+)
+from relecov_core.models import (
+    Chromosome,
+    Gene,
+    OrganismAnnotation,
+    Sample,
+    Variant,
+    VariantAnnotation,
+    VariantInSample,
+)
 
 
 def check_if_organism_exists(organism_code):
     if OrganismAnnotation.objects.filter(organism_code=organism_code).exists():
-        organism_obj = OrganismAnnotation.objects.filter(organism_code=organism_code).last()
+        organism_obj = OrganismAnnotation.objects.filter(
+            organism_code=organism_code
+        ).last()
         return organism_obj
     else:
         return None
         # return {"ERROR":ERROR_CHROMOSOME_DOES_NOT_EXIST}
-        
-        
+
+
 def check_if_chromosomes_exists(chromosome):
     if Chromosome.objects.filter(chromosome=chromosome).exists():
-        chromosomes_obj =  Chromosome.objects.filter(chromosome=chromosome).last()
+        chromosomes_obj = Chromosome.objects.filter(chromosome=chromosome).last()
         return chromosomes_obj
     else:
         return None
         # return {"ERROR":ERROR_CHROMOSOME_DOES_NOT_EXIST}
-        
-        
+
+
 def check_if_sample_exists(sample_name):
     if Sample.objects.filter(sequencing_sample_id=sample_name).exists():
-        sample_obj =  Sample.objects.filter(sequencing_sample_id=sample_name).last()
+        sample_obj = Sample.objects.filter(sequencing_sample_id=sample_name).last()
         return sample_obj
     else:
         return None
         # return {"ERROR":ERROR_CHROMOSOME_DOES_NOT_EXIST}
 
-        
-        
+
 def get_gene_data(organism_code):
     organism_obj = check_if_organism_exists(organism_code=organism_code)
     if organism_obj:
@@ -47,11 +59,12 @@ def get_gene_data(organism_code):
             gene_coords = Gene.objects.filter(org_annotationID=organism_obj)
             # gene_coords = Gene.objects.all()
             return gene_coords
-        
+
     else:
-        return {"ERROR":ERROR_CHROMOSOME_DOES_NOT_EXIST}
+        return {"ERROR": ERROR_CHROMOSOME_DOES_NOT_EXIST}
         # return {"ERROR":ERROR_GENE_NOT_DEFINED_IN_DATABASE}
-    
+
+
 def create_domains_list_of_dict(organism_code):
     separator = "-"
     dict_of_domain = {}
@@ -60,9 +73,9 @@ def create_domains_list_of_dict(organism_code):
     for gene_data_obj in gene_data_objs:
         list_of_coordenates = gene_data_obj.get_gene_positions()
         coords = separator.join(list_of_coordenates)
-        dict_of_domain = {"name":gene_data_obj.get_gene_name(), "coord":coords}
+        dict_of_domain = {"name": gene_data_obj.get_gene_name(), "coord": coords}
         domains.append(dict_of_domain)
-        
+
     return domains
 
 
@@ -72,11 +85,14 @@ def get_alelle_frequency_per_sample(sample_name, chromosome):
     if chrom_obj:
         sample_obj = check_if_sample_exists(sample_name)
         if sample_obj:
-            variant_in_sample_objs = VariantInSample.objects.filter(sampleID_id=sample_obj)
+            variant_in_sample_objs = VariantInSample.objects.filter(
+                sampleID_id=sample_obj
+            )
             for variant_in_sample_obj in variant_in_sample_objs:
                 # get_variant_in_sample_data
                 list_of_af.append(variant_in_sample_obj.get_af())
             return list_of_af
+
 
 def get_position_per_sample(sample_name, chromosome):
     list_of_position = []
@@ -84,28 +100,35 @@ def get_position_per_sample(sample_name, chromosome):
     if chrom_obj:
         sample_obj = check_if_sample_exists(sample_name)
         if sample_obj:
-            variant_in_sample_objs = VariantInSample.objects.filter(sampleID_id=sample_obj)
+            variant_in_sample_objs = VariantInSample.objects.filter(
+                sampleID_id=sample_obj
+            )
             for variant_in_sample_obj in variant_in_sample_objs:
                 # print(variant_in_sample_obj.get_variantID_id())
                 list_of_position.append(variant_in_sample_obj.get_variant_pos())
             return list_of_position
-        
+
+
 def create_effect_list(sample_name, chromosome):
     list_of_effects = []
     chrom_obj = check_if_chromosomes_exists(chromosome)
     if chrom_obj:
         sample_obj = check_if_sample_exists(sample_name)
         if sample_obj:
-            variant_in_sample_objs = VariantInSample.objects.filter(sampleID_id=sample_obj)
+            variant_in_sample_objs = VariantInSample.objects.filter(
+                sampleID_id=sample_obj
+            )
             for variant_in_sample_obj in variant_in_sample_objs:
                 variant_obj = variant_in_sample_obj.get_variantID_id()
-                variant_annotation_objs = VariantAnnotation.objects.filter(variantID_id=variant_obj)
+                variant_annotation_objs = VariantAnnotation.objects.filter(
+                    variantID_id=variant_obj
+                )
                 for variant_annotation_obj in variant_annotation_objs:
                     print(variant_annotation_obj)
                     list_of_effects.append(variant_annotation_obj.get_effectID_id())
-        
+
         return list_of_effects
-                
+
 
 def parse_csv(file_path):
     """
@@ -159,7 +182,7 @@ def set_dataframe_needle_plot(lines_from_long_table, sample):
         {"name": "N", "coord": "28274-29533"},
         {"name": "orf10", "coord": "29558-29674"},
     ]
-    
+
     return df
 
 
@@ -203,7 +226,7 @@ def get_list_of_dict_of_samples_from_long_table(lines):
 
 def create_needle_plot_graph(sample):
     organism_code = "NC_045512"
-    sample=210067
+    sample = 210067
     domains = create_domains_list_of_dict(organism_code)
     print(domains)
     af = get_alelle_frequency_per_sample(sample, organism_code)
@@ -212,7 +235,7 @@ def create_needle_plot_graph(sample):
     print(pos)
     effects = create_effect_list(sample, organism_code)
     print(effects)
-    
+
     """
     needle_data = os.path.join(
         settings.BASE_DIR, "relecov_core", "docs", "variants_long_table_last.csv"
