@@ -2,13 +2,13 @@ import json
 
 # import os
 # from django.conf import settings
-"""
+
 import dash_core_components as dcc
 import dash_html_components as html
 from django_plotly_dash import DjangoDash
 from dash.dependencies import Input, Output
 import dash_bio as dashbio
-"""
+
 from relecov_core.core_config import (
     ERROR_CHROMOSOME_DOES_NOT_EXIST,
     # ERROR_GENE_NOT_DEFINED_IN_DATABASE,
@@ -226,9 +226,7 @@ def get_list_of_dict_of_samples_from_long_table(lines):
     return list_of_samples
 
 
-def create_needle_plot_graph(sample):
-    organism_code = "NC_045512"
-    sample = 210067
+def create_dataframe(sample, organism_code):
     domains = create_domains_list_of_dict(organism_code)
     print(domains)
     af = get_alelle_frequency_per_sample(sample, organism_code)
@@ -237,7 +235,19 @@ def create_needle_plot_graph(sample):
     print(pos)
     effects = create_effect_list(sample, organism_code)
     print(effects)
+    mdata = {}
+    mdata["x"] = pos
+    mdata["y"] = af
+    mdata["mutationGroups"] = effects
+    mdata["domains"] = domains
 
+    return mdata
+
+
+def create_needle_plot_graph(sample):
+    # organism_code = "NC_045512"
+    sample = 2018185
+    mdata = create_dataframe(sample=2018185, organism_code="NC_045512")
     """
     needle_data = os.path.join(
         settings.BASE_DIR, "relecov_core", "docs", "variants_long_table_last.csv"
@@ -247,7 +257,7 @@ def create_needle_plot_graph(sample):
     )
     mdata = set_dataframe_needle_plot(parse_csv(needle_data), sample)
     print(mdata)
-
+    """
     app = DjangoDash("needle_plot")
 
     app.layout = html.Div(
@@ -275,7 +285,7 @@ def create_needle_plot_graph(sample):
                             "Select a Sample",
                             dcc.Dropdown(
                                 id="needleplot-select-sample",
-                                options=dict_of_samples,
+                                options=2018185,  # dict_of_samples,
                                 clearable=False,
                                 multi=False,
                                 value=sample,
@@ -315,7 +325,7 @@ def create_needle_plot_graph(sample):
     )
     def update_sample(selected_sample):
         create_needle_plot_graph(selected_sample)
-        mdata = set_dataframe_needle_plot(parse_csv(needle_data), selected_sample)
+        mdata = create_dataframe(sample=2018185, organism_code="NC_045512")
         mutationData = mdata
         return mutationData
 
@@ -325,4 +335,3 @@ def create_needle_plot_graph(sample):
     )
     def update_range_slider(range_slider_value):
         return True if range_slider_value else False
-    """
