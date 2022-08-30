@@ -17,16 +17,6 @@ import dash_core_components as dcc
 import dash_html_components as html
 from django_plotly_dash import DjangoDash
 import dash_table
-from relecov_core.models import VariantAnnotation, VariantInSample
-
-from relecov_core.utils.handling_variant import (
-    # get_if_chromosomes_exists,
-    # get_if_organism_exists,
-    get_position_per_sample,
-    get_alelle_frequency_per_sample,
-    create_effect_list,
-)
-from relecov_core.utils.handling_samples import get_sample_obj_if_exists
 
 
 def read_mutation_data(input_file: str, file_extension: str = "csv") -> pd.DataFrame:
@@ -72,34 +62,7 @@ def process_mutation_df(df: pd.DataFrame, renaming_dict: dict = None) -> pd.Data
     return df
 
 
-def generate_table(sample_name):
-    # "B.1.1.7", "NC_045512"
-    list_of_hgvs_p = []
-    chromosome = "NC_045512"
-    sample_obj = get_sample_obj_if_exists(sample_name=sample_name)
-    if sample_obj is not None:
-        af = get_alelle_frequency_per_sample(
-            sample_name=sample_name, chromosome=chromosome
-        )
-        print(af)
-        pos = get_position_per_sample(sample_name=sample_name, chromosome=chromosome)
-        print(pos)
-        effect = create_effect_list(sample_name=sample_name, chromosome=chromosome)
-        print(effect)
-        variant_in_sample_objs = VariantInSample.objects.filter(sampleID_id=sample_obj)
-        for variant_in_sample_obj in variant_in_sample_objs:
-            print(variant_in_sample_obj.get_variantID_id())
-            variant_annotation_objs = VariantAnnotation.objects.filter(
-                variantID_id=variant_in_sample_obj.get_variantID_id()
-            )
-            print(variant_annotation_objs)
-            for variant_annotation_obj in variant_annotation_objs:
-                list_of_hgvs_p.append(variant_annotation_obj.get_hgvs_p())
-        print(list_of_hgvs_p)
-
-
 def create_mutation_table(sample):
-    generate_table(sample_name=sample)
     PAGE_SIZE = 20
 
     input_file = os.path.join(
@@ -109,6 +72,7 @@ def create_mutation_table(sample):
     # Read data
     df = read_mutation_data(input_file, file_extension="csv")
     df = process_mutation_df(df)
+    print(df)
 
     # Read some extra values
     effects = list(df["EFFECT"].unique())
