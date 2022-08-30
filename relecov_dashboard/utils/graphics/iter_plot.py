@@ -23,7 +23,7 @@ def create_needle_plot_graph_ITER(lineage, mdata):
             "Select a Lineage",
             dcc.Dropdown(
                 id="needleplot-select-lineage",
-                options=2018185,  # dict_of_samples,
+                options=[{"label": "B.1.1.7", "value": "B.1.1.7"}],  # dict_of_samples,
                 clearable=False,
                 multi=False,
                 value=lineage,
