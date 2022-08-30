@@ -17,11 +17,11 @@ import dash_core_components as dcc
 import dash_html_components as html
 from django_plotly_dash import DjangoDash
 import dash_table
-from relecov_core.models import Effect, VariantAnnotation, VariantInSample
+from relecov_core.models import VariantAnnotation, VariantInSample # Effect, 
 
 from relecov_core.utils.handling_variant import (
-    get_if_chromosomes_exists,
-    get_if_organism_exists,
+    # get_if_chromosomes_exists,
+    # get_if_organism_exists,
     get_position_per_sample,
     get_alelle_frequency_per_sample,
     create_effect_list,
