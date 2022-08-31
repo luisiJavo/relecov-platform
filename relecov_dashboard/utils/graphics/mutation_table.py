@@ -5,9 +5,6 @@ Mutation table under needle plot
 - Clean or filter dataframe
 - Generate auxiliar table to needle plot
 """
-
-
-import os
 import pandas as pd
 import json
 
@@ -24,52 +21,9 @@ from relecov_core.utils.handling_variant import (
     # get_if_organism_exists,
     get_position_per_sample,
     get_alelle_frequency_per_sample,
-    create_effect_list,
+    # create_effect_list,
 )
 from relecov_core.utils.handling_samples import get_sample_obj_from_sample_name
-
-
-def read_mutation_data(input_file: str, file_extension: str = "csv") -> pd.DataFrame:
-    """
-    Read mutation data, either in CSV or JSON format.
-    If in JSON format, the JSON must follow a structure of [{'pk': {'atr1':'z'} }]
-    Returns a pandas dataframe object
-    """
-    df = None
-    if file_extension == "json":
-        with open(input_file) as f:
-            # JSON must have a "primary key", which is the sample ID
-            df = pd.DataFrame.from_dict(json.load(f), orient="index")
-            df = df.reset_index().rename(columns={"index": "SAMPLE"})
-    elif file_extension == "csv":
-        df = pd.read_csv(input_file, sep=",")
-    else:
-        raise Exception("Unrecognized file format!")
-
-    return df
-
-
-def process_mutation_df(df: pd.DataFrame, renaming_dict: dict = None) -> pd.DataFrame:
-    """
-    Process pd.DataFrame object, selecting specific columns and renaming then as required
-    (maybe usefull for translations)
-    """
-    if renaming_dict is None and type(renaming_dict) != dict:
-        renaming_dict = {
-            "SAMPLE": "SAMPLE",
-            "POS": "POS",
-            "HGVS_P": "MUTATION",
-            "AF": "AF",
-            "EFFECT": "EFFECT",
-            "GENE": "GENE",
-            "LINEAGE": "LINEAGE",
-        }
-
-    # Rename and select columns
-    df = df[renaming_dict.keys()]  # select specific keys
-    df = df.rename(columns=renaming_dict)  # rename to the required output names
-
-    return df
 
 
 def generate_table(sample_name):
