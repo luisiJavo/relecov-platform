@@ -6,9 +6,7 @@ Mutation table under needle plot
 - Generate auxiliar table to needle plot
 """
 import pandas as pd
-import json
 
-from django.conf import settings
 from dash.dependencies import Input, Output
 import dash_core_components as dcc
 import dash_html_components as html
