@@ -1,0 +1,20 @@
+{% extends 'relecov_core/base.html' %}
+
+
+{% load static %}
+{%load plotly_dash%}
+<link href="{% static 'relecov_dashboard/dashboard/css/style_mod2.css' %}" rel="stylesheet">
+{% block content %}
+<br><br><br><br><br><br>
+{% include "relecov_dashboard/methodologySideBar.html"%}
+<div class="container-fluid" style="text-align: center;">
+    <div class="card d-inline-flex p-2 m-1" style="width: 70%;" >
+
+    <div class="container text-center">
+         {% plotly_app name="m_utilization" ratio=1 %}
+    </div>
+    <p>juan</p>
+
+    <p>pepe</p>
+</div>
+{% endblock %}

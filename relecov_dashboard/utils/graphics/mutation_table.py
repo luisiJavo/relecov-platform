@@ -26,7 +26,7 @@ from relecov_core.utils.handling_variant import (
     get_alelle_frequency_per_sample,
     create_effect_list,
 )
-from relecov_core.utils.handling_samples import get_sample_obj_if_exists
+from relecov_core.utils.handling_samples import get_sample_obj_from_sample_name
 
 
 def read_mutation_data(input_file: str, file_extension: str = "csv") -> pd.DataFrame:
@@ -76,7 +76,7 @@ def generate_table(sample_name):
     # "B.1.1.7", "NC_045512"
     list_of_hgvs_p = []
     chromosome = "NC_045512"
-    sample_obj = get_sample_obj_if_exists(sample_name=sample_name)
+    sample_obj = get_sample_obj_from_sample_name(sample_name=sample_name)
     if sample_obj is not None:
         af = get_alelle_frequency_per_sample(
             sample_name=sample_name, chromosome=chromosome
