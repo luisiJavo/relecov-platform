@@ -24,14 +24,14 @@ from relecov_core.utils.handling_variant import (
 from relecov_core.utils.handling_samples import get_sample_obj_from_sample_name
 
 
-def generate_table(sample_name):
+def create_data_for_dataframe(sample_name):
     # "B.1.1.7", "NC_045512"
     df = {}
     list_of_hgvs_p = []
     gene_list = []
     effect_list = []
-    lineage_list = ["B.1.1.7", "B.1.1.7", "B.1.1.7", "B.1.1.7", "B.1.1.7"]
     sample_list = []
+    lineage_list = ["B.1.1.7", "B.1.1.7", "B.1.1.7", "B.1.1.7", "B.1.1.7"]
     chromosome = "NC_045512"
     sample_obj = get_sample_obj_from_sample_name(sample_name=sample_name)
     if sample_obj is not None:
@@ -72,8 +72,12 @@ def generate_table(sample_name):
         return None
 
 
+# def create_dataframe(dataframe):
+
+
 def create_mutation_table(sample):
-    df = generate_table(sample_name=sample)
+    df = create_data_for_dataframe(sample_name=sample)
+    # create_dataframe(df)
     df_pandas = pd.DataFrame.from_dict(df)
     PAGE_SIZE = 20
 
