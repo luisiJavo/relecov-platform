@@ -41,23 +41,22 @@ def create_data_for_dataframe(sample_name):
         pos = get_position_per_sample(sample_name=sample_name, chromosome=chromosome)
         variant_in_sample_objs = VariantInSample.objects.filter(sampleID_id=sample_obj)
         for variant_in_sample_obj in variant_in_sample_objs:
-            variant_annotation_objs = VariantAnnotation.objects.filter(
+            variant_annotation_obj = VariantAnnotation.objects.filter(
                 variantID_id=variant_in_sample_obj.get_variantID_id()
-            )
-            for variant_annotation_obj in variant_annotation_objs:
-                hgvs_p = variant_annotation_obj.get_variant_in_sample_data()[1]
-                list_of_hgvs_p.append(hgvs_p)
+            ).last()
+            hgvs_p = variant_annotation_obj.get_variant_in_sample_data()[1]
+            list_of_hgvs_p.append(hgvs_p)
 
-                geneID_id = variant_annotation_obj.get_geneID_id()
-                gene_obj = Gene.objects.filter(gene_name__iexact=geneID_id).last()
-                gene_list.append(gene_obj.get_gene_name())
+            geneID_id = variant_annotation_obj.get_geneID_id()
+            gene_obj = Gene.objects.filter(gene_name__iexact=geneID_id).last()
+            gene_list.append(gene_obj.get_gene_name())
 
-                effect_obj = Effect.objects.filter(
-                    effect__iexact=variant_annotation_obj.get_effectID_id()
-                ).last()
-                effect_list.append(effect_obj.get_effect())
+            effect_obj = Effect.objects.filter(
+                effect__iexact=variant_annotation_obj.get_effectID_id()
+            ).last()
+            effect_list.append(effect_obj.get_effect())
 
-                sample_list.append(sample_name)
+            sample_list.append(sample_name)
 
         df["SAMPLE"] = sample_list
         df["POS"] = pos
@@ -127,6 +126,3 @@ def create_mutation_table(sample):
             return str(active_cell)
         else:
             return "Click the table"
-
-    # if __name__ == "__main__":
-    #     app.run_server(debug=True)
