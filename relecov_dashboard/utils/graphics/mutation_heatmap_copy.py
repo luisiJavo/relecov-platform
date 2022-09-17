@@ -114,21 +114,11 @@ def create_hot_map():
             ),
             dcc.Graph(
                 id="mutation_heatmap",
-                figure=get_figure(df, sample_ids),
+                figure=get_figure(df, sample_ids, genes=all_genes),
                 style={"width": "1500px", "height": "700px"},
             ),
         ]
     )
-
-    def update_selected_sample(data: pd.DataFrame, selected_sample: int):
-        if selected_sample and type(selected_sample) == int:
-            data = data[data["SAMPLE"].isin([selected_sample])]
-        return data
-
-    def update_selected_genes(data: pd.DataFrame, selected_genes: int):
-        if selected_genes and type(selected_genes) == list and len(selected_genes) >= 1:
-            data = data[data["GENE"].isin(selected_genes)]
-        return data
 
     @app.callback(
         Output("mutation_heatmap", "figure"),
@@ -136,7 +126,20 @@ def create_hot_map():
         Input("mutation_heatmap-gene_dropdown", "value"),
     )
     def update_graph(sample_ids: str, genes: list):
+        print(genes)
         fig = get_figure(df, sample_ids, genes)
         return fig
+
+    def update_selected_sample(data: pd.DataFrame, selected_sample: int):
+        print(selected_sample)
+        if selected_sample and type(selected_sample) == int:
+            data = data[data["SAMPLE"].isin([selected_sample])]
+        return data
+
+    def update_selected_genes(data: pd.DataFrame, selected_genes: int):
+        print(selected_genes)
+        if selected_genes and type(selected_genes) == list and len(selected_genes) >= 1:
+            data = data[data["GENE"].isin(selected_genes)]
+        return data
 
     return app
