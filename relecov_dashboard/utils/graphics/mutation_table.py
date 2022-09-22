@@ -23,7 +23,7 @@ from relecov_core.utils.handling_variant import (
     # create_effect_list,
 )
 """
-from relecov_core.utils.handling_samples import get_sample_obj_from_sample_name
+# from relecov_core.utils.handling_samples import get_sample_obj_from_sample_name
 
 
 def create_data_for_dataframe(sample_list, effect_list):
