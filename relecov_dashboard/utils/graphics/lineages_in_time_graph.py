@@ -18,7 +18,8 @@ def testing_fisabio_data():
     )
     df = read_mutation_data(input_file, file_extension="csv")
     print(df)
-    create_test_variant_graph(df)
+    # create_test_variant_graph(df)
+    create_lineage_in_time_graph(input_file, df)
 
 
 def read_mutation_data(input_file: str, file_extension: str = "csv") -> pd.DataFrame:
@@ -41,13 +42,35 @@ def read_mutation_data(input_file: str, file_extension: str = "csv") -> pd.DataF
     return df
 
 
+def create_lineage_in_time_graph(input_file, df):
+    app = DjangoDash(name="TestVariantGraph")
+    app.layout = create_test_variant_graph(df)
+
+    @app.callback(Output("graph-with-slider", "figure"), Input("week-slider", "value"))
+    def update_figure(selected_range):
+        df = read_mutation_data(input_file, file_extension="csv")
+
+        fig = px.bar(
+            df,
+            x="sample_collection_date",
+            y="lineage_name",
+            color="who_name",
+            barmode="stack",
+            # hover_name="Variant",
+        )
+
+        fig.update_layout(transition_duration=500)
+
+        return fig
+
+
 def create_test_variant_graph(df):
     max_weeks = 0
     # df = set_dataframe_range_slider(get_variant_data(), selected_range)
     list_of_weeks = []
 
     for week in df["sample_collection_date"].unique():
-        max_weeks += 1
+        # max_weeks += 1
         list_of_weeks.append(week.strip())
 
     fig = px.bar(
