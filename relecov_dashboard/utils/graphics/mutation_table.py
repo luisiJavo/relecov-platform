@@ -13,6 +13,7 @@ import dash_html_components as html
 from django_plotly_dash import DjangoDash
 import dash_table
 from relecov_core.models import Effect, Gene, VariantAnnotation, VariantInSample
+from relecov_core.utils.handling_samples import get_sample_obj_from_sample_name
 
 """
 from relecov_core.utils.handling_variant import (
@@ -23,7 +24,6 @@ from relecov_core.utils.handling_variant import (
     # create_effect_list,
 )
 """
-from relecov_core.utils.handling_samples import get_sample_obj_from_sample_name
 
 
 def create_data_for_dataframe(sample_list, effect_list):
