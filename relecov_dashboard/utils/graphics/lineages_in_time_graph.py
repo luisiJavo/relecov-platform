@@ -9,7 +9,8 @@ import dash_html_components as html
 import plotly.express as px
 from django_plotly_dash import DjangoDash
 from dash.dependencies import Input, Output
-from relecov_core.utils.parse_files import parse_csv_into_list_of_dicts
+
+# from relecov_core.utils.parse_files import parse_csv_into_list_of_dicts
 
 
 def testing_fisabio_data():
