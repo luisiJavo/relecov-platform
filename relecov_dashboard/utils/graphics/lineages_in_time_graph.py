@@ -16,7 +16,7 @@ from relecov_core.models import DateUpdateState
 # from relecov_core.utils.parse_files import parse_csv_into_list_of_dicts
 
 
-def create_dataframe(list_of_lists):
+def create_dataframe_variants_in_time(list_of_lists):
     df = pd.DataFrame(list_of_lists).transpose()
     df.columns = ["SAMPLE", "DATE"]
     print(df)
