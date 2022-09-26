@@ -1,7 +1,7 @@
 import os
 
 # import random
-# import json
+import json
 from django.conf import settings
 import pandas as pd
 import dash_core_components as dcc
@@ -9,8 +9,6 @@ import dash_html_components as html
 import plotly.express as px
 from django_plotly_dash import DjangoDash
 from dash.dependencies import Input, Output
-import plotly.graph_objects as go
-from plotly.subplots import make_subplots
 
 # from relecov_core.utils.parse_files import parse_csv_into_list_of_dicts
 
@@ -48,49 +46,6 @@ def create_lineage_in_time_graph(input_file, df):
     def update_figure(selected_range):
         df = read_mutation_data(input_file, file_extension="csv")
 
-        # Create figure
-        # fig = go.Figure()
-
-        fig = make_subplots(1, 2)
-
-        # add first bar trace at row = 1, col = 1
-
-        fig.add_trace(
-            go.Bar(
-                x=df["sample_collection_date"],
-                y=df["lineage_name"],
-                name="A",
-                marker_color="green",
-                opacity=0.4,
-                marker_line_color="rgb(8,48,107)",
-                marker_line_width=2,
-            ),
-            row=1,
-            col=1,
-        )
-
-        fig.add_trace(
-            go.Scatter(
-                x=df["sample_collection_date"],
-                y=df["lineage_name"],
-                line=dict(color="red"),
-                name="B",
-            ),
-            row=1,
-            col=1,
-        )
-
-        """
-        # add first bar trace at row = 1, col = 2
-        fig.add_trace(go.Bar(x=df['sample_collection_date'], y=df['lineage_name'],
-            name='C',
-            marker_color = 'green',
-            opacity=0.4,
-            marker_line_color='rgb(8,48,107)',
-            marker_line_width=1),
-            row = 1, col = 2)
-        """
-        """
         fig = px.bar(
             df,
             x="sample_collection_date",
@@ -99,39 +54,8 @@ def create_lineage_in_time_graph(input_file, df):
             barmode="stack",
             # hover_name="Variant",
         )
-        """
 
-        # fig.add_trace(
-        # go.Scatter(x=list(df.sample_collection_date), y=list(df.lineage_name)))
-        # Set title
-        # fig.update_layout(title_text="Time series with range slider and selectors")
-
-        # Add range slider
-        fig.update_layout(
-            xaxis=dict(
-                rangeselector=dict(
-                    buttons=list(
-                        [
-                            dict(
-                                count=1, label="1m", step="month", stepmode="backward"
-                            ),
-                            dict(
-                                count=6, label="6m", step="month", stepmode="backward"
-                            ),
-                            dict(count=1, label="YTD", step="year", stepmode="todate"),
-                            dict(count=1, label="1y", step="year", stepmode="backward"),
-                            dict(step="all"),
-                        ]
-                    )
-                ),
-                rangeslider=dict(visible=True),
-                type="date",
-            )
-        )
-        """
-        
-        """
-        # fig.update_layout(transition_duration=500)
+        fig.update_layout(transition_duration=500)
 
         return fig
 
