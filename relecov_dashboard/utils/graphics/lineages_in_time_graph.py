@@ -1,8 +1,8 @@
 from datetime import datetime
-import os
+# simport os
 from time import strptime
 
-from django.conf import settings
+# from django.conf import settings
 import pandas as pd
 import dash_core_components as dcc
 import dash_html_components as html
