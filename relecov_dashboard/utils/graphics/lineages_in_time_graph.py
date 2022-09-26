@@ -1,4 +1,6 @@
+from datetime import datetime
 import os
+from time import strptime
 
 from django.conf import settings
 import pandas as pd
@@ -9,19 +11,26 @@ from django_plotly_dash import DjangoDash
 from dash.dependencies import Input, Output
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
+from relecov_core.models import DateUpdateState
 
 # from relecov_core.utils.parse_files import parse_csv_into_list_of_dicts
 
 
-def testing_fisabio_data():
+def create_dataframe(list_of_lists):
+    df = pd.DataFrame(list_of_lists).transpose()
+    df.columns = ["SAMPLE", "DATE"]
+    print(df)
+    """
     input_file = os.path.join(
         settings.BASE_DIR, "relecov_core", "docs", "fisabio_data.csv"
     )
     df = read_mutation_data(input_file, file_extension="csv")
     df = df.sort_values(by=["sample_collection_date"])
+    """
     # print(df)
     # create_test_variant_graph(df)
-    create_lineage_in_time_graph(input_file, df)
+    # create_lineage_in_time_graph(df)
+    return df
 
 
 def read_mutation_data(input_file: str, file_extension: str = "csv") -> pd.DataFrame:
@@ -38,13 +47,30 @@ def read_mutation_data(input_file: str, file_extension: str = "csv") -> pd.DataF
     return df
 
 
-def create_lineage_in_time_graph(input_file, df):
+def create_lineage_in_time_graph(df):
     app = DjangoDash(name="TestVariantGraph")
     app.layout = create_test_variant_graph(df)
 
     @app.callback(Output("graph-with-slider", "figure"), Input("date_slider", "value"))
     def update_figure(selected_range):
-        df = read_mutation_data(input_file, file_extension="csv")
+        sample_objs = DateUpdateState.objects.all()
+        date_list = []
+        list_of_dates = []
+        list_of_samples = []
+        list_of_lists = []
+        for sample_obj in sample_objs:
+            list_of_samples.append(sample_obj.get_sample_id())
+            date = sample_obj.get_date()
+            date_list = date.split(",")
+            year = date_list[1]
+            date_list = date_list[0].split(" ")
+            month = strptime(date_list[0], "%B").tm_mon
+            date_converted = datetime(int(year), month, int(date_list[1]))
+            list_of_dates.append(date_converted.strftime("%Y-%m-%d"))
+
+        list_of_lists.append(list_of_samples)
+        list_of_lists.append(list_of_dates)
+        df = create_dataframe(list_of_lists)
 
         # Create figure
         # fig = go.Figure()
@@ -55,8 +81,8 @@ def create_lineage_in_time_graph(input_file, df):
 
         fig.add_trace(
             go.Bar(
-                x=df["sample_collection_date"],
-                y=df["lineage_name"],
+                x=df["SAMPLE"],
+                y=df["DATE"],
                 name="A",
                 marker_color="green",
                 opacity=0.4,
@@ -69,8 +95,8 @@ def create_lineage_in_time_graph(input_file, df):
 
         fig.add_trace(
             go.Scatter(
-                x=df["sample_collection_date"],
-                y=df["lineage_name"],
+                x=df["SAMPLE"],
+                y=df["DATE"],
                 line=dict(color="red"),
                 name="B",
             ),
@@ -137,16 +163,16 @@ def create_test_variant_graph(df):
     # df = set_dataframe_range_slider(get_variant_data(), selected_range)
     list_of_dates = []
     list_of_lineages = []
-    for date in df["sample_collection_date"].unique():
+    for date in df["SAMPLE"].unique():
         list_of_dates.append(date.strip())
-    for lineage in df["lineage_name"].unique():
+    for lineage in df["DATE"].unique():
         list_of_lineages.append(lineage)
-    print(list_of_lineages)
+    # print(list_of_lineages)
     fig = px.bar(
         df,
-        x="sample_collection_date",
-        y="lineage_name",
-        color="who_name",
+        x="SAMPLE",
+        y="DATE",
+        color="SAMPLE",
         barmode="stack",
     )
     # pdb.set_trace()
@@ -185,7 +211,7 @@ def create_test_variant_graph(df):
                     max="2022-03-13",
                     step=None,
                     # type="date",
-                    value=df["sample_collection_date"],
+                    value=df["SAMPLE"],
                     # value=[int(df["Week"].min()), max_weeks],
                     marks={
                         str(list_of_dates[idx]): {
