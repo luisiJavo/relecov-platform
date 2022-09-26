@@ -1,7 +1,5 @@
 import os
 
-# import random
-# import json
 from django.conf import settings
 import pandas as pd
 import dash_core_components as dcc
@@ -128,9 +126,6 @@ def create_lineage_in_time_graph(input_file, df):
                 type="date",
             )
         )
-        """
-        
-        """
         # fig.update_layout(transition_duration=500)
 
         return fig
