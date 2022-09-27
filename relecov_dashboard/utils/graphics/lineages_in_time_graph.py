@@ -13,8 +13,17 @@ import plotly.graph_objects as go
 from relecov_core.models import DateUpdateState
 
 
-def create_list_for_dataframe():
-    sample_objs = DateUpdateState.objects.all()
+def create_dataframe_from_database():
+    """
+    This function reads data from database, DateUpdateState model:
+        - number of sample from "sampleID" field,
+        - date from "date" field
+
+    Returns a pandas dataframe object.
+    """
+
+    # sample_objs = DateUpdateState.objects.all()
+    sample_objs = DateUpdateState.objects.filter(stateID__iexact="Defined")
     date_list = []
     list_of_dates = []
     list_of_samples = []
@@ -32,10 +41,6 @@ def create_list_for_dataframe():
     list_of_lists.append(list_of_samples)
     list_of_lists.append(list_of_dates)
 
-    return list_of_lists
-
-
-def create_dataframe_variants_in_time(list_of_lists):
     df = pd.DataFrame(list_of_lists).transpose()
     df.columns = ["SAMPLE", "DATE"]
     df = df.sort_values(by=["DATE"])
@@ -43,8 +48,14 @@ def create_dataframe_variants_in_time(list_of_lists):
     return df
 
 
-def read_mutation_data():
-    # Returns a pandas dataframe object
+def create_dataframe_from_json():
+    """
+    This function reads data from processed_converted_metadata_lab.json:
+        - number of sample from "isolate_sample_id" field,
+        - date from "sample_received_date" field
+
+    Returns a pandas dataframe object.
+    """
 
     list_of_samples = []
     list_of_dates = []
@@ -74,11 +85,11 @@ def read_mutation_data():
 
 def create_lineage_in_time_graph(df):
     app = DjangoDash(name="TestVariantGraph")
-    app.layout = create_test_variant_graph(df)
+    app.layout = create_samples_received_in_time_graph(df)
 
     @app.callback(Output("graph-with-slider", "figure"), Input("date_slider", "value"))
     def update_figure(selected_range):
-        df = read_mutation_data()
+        df = create_dataframe_from_json()
         df = df.sort_values(by=["DATE"])
         dates_unique = df["DATE"].unique()
         number_of_samples_per_date = pd.DataFrame(df.DATE.value_counts())
@@ -135,8 +146,8 @@ def create_lineage_in_time_graph(df):
         return fig
 
 
-def create_test_variant_graph(df):
-    df = read_mutation_data()
+def create_samples_received_in_time_graph(df):
+    df = create_dataframe_from_json()
     df = df.sort_values(by=["DATE"])
     dates_unique = df["DATE"].unique()
     number_of_samples_per_date = pd.DataFrame(df.DATE.value_counts())
@@ -218,41 +229,13 @@ def create_test_variant_graph(df):
             html.Div(
                 children=dcc.RangeSlider(
                     id="date_slider",
-                    # min=1,
-                    # max=3,
+                    min=dates_unique.min(),
+                    max=dates_unique.max(),
                     step=None,
-                    # type="date",
-                    value=df["SAMPLE"],
+                    value=None,
                     # value=[int(df["Week"].min()), max_weeks],
                     marks=None,
                 ),
-            ),
-            html.Div(
-                className="card bg-light",
-                children=[
-                    html.Div(
-                        className="card-body",
-                        children=[
-                            html.H3(
-                                children="Variants of concern"
-                                + "(VOC) and under investigation"
-                                + "(VUI) detected in the Spain data.",
-                                className="card-title",
-                            ),
-                            html.H5(
-                                children="DISCLAIMER: relecov-platform"
-                                + "uses curated sequences"
-                                + "for determining the counts"
-                                + "of a given lineage. Other sources"
-                                + "of information may be reporting"
-                                + "cases with partial sequence"
-                                + "information or other forms"
-                                + "of PCR testing.",
-                                className="card-text",
-                            ),
-                        ],
-                    )
-                ],
             ),
         ],
     )
