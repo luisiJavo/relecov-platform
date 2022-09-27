@@ -2,6 +2,7 @@ from datetime import datetime
 import os
 from time import strptime
 
+# import random
 import json
 from django.conf import settings
 import pandas as pd
@@ -10,9 +11,9 @@ import dash_html_components as html
 import plotly.express as px
 from django_plotly_dash import DjangoDash
 from dash.dependencies import Input, Output
-import plotly.graph_objects as go
-from plotly.subplots import make_subplots
 from relecov_core.models import DateUpdateState
+
+# from relecov_core.utils.parse_files import parse_csv_into_list_of_dicts
 
 
 def create_list_for_dataframe():
@@ -40,14 +41,15 @@ def create_list_for_dataframe():
 def create_dataframe_variants_in_time(list_of_lists):
     df = pd.DataFrame(list_of_lists).transpose()
     df.columns = ["SAMPLE", "DATE"]
-    df = df.sort_values(by=["DATE"])
+    # df = df.sort_values(by=["sample_collection_date"])
 
     return df
 
 
 def read_mutation_data():
-    # Returns a pandas dataframe object
 
+    # Read fisabio.csv data, either in CSV format.
+    # Returns a pandas dataframe object
     list_of_samples = []
     list_of_dates = []
     list_of_lists = []
@@ -58,12 +60,11 @@ def read_mutation_data():
         "processed_converted_metadata_lab.json",
     )
     with open(input_file) as f:
+        # print(f)
         data = json.load(f)
-
     for line in data:
         list_of_samples.append(line["isolate_sample_id"])
         list_of_dates.append(line["sample_received_date"])
-
     list_of_lists.append(list_of_samples)
     list_of_lists.append(list_of_dates)
 
@@ -80,40 +81,17 @@ def create_lineage_in_time_graph(df):
 
     @app.callback(Output("graph-with-slider", "figure"), Input("date_slider", "value"))
     def update_figure(selected_range):
+        # df = create_dataframe_variants_in_time
         df = read_mutation_data()
-        df = df.sort_values(by=["DATE"])
-        dates_unique = df["DATE"].unique()
-        number_of_samples_per_date = pd.DataFrame(df.DATE.value_counts())
-        # number_of_samples_per_date = number_of_samples_per_date.sort_values(by=["DATE"])
+        print(df)
 
-        # number_of_samples_per_date = df.DATE.value_counts()
-        # number_of_samples_per_date = number_of_samples_per_date.sort_values(by=["DATE"])
-        # dates_unique = df["DATE"].unique()
-        # dates_unique = dates_unique.sort_values(by=["DATE"])
-
-        # Create figure
-        fig = go.Figure()
-
-        # add first bar trace at row = 1, col = 1
-        fig.add_trace(
-            go.Bar(
-                x=dates_unique,
-                y=number_of_samples_per_date["DATE"],
-                name="Samples in time",
-                marker_color="green",
-                opacity=0.4,
-                marker_line_color="rgb(8,48,107)",
-                marker_line_width=2,
-            ),
-        )
-        fig.add_trace(
-            go.Scatter(
-                x=dates_unique,
-                y=number_of_samples_per_date["DATE"],
-                mode="lines",
-                line=dict(color="red"),
-                name="Number of samples",
-            ),
+        fig = px.bar(
+            df,
+            x="DATE",
+            y="SAMPLE",
+            color="DATE",
+            barmode="stack",
+            # hover_name="Variant",
         )
 
         fig.update_layout(
@@ -144,57 +122,13 @@ def create_lineage_in_time_graph(df):
 
 
 def create_test_variant_graph(df):
-    df = read_mutation_data()
-    df = df.sort_values(by=["DATE"])
-    dates_unique = df["DATE"].unique()
-    number_of_samples_per_date = pd.DataFrame(df.DATE.value_counts())
-    # number_of_samples_per_date = number_of_samples_per_date.sort_values(by=["DATE"])
-    print(dates_unique)
-    # Create figure
-    fig = go.Figure()
-
-    # add first bar trace at row = 1, col = 1
-
-    fig.add_trace(
-        go.Bar(
-            x=dates_unique,
-            y=number_of_samples_per_date["DATE"],
-            name="Samples in time",
-            marker_color="green",
-            opacity=0.4,
-            marker_line_color="rgb(8,48,107)",
-            marker_line_width=2,
-        ),
+    fig = px.bar(
+        df,
+        x="DATE",
+        y="SAMPLE",
+        color="DATE",
+        barmode="stack",
     )
-    fig.add_trace(
-        go.Scatter(
-            x=dates_unique,
-            y=number_of_samples_per_date["DATE"],
-            mode="lines",
-            line=dict(color="red"),
-            name="Number of samples",
-        ),
-    )
-
-    fig.update_layout(
-        xaxis=dict(
-            rangeselector=dict(
-                buttons=list(
-                    [
-                        dict(count=1, label="1m", step="month", stepmode="backward"),
-                        dict(count=6, label="6m", step="month", stepmode="backward"),
-                        dict(count=1, label="YTD", step="year", stepmode="todate"),
-                        dict(count=1, label="1y", step="year", stepmode="backward"),
-                        dict(step="all"),
-                    ]
-                )
-            ),
-            rangeslider=dict(visible=True),
-            type="date",
-        )
-    )
-
-    fig.update_layout(transition_duration=500)
 
     return html.Div(
         className="card",
@@ -227,11 +161,11 @@ def create_test_variant_graph(df):
             html.Div(
                 children=dcc.RangeSlider(
                     id="date_slider",
-                    # min=1,
-                    # max=3,
+                    min=1,
+                    max=3,
                     step=None,
                     # type="date",
-                    value=df["SAMPLE"],
+                    value=df["DATE"],
                     # value=[int(df["Week"].min()), max_weeks],
                     marks=None,
                 ),
@@ -263,5 +197,6 @@ def create_test_variant_graph(df):
                     )
                 ],
             ),
+            # html.Div(children=generate_table(df_table)),
         ],
     )
