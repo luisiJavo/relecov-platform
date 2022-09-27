@@ -71,7 +71,7 @@ def create_lineage_in_time_graph(df):
 
         list_of_lists.append(list_of_samples)
         list_of_lists.append(list_of_dates)
-        df = create_dataframe(list_of_lists)
+        df = create_dataframe_variants_in_time(list_of_lists)
 
         # Create figure
         # fig = go.Figure()
