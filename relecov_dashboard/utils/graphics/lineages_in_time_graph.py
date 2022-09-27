@@ -82,7 +82,7 @@ def create_lineage_in_time_graph(df):
         df = df.sort_values(by=["DATE"])
         dates_unique = df["DATE"].unique()
         number_of_samples_per_date = pd.DataFrame(df.DATE.value_counts())
-        
+
         # Create figure
         fig = go.Figure()
 
@@ -140,7 +140,7 @@ def create_test_variant_graph(df):
     df = df.sort_values(by=["DATE"])
     dates_unique = df["DATE"].unique()
     number_of_samples_per_date = pd.DataFrame(df.DATE.value_counts())
-    
+
     # Create figure
     fig = go.Figure()
 
