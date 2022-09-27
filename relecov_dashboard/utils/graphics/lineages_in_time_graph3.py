@@ -10,9 +10,6 @@ import dash_html_components as html
 import plotly.express as px
 from django_plotly_dash import DjangoDash
 from dash.dependencies import Input, Output
-import plotly.graph_objects as go
-from plotly.subplots import make_subplots
-from relecov_core.models import DateUpdateState
 
 # from relecov_core.utils.parse_files import parse_csv_into_list_of_dicts
 
