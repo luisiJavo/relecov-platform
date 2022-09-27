@@ -7,11 +7,9 @@ from django.conf import settings
 import pandas as pd
 import dash_core_components as dcc
 import dash_html_components as html
-import plotly.express as px
 from django_plotly_dash import DjangoDash
 from dash.dependencies import Input, Output
 import plotly.graph_objects as go
-from plotly.subplots import make_subplots
 from relecov_core.models import DateUpdateState
 
 
@@ -84,13 +82,7 @@ def create_lineage_in_time_graph(df):
         df = df.sort_values(by=["DATE"])
         dates_unique = df["DATE"].unique()
         number_of_samples_per_date = pd.DataFrame(df.DATE.value_counts())
-        # number_of_samples_per_date = number_of_samples_per_date.sort_values(by=["DATE"])
-
-        # number_of_samples_per_date = df.DATE.value_counts()
-        # number_of_samples_per_date = number_of_samples_per_date.sort_values(by=["DATE"])
-        # dates_unique = df["DATE"].unique()
-        # dates_unique = dates_unique.sort_values(by=["DATE"])
-
+        
         # Create figure
         fig = go.Figure()
 
@@ -148,8 +140,7 @@ def create_test_variant_graph(df):
     df = df.sort_values(by=["DATE"])
     dates_unique = df["DATE"].unique()
     number_of_samples_per_date = pd.DataFrame(df.DATE.value_counts())
-    # number_of_samples_per_date = number_of_samples_per_date.sort_values(by=["DATE"])
-    print(dates_unique)
+    
     # Create figure
     fig = go.Figure()
 
