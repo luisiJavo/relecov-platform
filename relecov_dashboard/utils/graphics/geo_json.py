@@ -1,4 +1,3 @@
-from collections import Counter
 import os
 import pandas as pd
 import json
@@ -9,14 +8,6 @@ import dash_html_components as html
 from django_plotly_dash import DjangoDash
 from dash.dependencies import Input, Output
 from relecov_platform import settings
-
-"""
-def parse_csv(file_path):
-    # This function loads a CSV file and returns a DataFrame.
-    df = pd.read_csv(file_path, sep=",")
-
-    return df
-"""
 
 
 def parse_json_file():
@@ -34,14 +25,10 @@ def parse_json_file():
     )
     with open(input_file) as f:
         data = json.load(f)
-    # print(df)
-
+    
     region_data = data["region"]
     list_of_ccaa = region_data.keys()
     list_of_number_of_samples = region_data.values()
-
-    # list_of_ccaa = data.keys()
-    # list_of_number_of_samples = data.values()
 
     list_of_lists.append(list_of_ccaa)
     list_of_lists.append(list_of_number_of_samples)
@@ -50,103 +37,7 @@ def parse_json_file():
     df.columns = ["CCAA", "NUMBER_OF_SAMPLES"]
     df = df.sort_values(by=["NUMBER_OF_SAMPLES"])
 
-    print(df)
-
     return df
-
-
-def preprocess_json_data_with_csv(json_data, csv_data):
-    """
-    This function counts the number of samples for each CCAA for a certain lineage.
-    """
-    """
-    lineage_dict = dict()
-    for sample_data in json_data["data"]:
-        if not csv_data[
-            csv_data.SAMPLE == int(sample_data["sequencing_sample_id"])
-        ].empty:
-            lineage = (
-                csv_data[csv_data.SAMPLE == int(sample_data["sequencing_sample_id"])]
-                .iloc[0]
-                .at["LINEAGE"]
-            )
-            if lineage_dict.get(lineage) is None:
-                lineage_dict[lineage] = [sample_data["geo_loc_state"]]
-            else:
-                lineage_dict[lineage].append(sample_data["geo_loc_state"])
-    """
-    lineage_count_dict = dict()
-    for lineage in lineage_dict:
-        lineage_count_dict[lineage] = dict(Counter(lineage_dict[lineage]))
-
-    # Modify CCAA dictionary to values in JSON file
-    ccaa_dict = {
-        "Unassigned": 0,
-        "Andalucía": 1,
-        "Aragón": 2,
-        "Islas Baleares": 3,
-        "Islas Canarias": 4,
-        "Cantabria": 5,
-        "Castilla-La Mancha": 6,
-        "Castilla y León": 7,
-        # "Cataluña": 8,
-        "Catalonia": 8,
-        "Ceuta": 9,
-        "Extremadura": 10,
-        "Galicia": 11,
-        "La Rioja": 12,
-        "Madrid": 13,
-        "Melilla": 14,
-        "Murcia": 15,
-        "Navarra": 16,
-        "País Vasco": 17,
-        "Asturias": 18,
-        "Comunidad Valenciana": 19,
-    }
-
-    lineage_by_ccaa_df = pd.DataFrame(
-        columns=["ID", "CCAA", "Lineage", "Count"]
-    ).astype(dtype={"Count": "int64"})
-
-    for lineage in lineage_count_dict:
-        for ccaa in lineage_count_dict[lineage]:
-            lineage_by_ccaa_df = lineage_by_ccaa_df.append(
-                {
-                    "ID": ccaa_dict[ccaa],
-                    "CCAA": ccaa,
-                    # "Lineage": lineage,
-                    "Count": int(lineage_count_dict[lineage][ccaa]),
-                },
-                ignore_index=True,
-            )
-    return lineage_by_ccaa_df
-
-
-def set_dataframe_geo_plot(df, lineage):
-    """
-    This function receives a python dictionary, a list of selected fields and sets a dataframe from fields_selected_list
-    to represent the graph dataframe structure(dict) { x: [], y: [], domains: [], mutationGroups: [],}
-    """
-    if lineage is None:
-        first_line = df.iloc[0]
-        lineage = first_line.at[0, "Lineage"]
-
-    filter_df = df[df.Lineage == lineage]
-
-    return filter_df
-
-
-def get_list_of_dict_of_lineages_from_long_table(df):
-    """
-    This function receives parsed file from parse_csv().
-    Returns a list of dictionaries of lineages [{"label": "B.1.177.57", "value": "B.1.177.57"}]
-    """
-    unique_lineages = df.LINEAGE.unique()
-    list_of_lineages = []
-    for lin in unique_lineages:
-        list_of_lineages.append({"label": lin, "value": lin})
-
-    return list_of_lineages
 
 
 def create_json(lineage):
