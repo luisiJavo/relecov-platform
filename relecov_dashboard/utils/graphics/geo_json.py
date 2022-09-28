@@ -25,7 +25,7 @@ def parse_json_file():
     )
     with open(input_file) as f:
         data = json.load(f)
-    
+
     region_data = data["region"]
     list_of_ccaa = region_data.keys()
     list_of_number_of_samples = region_data.values()
