@@ -10,55 +10,30 @@ from django_plotly_dash import DjangoDash
 from dash.dependencies import Input, Output
 from relecov_platform import settings
 
-"""
+
 def parse_csv(file_path):
-    # This function loads a CSV file and returns a DataFrame.
+    """
+    This function loads a CSV file and returns a DataFrame.
+    """
     df = pd.read_csv(file_path, sep=",")
 
     return df
-"""
 
 
-def parse_json_file():
+def parse_json_file(json_file):
     """
     This function loads a json file and returns a python dictionary.
     """
-    list_of_ccaa = []
-    list_of_number_of_samples = []
-    list_of_lists = []
-    input_file = os.path.join(
-        settings.BASE_DIR,
-        "relecov_core",
-        "docs",
-        "data_for_geomap_from_ISkyLims_only_region.json",
-    )
-    with open(input_file) as f:
-        data = json.load(f)
-    # print(df)
+    json_parsed = {}
+    with open(json_file, encoding="utf-8") as f:
+        json_parsed["data"] = json.load(f)
 
-    region_data = data["region"]
-    list_of_ccaa = region_data.keys()
-    list_of_number_of_samples = region_data.values()
-
-    # list_of_ccaa = data.keys()
-    # list_of_number_of_samples = data.values()
-
-    list_of_lists.append(list_of_ccaa)
-    list_of_lists.append(list_of_number_of_samples)
-
-    df = pd.DataFrame(list_of_lists).transpose()
-    df.columns = ["CCAA", "NUMBER_OF_SAMPLES"]
-    df = df.sort_values(by=["NUMBER_OF_SAMPLES"])
-
-    print(df)
-
-    return df
+    return json_parsed
 
 
 def preprocess_json_data_with_csv(json_data, csv_data):
     """
     This function counts the number of samples for each CCAA for a certain lineage.
-    """
     """
     lineage_dict = dict()
     for sample_data in json_data["data"]:
@@ -74,7 +49,7 @@ def preprocess_json_data_with_csv(json_data, csv_data):
                 lineage_dict[lineage] = [sample_data["geo_loc_state"]]
             else:
                 lineage_dict[lineage].append(sample_data["geo_loc_state"])
-    """
+
     lineage_count_dict = dict()
     for lineage in lineage_dict:
         lineage_count_dict[lineage] = dict(Counter(lineage_dict[lineage]))
@@ -114,7 +89,7 @@ def preprocess_json_data_with_csv(json_data, csv_data):
                 {
                     "ID": ccaa_dict[ccaa],
                     "CCAA": ccaa,
-                    # "Lineage": lineage,
+                    "Lineage": lineage,
                     "Count": int(lineage_count_dict[lineage][ccaa]),
                 },
                 ignore_index=True,
@@ -150,16 +125,13 @@ def get_list_of_dict_of_lineages_from_long_table(df):
 
 
 def create_json(lineage):
-    ldata = parse_json_file()
-
     geojson_file = os.path.join(
         settings.BASE_DIR, "relecov_core", "docs", "spain-communities.geojson"
     )
 
     with open(geojson_file) as geo_json:
         counties = json.load(geo_json)
-    # print(counties)
-    """
+
     csv_file = os.path.join(
         settings.BASE_DIR, "relecov_core", "docs", "variants_long_table_last.csv"
     )
@@ -178,14 +150,14 @@ def create_json(lineage):
     ldata = set_dataframe_geo_plot(
         preprocess_json_data_with_csv(json_data, csv_data), lineage
     )
-    """
+
     fig = px.choropleth_mapbox(
         ldata,
         geojson=counties,
-        locations=ldata.CCAA,
-        color=ldata.NUMBER_OF_SAMPLES,
+        locations=ldata.ID,
+        color=ldata.Count,
         color_continuous_scale="Viridis",
-        range_color=(0, ldata.NUMBER_OF_SAMPLES.max()),
+        range_color=(0, ldata.Count.max()),
         mapbox_style="carto-positron",
         zoom=3,
         center={"lat": 35.9, "lon": -5.3},
@@ -197,28 +169,39 @@ def create_json(lineage):
     app = DjangoDash("geo_json")
     app.layout = html.Div(
         children=[
-            html.Div(
-                children=dcc.Graph(figure=fig, id="geomap-per-lineage"),
+            "Select a Lineage",
+            dcc.Dropdown(
+                id="geomap-select-lineage",
+                options=dict_of_samples,
+                clearable=False,
+                multi=False,
+                value=lineage,
+                # style={"width": "400px"},
             ),
-        ],
+            html.Div(
+                children=[
+                    html.Div(
+                        children=dcc.Graph(figure=fig, id="geomap-per-lineage"),
+                    ),
+                ],
+            ),
+        ]
     )
-    # ])
 
     @app.callback(
         Output("geomap-per-lineage", "figure"),
         Input("geomap-select-lineage", "value"),
     )
     def update_sample(selected_lineage):
-        # lineage_by_ccaa = preprocess_json_data_with_csv(json_data, csv_data)
-        # ldata = set_dataframe_geo_plot(lineage_by_ccaa, selected_lineage)
-        ldata = parse_json_file()
+        lineage_by_ccaa = preprocess_json_data_with_csv(json_data, csv_data)
+        ldata = set_dataframe_geo_plot(lineage_by_ccaa, selected_lineage)
         fig = px.choropleth_mapbox(
             data_frame=ldata,
             geojson=counties,
-            locations=ldata.CCAA,
-            color=ldata.NUMBER_OF_SAMPLES,
+            locations=ldata.ID,
+            color=ldata.Count,
             color_continuous_scale="Viridis",
-            range_color=(0, ldata.NUMBER_OF_SAMPLES.max()),
+            range_color=(0, ldata.Count.max()),
             mapbox_style="carto-positron",
             zoom=5,
             center={"lat": 35.9, "lon": -5.3},
