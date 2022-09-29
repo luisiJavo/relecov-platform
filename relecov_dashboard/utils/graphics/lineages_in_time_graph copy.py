@@ -16,7 +16,13 @@ from relecov_core.models import DateUpdateState
 # from relecov_core.utils.parse_files import parse_csv_into_list_of_dicts
 
 
-def create_list_for_dataframe():
+def create_dataframe_from_database():
+    """
+    This function reads data from database, "DateUpdateState" model,
+    and creates a pandas dataframe object with this fields:
+        -"SAMPLE" -> from "sampleID" field
+        -"DATE"   -> from "date" field
+    """
     sample_objs = DateUpdateState.objects.all()
     date_list = []
     list_of_dates = []
@@ -35,21 +41,21 @@ def create_list_for_dataframe():
     list_of_lists.append(list_of_samples)
     list_of_lists.append(list_of_dates)
 
-    return list_of_lists
-
-
-def create_dataframe_variants_in_time(list_of_lists):
     df = pd.DataFrame(list_of_lists).transpose()
     df.columns = ["SAMPLE", "DATE"]
-    # df = df.sort_values(by=["sample_collection_date"])
+    df = df.sort_values(by=["DATE"])
 
     return df
 
 
-def read_mutation_data():
+def create_dataframe_from_json():
+    """
+    This function reads data from file "processed_converted_metadata_lab.json",
+    and creates a pandas dataframe object with this fields:
+        -"SAMPLE" -> from "isolate_sample_id" field
+        -"DATE"   -> from "sample_received_date"
+    """
 
-    # Read fisabio.csv data, either in CSV format.
-    # Returns a pandas dataframe object
     list_of_samples = []
     list_of_dates = []
     list_of_lists = []
@@ -60,11 +66,12 @@ def read_mutation_data():
         "processed_converted_metadata_lab.json",
     )
     with open(input_file) as f:
-        # print(f)
         data = json.load(f)
+
     for line in data:
         list_of_samples.append(line["isolate_sample_id"])
         list_of_dates.append(line["sample_received_date"])
+
     list_of_lists.append(list_of_samples)
     list_of_lists.append(list_of_dates)
 
@@ -82,7 +89,7 @@ def create_lineage_in_time_graph(df):
     @app.callback(Output("graph-with-slider", "figure"), Input("date_slider", "value"))
     def update_figure(selected_range):
         # df = create_dataframe_variants_in_time
-        df = read_mutation_data()
+        df = create_dataframe_from_json()
         print(df)
 
         fig = px.bar(

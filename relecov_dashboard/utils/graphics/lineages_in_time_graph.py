@@ -123,9 +123,12 @@ def create_lineage_in_time_graph(df):
             xaxis=dict(
                 rangeselector=dict(
                     buttons=list(
-                        
-        "processed_converted_metadata_lab.json",
-    )        count=6, label="6m", step="month", stepmode="backward"
+                        [
+                            dict(
+                                count=1, label="1m", step="month", stepmode="backward"
+                            ),
+                            dict(
+                                count=6, label="6m", step="month", stepmode="backward"
                             ),
                             dict(count=1, label="YTD", step="year", stepmode="todate"),
                             dict(count=1, label="1y", step="year", stepmode="backward"),
@@ -188,9 +191,7 @@ def create_samples_received_in_time_graph(df):
                     ]
                 )
             ),
-            
-        "processed_converted_metadata_lab.json",
-    )rangeslider=dict(visible=True),
+            rangeslider=dict(visible=True),
             type="date",
         )
     )
