@@ -30,6 +30,8 @@ def create_dataframe_from_database():
     list_of_lists = []
     for sample_obj in sample_objs:
         list_of_samples.append(sample_obj.get_sample_id())
+
+        # Changes date format to "23 Aug, 2022" to "2022-08-23"
         date = sample_obj.get_date()
         date_list = date.split(",")
         year = date_list[1]
@@ -83,120 +85,19 @@ def create_dataframe_from_json():
     return df
 
 
-def create_lineage_in_time_graph(df):
-    app = DjangoDash(name="TestVariantGraph")
-    app.layout = create_samples_received_in_time_graph(df)
+def create_samples_over_time_graph(df):
+    app = DjangoDash(name="SamplesInTimeGraph")
+    app.layout = create_samples_received_over_time(df)
 
     @app.callback(Output("graph-with-slider", "figure"), Input("date_slider", "value"))
     def update_figure(selected_range):
         df = create_dataframe_from_json()
-        df = df.sort_values(by=["DATE"])
-        dates_unique = df["DATE"].unique()
-        number_of_samples_per_date = pd.DataFrame(df.DATE.value_counts())
-
-        # Create figure
-        fig = go.Figure()
-
-        # add first bar trace at row = 1, col = 1
-        fig.add_trace(
-            go.Bar(
-                x=dates_unique,
-                y=number_of_samples_per_date["DATE"],
-                name="Samples in time",
-                marker_color="green",
-                opacity=0.4,
-                marker_line_color="rgb(8,48,107)",
-                marker_line_width=2,
-            ),
-        )
-        fig.add_trace(
-            go.Scatter(
-                x=dates_unique,
-                y=number_of_samples_per_date["DATE"],
-                mode="lines",
-                line=dict(color="red"),
-                name="Number of samples",
-            ),
-        )
-
-        fig.update_layout(
-            xaxis=dict(
-                rangeselector=dict(
-                    buttons=list(
-                        [
-                            dict(
-                                count=1, label="1m", step="month", stepmode="backward"
-                            ),
-                            dict(
-                                count=6, label="6m", step="month", stepmode="backward"
-                            ),
-                            dict(count=1, label="YTD", step="year", stepmode="todate"),
-                            dict(count=1, label="1y", step="year", stepmode="backward"),
-                            dict(step="all"),
-                        ]
-                    )
-                ),
-                rangeslider=dict(visible=True),
-                type="date",
-            )
-        )
-
-        fig.update_layout(transition_duration=500)
-
-        return fig
+        create_samples_received_over_time(df)
 
 
-def create_samples_received_in_time_graph(df):
-    df = create_dataframe_from_json()
-    df = df.sort_values(by=["DATE"])
+def create_samples_received_over_time(df):
     dates_unique = df["DATE"].unique()
-    number_of_samples_per_date = pd.DataFrame(df.DATE.value_counts())
-
-    # Create figure
-    fig = go.Figure()
-
-    # add first bar trace at row = 1, col = 1
-
-    fig.add_trace(
-        go.Bar(
-            x=dates_unique,
-            y=number_of_samples_per_date["DATE"],
-            name="Samples in time",
-            marker_color="green",
-            opacity=0.4,
-            marker_line_color="rgb(8,48,107)",
-            marker_line_width=2,
-        ),
-    )
-    fig.add_trace(
-        go.Scatter(
-            x=dates_unique,
-            y=number_of_samples_per_date["DATE"],
-            mode="lines",
-            line=dict(color="red"),
-            name="Number of samples",
-        ),
-    )
-
-    fig.update_layout(
-        xaxis=dict(
-            rangeselector=dict(
-                buttons=list(
-                    [
-                        dict(count=1, label="1m", step="month", stepmode="backward"),
-                        dict(count=6, label="6m", step="month", stepmode="backward"),
-                        dict(count=1, label="YTD", step="year", stepmode="todate"),
-                        dict(count=1, label="1y", step="year", stepmode="backward"),
-                        dict(step="all"),
-                    ]
-                )
-            ),
-            rangeslider=dict(visible=True),
-            type="date",
-        )
-    )
-
-    fig.update_layout(transition_duration=500)
+    fig = update_figure(df)
 
     return html.Div(
         className="card",
@@ -206,11 +107,11 @@ def create_samples_received_in_time_graph(df):
                 children=[
                     html.H1(
                         className="card-title",
-                        children="Linages in Spain",
+                        children="Samples in Spain",
                     ),
                     html.Div(
                         className="card-text",
-                        children="Linages evolution.",
+                        children="Samples received over time.",
                     ),
                 ],
             ),
@@ -239,3 +140,57 @@ def create_samples_received_in_time_graph(df):
             ),
         ],
     )
+
+
+def update_figure(df):
+    dates_unique = df["DATE"].unique()
+    number_of_samples_per_date = pd.DataFrame(df.DATE.value_counts())
+
+    # Create figure
+    fig = go.Figure()
+
+    fig.add_trace(
+        go.Bar(
+            x=dates_unique,
+            y=number_of_samples_per_date["DATE"],
+            name="Samples in time",
+            marker_color="green",
+            opacity=0.4,
+            marker_line_color="rgb(8,48,107)",
+            marker_line_width=2,
+        ),
+    )
+
+    fig.add_trace(
+        go.Scatter(
+            x=dates_unique,
+            y=number_of_samples_per_date["DATE"],
+            mode="lines",
+            line=dict(color="red"),
+            name="Number of samples",
+        ),
+    )
+
+    fig.update_layout(
+        xaxis=dict(
+            rangeselector=dict(
+                buttons=list(
+                    [
+                        dict(count=1, label="1m", step="month", stepmode="backward"),
+                        dict(count=6, label="6m", step="month", stepmode="backward"),
+                        dict(
+                            count=1, label="YTD", step="year", stepmode="backward"
+                        ),  # stepmode="todate"
+                        dict(count=1, label="1y", step="year", stepmode="backward"),
+                        dict(step="all"),
+                    ]
+                )
+            ),
+            rangeslider=dict(visible=True),
+            type="date",
+        )
+    )
+
+    fig.update_layout(transition_duration=500)
+
+    return fig

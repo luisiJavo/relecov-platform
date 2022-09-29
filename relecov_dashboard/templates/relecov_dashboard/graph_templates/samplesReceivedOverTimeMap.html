@@ -3,9 +3,10 @@
 {%load plotly_dash%}
 
 {% block content %}
-
+<br><br><br><br><br><br>
+{% include "relecov_dashboard/variantsSidebar.html"%}
     <div class="container text-center">
         <br><br><br><br><br><br>
-        {% plotly_app name="geo_json" ratio=2 %}
+        {% plotly_app name="samplesReceivedOverTimeMap" ratio=2 %}
     </div>
 {% endblock %}

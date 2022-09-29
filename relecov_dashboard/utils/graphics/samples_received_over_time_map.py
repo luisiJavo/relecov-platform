@@ -60,12 +60,11 @@ def parse_json_file():
     df = pd.DataFrame(list_of_lists).transpose()
     df.columns = ["CCAA_ID", "CCAA_NAME", "NUMBER_OF_SAMPLES"]
     df = df.sort_values(by=["NUMBER_OF_SAMPLES"])
-    print(df)
 
     return df
 
 
-def create_json():
+def create_samples_received_over_time_map():
     ldata = parse_json_file()
 
     geojson_file = os.path.join(
@@ -95,7 +94,7 @@ def create_json():
     )
     fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
 
-    app = DjangoDash("geo_json")
+    app = DjangoDash("samplesReceivedOverTimeMap")
     app.layout = html.Div(
         children=[
             html.Br(),
