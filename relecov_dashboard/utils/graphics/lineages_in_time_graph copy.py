@@ -1,5 +1,8 @@
+from datetime import datetime
 import os
-import random
+from time import strptime
+
+# import random
 import json
 from django.conf import settings
 import pandas as pd
@@ -8,124 +11,109 @@ import dash_html_components as html
 import plotly.express as px
 from django_plotly_dash import DjangoDash
 from dash.dependencies import Input, Output
-from relecov_core.utils.parse_files import parse_csv_into_list_of_dicts
+from relecov_core.models import DateUpdateState
+
+# from relecov_core.utils.parse_files import parse_csv_into_list_of_dicts
 
 
-def generate_random_sequences():
-    sequence_list = []
-    for i in range(103):
-        sequence = random.randint(100, 1000)
-        sequence_list.append(sequence)
-    return sequence_list
+def create_list_for_dataframe():
+    sample_objs = DateUpdateState.objects.all()
+    date_list = []
+    list_of_dates = []
+    list_of_samples = []
+    list_of_lists = []
+    for sample_obj in sample_objs:
+        list_of_samples.append(sample_obj.get_sample_id())
+        date = sample_obj.get_date()
+        date_list = date.split(",")
+        year = date_list[1]
+        date_list = date_list[0].split(" ")
+        month = strptime(date_list[0], "%B").tm_mon
+        date_converted = datetime(int(year), month, int(date_list[1]))
+        list_of_dates.append(date_converted.strftime("%Y-%m-%d"))
+
+    list_of_lists.append(list_of_samples)
+    list_of_lists.append(list_of_dates)
+
+    return list_of_lists
 
 
-def generate_weeks():
-    weeks_list = []
+def create_dataframe_variants_in_time(list_of_lists):
+    df = pd.DataFrame(list_of_lists).transpose()
+    df.columns = ["SAMPLE", "DATE"]
+    # df = df.sort_values(by=["sample_collection_date"])
 
-    for j in range(10):
-        weeks_list.append(1)
-    for k in range(10):
-        weeks_list.append(2)
-    for la in range(10):
-        weeks_list.append(3)
-    for m in range(10):
-        weeks_list.append(4)
-    for n in range(10):
-        weeks_list.append(5)
-    for o in range(10):
-        weeks_list.append(6)
-    for p in range(10):
-        weeks_list.append(7)
-    for q in range(10):
-        weeks_list.append(8)
-    for r in range(10):
-        weeks_list.append(9)
-    for s in range(10):
-        weeks_list.append(10)
-    for t in range(3):
-        weeks_list.append(11)
-
-    return weeks_list
-
-
-def parse_json_file(json_file):
-    data = {}
-    data = json.loads(json_file)
-
-    return data
-
-
-def generate_table(dataframe, max_rows=14):
-    return html.Table(
-        className="table table-striped",
-        children=[
-            html.Thead(
-                className="table-info",
-                children=html.Tr([html.Th(col) for col in dataframe.columns]),
-            ),
-            html.Tbody(
-                [
-                    html.Tr(
-                        [html.Td(dataframe.iloc[i][col]) for col in dataframe.columns]
-                    )
-                    for i in range(min(len(dataframe), max_rows))
-                ],
-            ),
-        ],
-    )
-
-
-def set_dataframe_range_slider(variant_data, selected_range):
-    sequences_list = generate_random_sequences()
-    lineage_list = []
-    sequences_list2 = []
-    lineage_week_list2 = []
-    lineage_list2 = []
-
-    for variant in variant_data:
-        lineage_list.append(variant["lineage_dict"]["lineage"])
-        if int(variant["lineage_dict"]["week"]) >= int(selected_range[0]) and int(
-            variant["lineage_dict"]["week"]
-        ) <= int(selected_range[1]):
-            lineage_list2.append(variant["lineage_dict"]["lineage"])
-            lineage_week_list2.append(variant["lineage_dict"]["week"])
-    for i in range(len(lineage_list2)):
-        sequences_list2.append(sequences_list[i])
-
-    df = pd.DataFrame(
-        {
-            "Week": lineage_week_list2,
-            "Sequences": sequences_list2,
-            "Variant": lineage_list2,
-        }
-    )
     return df
 
 
-def get_variant_data():
-    variant_data = parse_csv_into_list_of_dicts(
-        os.path.join(
-            settings.BASE_DIR, "relecov_core", "docs", "variantLuisTableCSV.csv"
-        )
+def read_mutation_data():
+
+    # Read fisabio.csv data, either in CSV format.
+    # Returns a pandas dataframe object
+    list_of_samples = []
+    list_of_dates = []
+    list_of_lists = []
+    input_file = os.path.join(
+        settings.BASE_DIR,
+        "relecov_core",
+        "docs",
+        "processed_converted_metadata_lab.json",
     )
-    return variant_data
+    with open(input_file) as f:
+        # print(f)
+        data = json.load(f)
+    for line in data:
+        list_of_samples.append(line["isolate_sample_id"])
+        list_of_dates.append(line["sample_received_date"])
+    list_of_lists.append(list_of_samples)
+    list_of_lists.append(list_of_dates)
+
+    df = pd.DataFrame(list_of_lists).transpose()
+    df.columns = ["SAMPLE", "DATE"]
+    df = df.sort_values(by=["DATE"])
+
+    return df
 
 
-def create_lineage_in_time_graph():
+def create_lineage_in_time_graph(df):
     app = DjangoDash(name="TestVariantGraph")
-    app.layout = create_test_variant_graph([1, 19])
+    app.layout = create_test_variant_graph(df)
 
-    @app.callback(Output("graph-with-slider", "figure"), Input("week-slider", "value"))
+    @app.callback(Output("graph-with-slider", "figure"), Input("date_slider", "value"))
     def update_figure(selected_range):
-        df = set_dataframe_range_slider(get_variant_data(), selected_range)
+        # df = create_dataframe_variants_in_time
+        df = read_mutation_data()
+        print(df)
 
         fig = px.bar(
             df,
-            x="Week",
-            y="Sequences",
-            color="Variant",
+            x="DATE",
+            y="SAMPLE",
+            color="DATE",
             barmode="stack",
-            hover_name="Variant",
+            # hover_name="Variant",
+        )
+
+        fig.update_layout(
+            xaxis=dict(
+                rangeselector=dict(
+                    buttons=list(
+                        [
+                            dict(
+                                count=1, label="1m", step="month", stepmode="backward"
+                            ),
+                            dict(
+                                count=6, label="6m", step="month", stepmode="backward"
+                            ),
+                            dict(count=1, label="YTD", step="year", stepmode="todate"),
+                            dict(count=1, label="1y", step="year", stepmode="backward"),
+                            dict(step="all"),
+                        ]
+                    )
+                ),
+                rangeslider=dict(visible=True),
+                type="date",
+            )
         )
 
         fig.update_layout(transition_duration=500)
@@ -133,16 +121,14 @@ def create_lineage_in_time_graph():
         return fig
 
 
-def create_test_variant_graph(selected_range):
-    max_weeks = 0
-    df = set_dataframe_range_slider(get_variant_data(), selected_range)
-    list_of_weeks = []
-
-    for week in df["Week"].unique():
-        max_weeks += 1
-        list_of_weeks.append(week.strip())
-
-    fig = px.bar(df, x="Week", y="Sequences", color="Variant", barmode="stack")
+def create_test_variant_graph(df):
+    fig = px.bar(
+        df,
+        x="DATE",
+        y="SAMPLE",
+        color="DATE",
+        barmode="stack",
+    )
 
     return html.Div(
         className="card",
@@ -174,19 +160,14 @@ def create_test_variant_graph(selected_range):
             html.Br(),
             html.Div(
                 children=dcc.RangeSlider(
-                    id="week-slider",
-                    min=1,  # df["Week"].min(),
-                    max=max_weeks,
+                    id="date_slider",
+                    min=1,
+                    max=3,
                     step=None,
-                    value=[1, 19],
+                    # type="date",
+                    value=df["DATE"],
                     # value=[int(df["Week"].min()), max_weeks],
-                    marks={
-                        str(list_of_weeks[idx]): {
-                            "label": "{}º Week".format(list_of_weeks[idx]),
-                            "style": {"transform": "rotate(45deg)", "margin": "5px"},
-                        }
-                        for idx in range(len(list_of_weeks))
-                    },
+                    marks=None,
                 ),
             ),
             html.Div(

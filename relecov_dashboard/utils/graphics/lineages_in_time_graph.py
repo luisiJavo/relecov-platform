@@ -1,63 +1,141 @@
+from datetime import datetime
 import os
+from time import strptime
 
-# import random
 import json
 from django.conf import settings
 import pandas as pd
 import dash_core_components as dcc
 import dash_html_components as html
-import plotly.express as px
 from django_plotly_dash import DjangoDash
 from dash.dependencies import Input, Output
-
-# from relecov_core.utils.parse_files import parse_csv_into_list_of_dicts
-
-
-def testing_fisabio_data():
-    input_file = os.path.join(
-        settings.BASE_DIR, "relecov_core", "docs", "fisabio_data.csv"
-    )
-    df = read_mutation_data(input_file, file_extension="csv")
-    print(df)
-    # create_test_variant_graph(df)
-    create_lineage_in_time_graph(input_file, df)
+import plotly.graph_objects as go
+from relecov_core.models import DateUpdateState
 
 
-def read_mutation_data(input_file: str, file_extension: str = "csv") -> pd.DataFrame:
+def create_dataframe_from_database():
+    """
+    This function reads data from database, DateUpdateState model:
+        - number of sample from "sampleID" field,
+        - date from "date" field
 
-    # Read mutation data, either in CSV or JSON format.
-    # If in JSON format, the JSON must follow a structure of [{'pk': {'atr1':'z'} }]
-    # Returns a pandas dataframe object
+    Returns a pandas dataframe object.
+    """
 
-    df = None
-    if file_extension == "json":
-        with open(input_file) as f:
-            # JSON must have a "primary key", which is the sample ID
-            df = pd.DataFrame.from_dict(json.load(f), orient="index")
-            df = df.reset_index().rename(columns={"index": "SAMPLE"})
-    elif file_extension == "csv":
-        df = pd.read_csv(input_file, sep=",")
-    else:
-        raise Exception("Unrecognized file format!")
+    # sample_objs = DateUpdateState.objects.all()
+    sample_objs = DateUpdateState.objects.filter(stateID__iexact="Defined")
+    date_list = []
+    list_of_dates = []
+    list_of_samples = []
+    list_of_lists = []
+    for sample_obj in sample_objs:
+        list_of_samples.append(sample_obj.get_sample_id())
+        date = sample_obj.get_date()
+        date_list = date.split(",")
+        year = date_list[1]
+        date_list = date_list[0].split(" ")
+        month = strptime(date_list[0], "%B").tm_mon
+        date_converted = datetime(int(year), month, int(date_list[1]))
+        list_of_dates.append(date_converted.strftime("%Y-%m-%d"))
+
+    list_of_lists.append(list_of_samples)
+    list_of_lists.append(list_of_dates)
+
+    df = pd.DataFrame(list_of_lists).transpose()
+    df.columns = ["SAMPLE", "DATE"]
+    df = df.sort_values(by=["DATE"])
 
     return df
 
 
-def create_lineage_in_time_graph(input_file, df):
+def create_dataframe_from_json():
+    """
+    This function reads data from processed_converted_metadata_lab.json:
+        - number of sample from "isolate_sample_id" field,
+        - date from "sample_received_date" field
+
+    Returns a pandas dataframe object.
+    """
+
+    list_of_samples = []
+    list_of_dates = []
+    list_of_lists = []
+    input_file = os.path.join(
+        settings.BASE_DIR,
+        "relecov_core",
+        "docs",
+        "processed_converted_metadata_lab.json",
+    )
+    with open(input_file) as f:
+        data = json.load(f)
+
+    for line in data:
+        list_of_samples.append(line["isolate_sample_id"])
+        list_of_dates.append(line["sample_received_date"])
+
+    list_of_lists.append(list_of_samples)
+    list_of_lists.append(list_of_dates)
+
+    df = pd.DataFrame(list_of_lists).transpose()
+    df.columns = ["SAMPLE", "DATE"]
+    df = df.sort_values(by=["DATE"])
+
+    return df
+
+
+def create_lineage_in_time_graph(df):
     app = DjangoDash(name="TestVariantGraph")
-    app.layout = create_test_variant_graph(df)
+    app.layout = create_samples_received_in_time_graph(df)
 
-    @app.callback(Output("graph-with-slider", "figure"), Input("week-slider", "value"))
+    @app.callback(Output("graph-with-slider", "figure"), Input("date_slider", "value"))
     def update_figure(selected_range):
-        df = read_mutation_data(input_file, file_extension="csv")
+        df = create_dataframe_from_json()
+        df = df.sort_values(by=["DATE"])
+        dates_unique = df["DATE"].unique()
+        number_of_samples_per_date = pd.DataFrame(df.DATE.value_counts())
 
-        fig = px.bar(
-            df,
-            x="sample_collection_date",
-            y="lineage_name",
-            color="who_name",
-            barmode="stack",
-            # hover_name="Variant",
+        # Create figure
+        fig = go.Figure()
+
+        # add first bar trace at row = 1, col = 1
+        fig.add_trace(
+            go.Bar(
+                x=dates_unique,
+                y=number_of_samples_per_date["DATE"],
+                name="Samples in time",
+                marker_color="green",
+                opacity=0.4,
+                marker_line_color="rgb(8,48,107)",
+                marker_line_width=2,
+            ),
+        )
+        fig.add_trace(
+            go.Scatter(
+                x=dates_unique,
+                y=number_of_samples_per_date["DATE"],
+                mode="lines",
+                line=dict(color="red"),
+                name="Number of samples",
+            ),
+        )
+
+        fig.update_layout(
+            xaxis=dict(
+                rangeselector=dict(
+                    buttons=list(
+                        
+        "processed_converted_metadata_lab.json",
+    )        count=6, label="6m", step="month", stepmode="backward"
+                            ),
+                            dict(count=1, label="YTD", step="year", stepmode="todate"),
+                            dict(count=1, label="1y", step="year", stepmode="backward"),
+                            dict(step="all"),
+                        ]
+                    )
+                ),
+                rangeslider=dict(visible=True),
+                type="date",
+            )
         )
 
         fig.update_layout(transition_duration=500)
@@ -65,24 +143,59 @@ def create_lineage_in_time_graph(input_file, df):
         return fig
 
 
-def create_test_variant_graph(df):
-    import pdb
+def create_samples_received_in_time_graph(df):
+    df = create_dataframe_from_json()
+    df = df.sort_values(by=["DATE"])
+    dates_unique = df["DATE"].unique()
+    number_of_samples_per_date = pd.DataFrame(df.DATE.value_counts())
 
-    max_weeks = 0
-    # df = set_dataframe_range_slider(get_variant_data(), selected_range)
-    list_of_weeks = []
+    # Create figure
+    fig = go.Figure()
 
-    for week in df["sample_collection_date"].unique():
-        # max_weeks += 1
-        list_of_weeks.append(week.strip())
+    # add first bar trace at row = 1, col = 1
 
-    fig = px.bar(
-        df,
-        x="sample_collection_date",
-        y="lineage_name",
-        color="who_name",
-        barmode="stack",
+    fig.add_trace(
+        go.Bar(
+            x=dates_unique,
+            y=number_of_samples_per_date["DATE"],
+            name="Samples in time",
+            marker_color="green",
+            opacity=0.4,
+            marker_line_color="rgb(8,48,107)",
+            marker_line_width=2,
+        ),
     )
+    fig.add_trace(
+        go.Scatter(
+            x=dates_unique,
+            y=number_of_samples_per_date["DATE"],
+            mode="lines",
+            line=dict(color="red"),
+            name="Number of samples",
+        ),
+    )
+
+    fig.update_layout(
+        xaxis=dict(
+            rangeselector=dict(
+                buttons=list(
+                    [
+                        dict(count=1, label="1m", step="month", stepmode="backward"),
+                        dict(count=6, label="6m", step="month", stepmode="backward"),
+                        dict(count=1, label="YTD", step="year", stepmode="todate"),
+                        dict(count=1, label="1y", step="year", stepmode="backward"),
+                        dict(step="all"),
+                    ]
+                )
+            ),
+            
+        "processed_converted_metadata_lab.json",
+    )rangeslider=dict(visible=True),
+            type="date",
+        )
+    )
+
+    fig.update_layout(transition_duration=500)
 
     return html.Div(
         className="card",
@@ -114,48 +227,14 @@ def create_test_variant_graph(df):
             html.Br(),
             html.Div(
                 children=dcc.RangeSlider(
-                    id="week-slider",
-                    min=df["sample_collection_date"].min(),
-                    max=df["sample_collection_date"].max(),
+                    id="date_slider",
+                    min=dates_unique.min(),
+                    max=dates_unique.max(),
                     step=None,
-                    # value=[1, 19],
-                    value=[int(df["sample_collection_date"].min()), max_weeks],
-                    marks={
-                        str(list_of_weeks[idx]): {
-                            "label": "{}º Week".format(list_of_weeks[idx]),
-                            "style": {"transform": "rotate(45deg)", "margin": "5px"},
-                        }
-                        for idx in range(len(list_of_weeks))
-                    },
+                    value=None,
+                    # value=[int(df["Week"].min()), max_weeks],
+                    marks=None,
                 ),
             ),
-            html.Div(
-                className="card bg-light",
-                children=[
-                    html.Div(
-                        className="card-body",
-                        children=[
-                            html.H3(
-                                children="Variants of concern"
-                                + "(VOC) and under investigation"
-                                + "(VUI) detected in the Spain data.",
-                                className="card-title",
-                            ),
-                            html.H5(
-                                children="DISCLAIMER: relecov-platform"
-                                + "uses curated sequences"
-                                + "for determining the counts"
-                                + "of a given lineage. Other sources"
-                                + "of information may be reporting"
-                                + "cases with partial sequence"
-                                + "information or other forms"
-                                + "of PCR testing.",
-                                className="card-text",
-                            ),
-                        ],
-                    )
-                ],
-            ),
-            # html.Div(children=generate_table(df_table)),
         ],
     )
