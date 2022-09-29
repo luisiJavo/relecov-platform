@@ -119,7 +119,6 @@ def create_mutation_table(sample_list, effect_list):
     def update_selected_effects(selected_effects):
         data = {}
         sample_list = [2018185, 210067]
-        print(selected_effects)
 
         if type(selected_effects) == list and len(selected_effects) >= 1:
 
