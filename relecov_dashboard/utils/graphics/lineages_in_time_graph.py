@@ -66,6 +66,8 @@ def create_lineage_in_time_graph(input_file, df):
 
 
 def create_test_variant_graph(df):
+    import pdb
+
     max_weeks = 0
     # df = set_dataframe_range_slider(get_variant_data(), selected_range)
     list_of_weeks = []
@@ -113,11 +115,11 @@ def create_test_variant_graph(df):
             html.Div(
                 children=dcc.RangeSlider(
                     id="week-slider",
-                    min=1,  # df["Week"].min(),
-                    max=max_weeks,
+                    min=df["sample_collection_date"].min(),
+                    max=df["sample_collection_date"].max(),
                     step=None,
-                    value=[1, 19],
-                    # value=[int(df["Week"].min()), max_weeks],
+                    # value=[1, 19],
+                    value=[int(df["sample_collection_date"].min()), max_weeks],
                     marks={
                         str(list_of_weeks[idx]): {
                             "label": "{}º Week".format(list_of_weeks[idx]),
