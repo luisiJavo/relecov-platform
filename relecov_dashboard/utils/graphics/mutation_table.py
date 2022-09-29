@@ -86,7 +86,7 @@ def create_mutation_table(sample_list, effect_list):
     all_effects = list(df["EFFECT"].unique())
     PAGE_SIZE = 20
 
-    app = DjangoDash("mutation_table")
+    app = DjangoDash("mutationTable")
 
     app.layout = html.Div(
         children=[
