@@ -91,6 +91,7 @@ def create_samples_over_time_graph(df):
 
     @app.callback(Output("graph-with-slider", "figure"), Input("date_slider", "value"))
     def update_figure(selected_range):
+        # df = create_dataframe_from_database()
         df = create_dataframe_from_json()
         create_samples_received_over_time(df)
 
