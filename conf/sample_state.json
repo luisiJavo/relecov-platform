@@ -1,0 +1,20 @@
+[
+{
+    "model": "relecov_core.samplestate",
+    "pk": 1,
+    "fields": {
+        "state": "Defined",
+        "display_string": "Sample Defined",
+        "description": "Sample is just defined"
+    }
+},
+{
+    "model": "relecov_core.samplestate",
+    "pk": 2,
+    "fields": {
+        "state": "Bioinfo",
+        "display_string": "Recorded Bioinfo Metadata",
+        "description": "Sample contains the bioinfo metadata"
+    }
+}
+]

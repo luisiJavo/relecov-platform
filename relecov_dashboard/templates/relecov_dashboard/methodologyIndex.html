@@ -1,0 +1,31 @@
+{% extends 'relecov_core/base.html' %}
+
+
+{% load static %}
+{%load plotly_dash%}
+<link href="{% static 'relecov_dashboard/dashboard/css/style_mod2.css' %}" rel="stylesheet">
+{% block content %}
+<br><br><br><br><br><br>
+
+<div class="container-fluid" style="text-align: center;">
+    <div class="card d-inline-flex p-2 m-1" style="width: 95%;" >
+        <div class="row">
+            <div class="col-md-4">
+                <div class="container text-center">
+                      {% plotly_app name="never_used_fields" ratio=1 %}
+                </div>
+            </div> <!-- end col -->
+            <div class="col-md-4">
+                <div class="container text-center">
+                      {% plotly_app name="param_not_empty" ratio=1 %}
+                </div>
+            </div> <!-- end col -->
+            <div class="col-md-4">
+                <div class="container text-center">
+                      <p>More graphics to come ;-)</p>
+                </div>
+            </div> <!-- end col -->
+        </div> <!-- end row -->
+    </div> <!-- end card -->
+</div>
+{% endblock %}
