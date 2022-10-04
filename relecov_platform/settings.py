@@ -1,5 +1,6 @@
 from pathlib import Path
 import os
+
 # Build paths inside the project like this: BASE_DIR / "subdir".
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -13,7 +14,7 @@ SECRET_KEY = "django-insecure-+g7)v4(@+u!&ve$mt7*))77^-=n6tl=2yf(+gb98mj&75*%k)$
 # SECURITY WARNING: don"t run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []#"localhost"
+ALLOWED_HOSTS = ["relecov-platform.isciiides.es", "127.0.0.1"]  # "localhost"
 
 
 # Application definition
@@ -31,10 +32,7 @@ INSTALLED_APPS = [
     "relecov_core",
     "relecov_dashboard",
     "relecov_documentation",
-    "django_extensions",
     "rest_framework",
-    "drf_yasg",
-    "django_cleanup",
     "markdownx",
 ]
 
@@ -76,7 +74,7 @@ WSGI_APPLICATION = "relecov_platform.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "USER": "birbigaming",
+        "USER": "mankat",
         "PASSWORD": "0xfa0xff",
         "PORT": "3306",
         "NAME": "relecov",
