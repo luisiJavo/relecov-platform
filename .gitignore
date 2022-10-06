@@ -8,7 +8,7 @@ migrations/
 # static/
 virtualenv/
 manage.py
-install_settings.txt
+initial_settings.txt
 relecov_platform/
 documents/
 
