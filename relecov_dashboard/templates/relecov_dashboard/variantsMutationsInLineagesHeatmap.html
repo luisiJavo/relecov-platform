@@ -4,12 +4,30 @@
 {% block content %}
 <br><br><br><br><br><br>
 {% include "relecov_dashboard/variantsSidebar.html"%}
-<div class="container-fluid" style="text-align: center;">
-    <div class="card d-inline-flex p-2 m-1" style="width: 75%;">
-        <div class="card-body border">
-            {% plotly_app name="mutationHeatmap" ratio=1 %}
+{% if ERROR %}
+    <div class="container-fluid" style="text-align: center;">
+        <div class="card d-inline-flex p-2 m-1" style="width: 60%;">
+            <div class="col-sm-12" >
+                <div class="card  border-danger mb-3">
+                    <div class="card-header text-center text-danger"><h3 style="text-align:center">ERROR</h3> </div>
+                    <div class="card-body  text-center">
+                        <br>
+                        <p><strong>{{ERROR}}</strong></p>
+                    </div> <!-- end card body  -->
+                </div> <!-- end card  -->
+            </div> <!--// end col-sm-8 -->
+        </div> <!--// card -->
+    </div> <!--// end container -->
+    <br><br><br><br><br><br>
+{% elif CHROMOSOMES %}
+
+{% else %}
+    <div class="container-fluid" style="text-align: center;">
+        <div class="card d-inline-flex p-2 m-1" style="width: 75%;">
+            <div class="card-body border">
+                {% plotly_app name="mutationHeatmap" ratio=1 %}
+            </div>
         </div>
     </div>
-</div>
-
+{% endif %}
 {% endblock %}
