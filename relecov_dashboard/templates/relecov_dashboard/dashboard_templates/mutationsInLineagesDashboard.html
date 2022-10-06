@@ -6,19 +6,18 @@
 <br><br><br><br><br><br>
 {% include "relecov_dashboard/variantsSidebar.html"%}
 <br><br><br><br><br><br>
-<div class="" style="text-align: center;"><p>Mutation in Lineages</p></div>
+<div class="" style="text-align: center;"><p>Variant mutations in Lineages</p></div>
 <div class="container-fluid" style="text-align: center;">
   <!--card 1-->
   <div class="card d-inline-flex  p-2 m-1" style="width: 35%">
-    <div class="card-body border">
-      <div class="card-header" ><h2>Variant mutations in Lineages (search by sample)</h2>
-          <div class="card-title">Variant mutations in Lineages (search by sample)</div>
-          <div class="card-subtitle">This needle plot allows you to display variant mutations in Lineages of each sample available in the database. Click on the Tutorial button to know more about each of the parts that are part of this graph</div>
+    <div class="card-body border" style="text-align: left;">
+      <div class="card-header" ><h2>Search by number of sample</h2>
+          <div class="card-subtitle">This needle plot allows you to display variant mutations in Lineages of each sample available in the database.<br>Click on the Tutorial button to know more about each of the parts that are part of this graph</div>
 
           <!-- Example split danger button -->
           <div class="btn-group">
-              <button type="button" class="btn btn-success">Tutorial</button>
-              <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+              <button type="button" class="btn btn-info">Tutorial</button>
+              <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
               <span class="visually-hidden">Toggle Dropdown</span>
               </button>
               <div class="dropdown-menu">
@@ -30,7 +29,7 @@
                           <ol>
                               <li class="card-text"><b>Range slider(Show or Hide) - </b>This element allows us to select if we want to make the rangeslider visible or not</li>
                               <li class="card-text"><b>Select a sample - </b>This element allows us to select the sample number that we want to display, as long as it is available in the database.</li>
-                              <li class="card-text"><b>HGVS_P - </b>We can filter the graph by the value of hgvs_p that is the reason for our query.</li>
+                              <li class="card-text"><b>Mutations - </b>We can filter the graph by the mutation value (hgvs_p).</li>
                               <li class="card-text"><b>Gene Domains - </b>This element allows us to mark the domains of the gene that we need to highlight.</li>
                               <li class="card-text"><b>Needle Plot - </b> 
                                   This graph displays variant mutations in Lineages of each sample, using the following data:<br>
@@ -46,6 +45,9 @@
                   </div>  
               </div>
           </div>
+
+          <a href="/dashboard/variants/mutationsInLineagesBySample" class="btn btn-outline-success" role="button" style="margin-left:10%;">Expand</a>
+      
       </div>
       <div class="card-body border" style="text-align: center;">
           {% plotly_app name="needlePlotBySample" ratio=1 %}
@@ -56,15 +58,14 @@
 
   <!--card 2-->
   <div class="card d-inline-flex  p-2 m-1" style="width: 35%">
-    <div class="card-body border">
-      <div class="card-header" ><h2>Variant mutations in Lineages (search by lineage)</h2>
-          <div class="card-title">Variant mutations in Lineages (search by lineage)</div>
-          <div class="card-subtitle">This needle plot allows you to display variant mutations in Lineages of each sample available in the database. Click on the Tutorial button to know more about each of the parts that are part of this graph</div>
+    <div class="card-body border" style="text-align: left;">
+      <div class="card-header" ><h2>Search by lineage</h2>
+          <div class="card-subtitle">Choose a lineage and the needle plot will display the positions in all the samples that contain the selected lineage.<br>Click on the Tutorial button to know more about each of the parts that are part of this graph</div>
 
           <!-- Example split danger button -->
           <div class="btn-group">
-              <button type="button" class="btn btn-success">Tutorial</button>
-              <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+              <button type="button" class="btn btn-info">Tutorial</button>
+              <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
               <span class="visually-hidden">Toggle Dropdown</span>
               </button>
               <div class="dropdown-menu">
@@ -75,8 +76,8 @@
                           <h5 class="card-title">Info about graph elements</h5>
                           <ol>
                               <li class="card-text"><b>Range slider(Show or Hide) - </b>This element allows us to select if we want to make the rangeslider visible or not</li>
-                              <li class="card-text"><b>Select a sample - </b>This element allows us to select the sample number that we want to display, as long as it is available in the database.</li>
-                              <li class="card-text"><b>HGVS_P - </b>We can filter the graph by the value of hgvs_p that is the reason for our query.</li>
+                              <li class="card-text"><b>Select a lineage - </b>This element allows us to select a lineage that we want to display.</li>
+                              <li class="card-text"><b>Mutations - </b>We can filter the graph by mutation value.</li>
                               <li class="card-text"><b>Gene Domains - </b>This element allows us to mark the domains of the gene that we need to highlight.</li>
                               <li class="card-text"><b>Needle Plot - </b> 
                                   This graph displays variant mutations in Lineages of each sample, using the following data:<br>
@@ -92,6 +93,7 @@
                   </div>  
               </div>
           </div>
+          <a href="/dashboard/variants/mutationsInLineagesByLineage" class="btn btn-outline-success" role="button" style="margin-left:10%;">Expand</a>
       </div>
       <div class="card-body border" style="text-align: center;">
         {% plotly_app name="needlePlotMutationByLineage" ratio=1 %}
@@ -102,15 +104,14 @@
 
   <!--card 3-->
   <div class="card d-inline-flex  p-2 m-1" style="width: 35%">
-    <div class="card-body border">
-      <div class="card-header" ><h2>Variant mutations in Lineages heatmap</h2>
-          <div class="card-title">Variant mutations in Lineages heatmap</div>
+    <div class="card-body border" style="text-align: left;">
+      <div class="card-header" ><h2>Heatmap</h2>
           <div class="card-subtitle">This needle plot allows you to display variant mutations in Lineages of each sample available in the database. Click on the Tutorial button to know more about each of the parts that are part of this graph</div>
 
           <!-- Example split danger button -->
           <div class="btn-group">
-              <button type="button" class="btn btn-success">Tutorial</button>
-              <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+              <button type="button" class="btn btn-info">Tutorial</button>
+              <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
               <span class="visually-hidden">Toggle Dropdown</span>
               </button>
               <div class="dropdown-menu">
@@ -138,6 +139,7 @@
                   </div>  
               </div>
           </div>
+          <a href="/dashboard/variants/mutationsInLineagesHeatmap" class="btn btn-outline-success" role="button" style="margin-left:10%;">Expand</a>
       </div>
       <div class="card-body border" style="text-align: center;">
         {% plotly_app name="mutationHeatmap" ratio=1 %}
@@ -149,15 +151,14 @@
 
   <!--card 4-->
   <div class="card d-inline-flex  p-2 m-1" style="width: 35%">
-    <div class="card-body border">
-      <div class="card-header" ><h2>Variant mutations in Lineages (search by sample)</h2>
-          <div class="card-title">Variant mutations in Lineages (search by sample)</div>
-          <div class="card-subtitle">This needle plot allows you to display variant mutations in Lineages of each sample available in the database. Click on the Tutorial button to know more about each of the parts that are part of this graph</div>
+    <div class="card-body border" style="text-align: left;">
+      <div class="card-header" ><h2>Table filtered by mutation effect</h2>
+          <div class="card-subtitle">The following table shows us the data related to the mutations present in each sample. We can filter the results by adding or removing mutation effects from the select widget</div>
 
           <!-- Example split danger button -->
           <div class="btn-group">
-              <button type="button" class="btn btn-success">Tutorial</button>
-              <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+              <button type="button" class="btn btn-info">Tutorial</button>
+              <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
               <span class="visually-hidden">Toggle Dropdown</span>
               </button>
               <div class="dropdown-menu">
@@ -185,6 +186,7 @@
                   </div>  
               </div>
           </div>
+          <a href="/dashboard/variants/mutationsInLineagesTable" class="btn btn-outline-success" role="button" style="margin-left:10%;">Expand</a>
       </div>
       <div class="card-body border" style="text-align: center;">
         {% plotly_app name="mutationTable" ratio=1 %}
