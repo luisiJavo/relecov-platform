@@ -5,28 +5,193 @@
 {% block content %}
 <br><br><br><br><br><br>
 {% include "relecov_dashboard/variantsSidebar.html"%}
-<div class="" style="text-align: center;">
-    <div class="card d-inline-flex p-2 m-1" style="width: 75%;">
-        <div class="card-header"><h2>Variant mutations in Lineages (search by sample)</h2></div>
-        <div class="card-body border">
-            {% plotly_app name="needlePlotBySample" ratio=1 %}
-        </div>
+<br><br><br><br><br><br>
+<div class="" style="text-align: center;"><p>Mutation in Lineages</p></div>
+<div class="container-fluid" style="text-align: center;">
+  <!--card 1-->
+  <div class="card d-inline-flex  p-2 m-1" style="width: 35%">
+    <div class="card-body border">
+      <div class="card-header" ><h2>Variant mutations in Lineages (search by sample)</h2>
+          <div class="card-title">Variant mutations in Lineages (search by sample)</div>
+          <div class="card-subtitle">This needle plot allows you to display variant mutations in Lineages of each sample available in the database. Click on the Tutorial button to know more about each of the parts that are part of this graph</div>
 
-        <div class="card-header"><h2>Variant mutations in Lineages (search by lineage)</h2></div>
-        <div class="card-body border">
-            {% plotly_app name="needlePlotMutationByLineage" ratio=1 %}
-        </div>
-
-        <div class="card-header"><h2>Mutation Heatmap</h2></div>
-        <div class="card-body border">
-            {% plotly_app name="mutationHeatmap" ratio=1 %}
-        </div>
-
-        <div class="card-header"><h2>Table format</h2></div>
-        <div class="card-body border">
-            {% plotly_app name="mutationTable" ratio=1 %}
-        </div>
+          <!-- Example split danger button -->
+          <div class="btn-group">
+              <button type="button" class="btn btn-success">Tutorial</button>
+              <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="visually-hidden">Toggle Dropdown</span>
+              </button>
+              <div class="dropdown-menu">
+                  <div class="dropdown-item">
+                      <div class="card dropdown-item" style="width: auto;">
+                        <img src="{% static 'relecov_dashboard/img/variants_dashboard_images/mutations_in_lineages_dashboard_images/variants_in_lineages_by_sample_tutorial.png' %}"class="card-img-left" alt="mutations in lineages by sample"style="width:85%;">
+                        <div class="card-body">
+                          <h5 class="card-title">Info about graph elements</h5>
+                          <ol>
+                              <li class="card-text"><b>Range slider(Show or Hide) - </b>This element allows us to select if we want to make the rangeslider visible or not</li>
+                              <li class="card-text"><b>Select a sample - </b>This element allows us to select the sample number that we want to display, as long as it is available in the database.</li>
+                              <li class="card-text"><b>HGVS_P - </b>We can filter the graph by the value of hgvs_p that is the reason for our query.</li>
+                              <li class="card-text"><b>Gene Domains - </b>This element allows us to mark the domains of the gene that we need to highlight.</li>
+                              <li class="card-text"><b>Needle Plot - </b> 
+                                  This graph displays variant mutations in Lineages of each sample, using the following data:<br>
+                                  <ul>
+                                      <li>x-axis - Genome position</li>
+                                      <li>y-axis - Allele Frequency (AF)</li>
+                                  </ul>
+                              </li>
+                              <li class="card-text"><b>Range slider - </b>This element allows us to select a specific area of ​​the needle plot, in a more comfortable way</li>
+                          </ol>
+                        </div>
+                      </div>
+                  </div>  
+              </div>
+          </div>
+      </div>
+      <div class="card-body border" style="text-align: center;">
+          {% plotly_app name="needlePlotBySample" ratio=1 %}
+      </div>
     </div>
-</div>
+  </div>
+  <!--end card 1-->
 
+  <!--card 2-->
+  <div class="card d-inline-flex  p-2 m-1" style="width: 35%">
+    <div class="card-body border">
+      <div class="card-header" ><h2>Variant mutations in Lineages (search by lineage)</h2>
+          <div class="card-title">Variant mutations in Lineages (search by lineage)</div>
+          <div class="card-subtitle">This needle plot allows you to display variant mutations in Lineages of each sample available in the database. Click on the Tutorial button to know more about each of the parts that are part of this graph</div>
+
+          <!-- Example split danger button -->
+          <div class="btn-group">
+              <button type="button" class="btn btn-success">Tutorial</button>
+              <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="visually-hidden">Toggle Dropdown</span>
+              </button>
+              <div class="dropdown-menu">
+                  <div class="dropdown-item">
+                      <div class="card dropdown-item" style="width: auto;">
+                        <img src="{% static 'relecov_dashboard/img/variants_dashboard_images/mutations_in_lineages_dashboard_images/variants_in_lineages_by_sample_tutorial.png' %}"class="card-img-left" alt="mutations in lineages by sample"style="width:85%;">
+                        <div class="card-body">
+                          <h5 class="card-title">Info about graph elements</h5>
+                          <ol>
+                              <li class="card-text"><b>Range slider(Show or Hide) - </b>This element allows us to select if we want to make the rangeslider visible or not</li>
+                              <li class="card-text"><b>Select a sample - </b>This element allows us to select the sample number that we want to display, as long as it is available in the database.</li>
+                              <li class="card-text"><b>HGVS_P - </b>We can filter the graph by the value of hgvs_p that is the reason for our query.</li>
+                              <li class="card-text"><b>Gene Domains - </b>This element allows us to mark the domains of the gene that we need to highlight.</li>
+                              <li class="card-text"><b>Needle Plot - </b> 
+                                  This graph displays variant mutations in Lineages of each sample, using the following data:<br>
+                                  <ul>
+                                      <li>x-axis - Genome position</li>
+                                      <li>y-axis - Allele Frequency (AF)</li>
+                                  </ul>
+                              </li>
+                              <li class="card-text"><b>Range slider - </b>This element allows us to select a specific area of ​​the needle plot, in a more comfortable way</li>
+                          </ol>
+                        </div>
+                      </div>
+                  </div>  
+              </div>
+          </div>
+      </div>
+      <div class="card-body border" style="text-align: center;">
+        {% plotly_app name="needlePlotMutationByLineage" ratio=1 %}
+      </div>
+    </div>
+  </div>
+  <!--end card 2-->
+
+  <!--card 3-->
+  <div class="card d-inline-flex  p-2 m-1" style="width: 35%">
+    <div class="card-body border">
+      <div class="card-header" ><h2>Variant mutations in Lineages heatmap</h2>
+          <div class="card-title">Variant mutations in Lineages heatmap</div>
+          <div class="card-subtitle">This needle plot allows you to display variant mutations in Lineages of each sample available in the database. Click on the Tutorial button to know more about each of the parts that are part of this graph</div>
+
+          <!-- Example split danger button -->
+          <div class="btn-group">
+              <button type="button" class="btn btn-success">Tutorial</button>
+              <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="visually-hidden">Toggle Dropdown</span>
+              </button>
+              <div class="dropdown-menu">
+                  <div class="dropdown-item">
+                      <div class="card dropdown-item" style="width: auto;">
+                        <img src="{% static 'relecov_dashboard/img/variants_dashboard_images/mutations_in_lineages_dashboard_images/variants_in_lineages_by_sample_tutorial.png' %}"class="card-img-left" alt="mutations in lineages by sample"style="width:85%;">
+                        <div class="card-body">
+                          <h5 class="card-title">Info about graph elements</h5>
+                          <ol>
+                              <li class="card-text"><b>Range slider(Show or Hide) - </b>This element allows us to select if we want to make the rangeslider visible or not</li>
+                              <li class="card-text"><b>Select a sample - </b>This element allows us to select the sample number that we want to display, as long as it is available in the database.</li>
+                              <li class="card-text"><b>HGVS_P - </b>We can filter the graph by the value of hgvs_p that is the reason for our query.</li>
+                              <li class="card-text"><b>Gene Domains - </b>This element allows us to mark the domains of the gene that we need to highlight.</li>
+                              <li class="card-text"><b>Needle Plot - </b> 
+                                  This graph displays variant mutations in Lineages of each sample, using the following data:<br>
+                                  <ul>
+                                      <li>x-axis - Genome position</li>
+                                      <li>y-axis - Allele Frequency (AF)</li>
+                                  </ul>
+                              </li>
+                              <li class="card-text"><b>Range slider - </b>This element allows us to select a specific area of ​​the needle plot, in a more comfortable way</li>
+                          </ol>
+                        </div>
+                      </div>
+                  </div>  
+              </div>
+          </div>
+      </div>
+      <div class="card-body border" style="text-align: center;">
+        {% plotly_app name="mutationHeatmap" ratio=1 %}
+      </div>
+    </div>
+  </div>
+  <!--end card 3-->
+
+
+  <!--card 4-->
+  <div class="card d-inline-flex  p-2 m-1" style="width: 35%">
+    <div class="card-body border">
+      <div class="card-header" ><h2>Variant mutations in Lineages (search by sample)</h2>
+          <div class="card-title">Variant mutations in Lineages (search by sample)</div>
+          <div class="card-subtitle">This needle plot allows you to display variant mutations in Lineages of each sample available in the database. Click on the Tutorial button to know more about each of the parts that are part of this graph</div>
+
+          <!-- Example split danger button -->
+          <div class="btn-group">
+              <button type="button" class="btn btn-success">Tutorial</button>
+              <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="visually-hidden">Toggle Dropdown</span>
+              </button>
+              <div class="dropdown-menu">
+                  <div class="dropdown-item">
+                      <div class="card dropdown-item" style="width: auto;">
+                        <img src="{% static 'relecov_dashboard/img/variants_dashboard_images/mutations_in_lineages_dashboard_images/variants_in_lineages_by_sample_tutorial.png' %}"class="card-img-left" alt="mutations in lineages by sample"style="width:85%;">
+                        <div class="card-body">
+                          <h5 class="card-title">Info about graph elements</h5>
+                          <ol>
+                              <li class="card-text"><b>Range slider(Show or Hide) - </b>This element allows us to select if we want to make the rangeslider visible or not</li>
+                              <li class="card-text"><b>Select a sample - </b>This element allows us to select the sample number that we want to display, as long as it is available in the database.</li>
+                              <li class="card-text"><b>HGVS_P - </b>We can filter the graph by the value of hgvs_p that is the reason for our query.</li>
+                              <li class="card-text"><b>Gene Domains - </b>This element allows us to mark the domains of the gene that we need to highlight.</li>
+                              <li class="card-text"><b>Needle Plot - </b> 
+                                  This graph displays variant mutations in Lineages of each sample, using the following data:<br>
+                                  <ul>
+                                      <li>x-axis - Genome position</li>
+                                      <li>y-axis - Allele Frequency (AF)</li>
+                                  </ul>
+                              </li>
+                              <li class="card-text"><b>Range slider - </b>This element allows us to select a specific area of ​​the needle plot, in a more comfortable way</li>
+                          </ol>
+                        </div>
+                      </div>
+                  </div>  
+              </div>
+          </div>
+      </div>
+      <div class="card-body border" style="text-align: center;">
+          {% plotly_app name="needlePlotBySample" ratio=1 %}
+      </div>
+    </div>
+  </div>
+  <!--end card 4-->
+
+</div>
 {% endblock %}
