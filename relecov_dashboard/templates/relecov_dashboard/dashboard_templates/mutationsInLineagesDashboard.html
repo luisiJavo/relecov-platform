@@ -4,12 +4,18 @@
 
 {% block content %}
 <br><br><br><br><br><br>
-{% include "relecov_dashboard/variantsSidebar.html"%}
-<br><br><br><br><br><br>
-<div class="" style="text-align: center;"><p>Variant mutations in Lineages</p></div>
-<div class="container-fluid" style="text-align: center;">
+
+<!--<div class="" style="text-align: center;"><p>Variant mutations in Lineages</p></div>-->
+<div class="container-fluid text-center">
+  <!--header-->
+  <div class="card bg-light d-inline-flex p-3" style="width: 80%;">
+    <div class="container-fluid" style="text-align: center;">
+      <p class="fs-1 text-uppercase">Variant mutations in Lineages dashboard</p>
+    </div>
+  </div>
+
   <!--card 1-->
-  <div class="card d-inline-flex  p-2 m-1" style="width: 35%">
+  <div class="card d-inline-flex  p-2 m-1" style="width: 40%">
     <div class="card-body border" style="text-align: left;">
       <div class="card-header" ><h2>Search by number of sample</h2>
           <div class="card-subtitle">This needle plot allows you to display variant mutations in Lineages of each sample available in the database.<br>Click on the Tutorial button to know more about each of the parts that are part of this graph</div>
@@ -57,7 +63,7 @@
   <!--end card 1-->
 
   <!--card 2-->
-  <div class="card d-inline-flex  p-2 m-1" style="width: 35%">
+  <div class="card d-inline-flex  p-2 m-1" style="width: 40%">
     <div class="card-body border" style="text-align: left;">
       <div class="card-header" ><h2>Search by lineage</h2>
           <div class="card-subtitle">Choose a lineage and the needle plot will display the positions in all the samples that contain the selected lineage.<br>Click on the Tutorial button to know more about each of the parts that are part of this graph</div>
@@ -103,7 +109,7 @@
   <!--end card 2-->
 
   <!--card 3-->
-  <div class="card d-inline-flex  p-2 m-1" style="width: 35%">
+  <div class="card d-inline-flex  p-2 m-1" style="width: 40%">
     <div class="card-body border" style="text-align: left;">
       <div class="card-header" ><h2>Heatmap</h2>
           <div class="card-subtitle">This needle plot allows you to display variant mutations in Lineages of each sample available in the database. Click on the Tutorial button to know more about each of the parts that are part of this graph</div>
@@ -150,7 +156,7 @@
 
 
   <!--card 4-->
-  <div class="card d-inline-flex  p-2 m-1" style="width: 35%">
+  <div class="card d-inline-flex  p-2 m-1" style="width: 40%">
     <div class="card-body border" style="text-align: left;">
       <div class="card-header" ><h2>Table filtered by mutation effect</h2>
           <div class="card-subtitle">The following table shows us the data related to the mutations present in each sample. We can filter the results by adding or removing mutation effects from the select widget</div>
