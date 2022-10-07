@@ -4,17 +4,109 @@
 
 {% block content %}
 <br><br><br><br><br><br>
-{% include "relecov_dashboard/variantsSidebar.html"%}
-<div class="container-fluid" style="text-align: center;">
-<div class="card d-inline-flex p-2 m-1" style="width: 75%;">
-    <div class="card-body border">
-        <!--<h5>Missing file to create graphics</h5>-->
+
+<!--<div class="" style="text-align: center;"><p>Variant mutations in Lineages</p></div>-->
+<div class="container-fluid text-center">
+  <!--header-->
+  <div class="card bg-light d-inline-flex p-3" style="width: 80%;">
+    <div class="container-fluid" style="text-align: center;">
+      <p class="fs-1 text-uppercase">Lineages dashboard</p>
+    </div>
+  </div>
+
+  <!--card 1-->
+  <div class="card d-inline-flex  p-2 m-1" style="width: 40%">
+    <div class="card-body border" style="text-align: left;">
+      <div class="card-header" ><h2>Samples received over time in Spain</h2>
+          <div class="card-subtitle">Check the number of samples received from the beginning of the project until now.<br>Click on the Tutorial button to know more about each of the parts that are part of this graph</div>
+
+          <!-- Example split danger button -->
+          <div class="btn-group">
+              <button type="button" class="btn btn-info">Tutorial</button>
+              <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="visually-hidden">Toggle Dropdown</span>
+              </button>
+              <div class="dropdown-menu">
+                  <div class="dropdown-item">
+                      <div class="card dropdown-item" style="width: auto;">
+                        <!--<img src="{% static 'relecov_dashboard/img/variants_dashboard_images/mutations_in_lineages_dashboard_images/variants_in_lineages_by_sample_tutorial.png' %}"class="card-img-left" alt="mutations in lineages by sample"style="width:85%;">-->
+                        <div class="card-body">
+                          <h5 class="card-title">Info about graph elements</h5>
+                          <ol>
+                              <li class="card-text"><b>Range slider(Show or Hide) - </b>This element allows us to select if we want to make the rangeslider visible or not</li>
+                              <li class="card-text"><b>Select a sample - </b>This element allows us to select the sample number that we want to display, as long as it is available in the database.</li>
+                              <li class="card-text"><b>Mutations - </b>We can filter the graph by the mutation value (hgvs_p).</li>
+                              <li class="card-text"><b>Gene Domains - </b>This element allows us to mark the domains of the gene that we need to highlight.</li>
+                              <li class="card-text"><b>Needle Plot - </b> 
+                                  This graph displays variant mutations in Lineages of each sample, using the following data:<br>
+                                  <ul>
+                                      <li>x-axis - Genome position</li>
+                                      <li>y-axis - Allele Frequency (AF)</li>
+                                  </ul>
+                              </li>
+                              <li class="card-text"><b>Range slider - </b>This element allows us to select a specific area of ​​the needle plot, in a more comfortable way</li>
+                          </ol>
+                        </div>
+                      </div>
+                  </div>  
+              </div>
+          </div>
+
+          <a href="/dashboard/variants/samplesReceivedOverTimeMap" class="btn btn-outline-success" role="button" style="margin-left:10%;">Expand</a>
+      
+      </div>
+      <div class="card-body border" style="text-align: center;">
         {% plotly_app name="samplesReceivedOverTimeMap" ratio=1 %}
+      </div>
     </div>
-    <div class="card-body border">
-        <!--<h5>Missing file to create graphics</h5>-->
+  </div>
+  <!--end card 1-->
+
+  <!--card 2-->
+  <div class="card d-inline-flex  p-2 m-1" style="width: 40%">
+    <div class="card-body border" style="text-align: left;">
+      <div class="card-header" ><h2>Search by lineage</h2>
+          <div class="card-subtitle">Choose a lineage and the needle plot will display the positions in all the samples that contain the selected lineage.<br>Click on the Tutorial button to know more about each of the parts that are part of this graph</div>
+
+          <!-- Example split danger button -->
+          <div class="btn-group">
+              <button type="button" class="btn btn-info">Tutorial</button>
+              <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="visually-hidden">Toggle Dropdown</span>
+              </button>
+              <div class="dropdown-menu">
+                  <div class="dropdown-item">
+                      <div class="card dropdown-item" style="width: auto;">
+                        <img src="{% static 'relecov_dashboard/img/variants_dashboard_images/mutations_in_lineages_dashboard_images/variants_in_lineages_by_lineage_tutorial.png' %}"class="card-img-left" alt="mutations in lineages by sample"style="width:85%;">
+                        <div class="card-body">
+                          <h5 class="card-title">Info about graph elements</h5>
+                          <ol>
+                              <li class="card-text"><b>Range slider(Show or Hide) - </b>This element allows us to select if we want to make the rangeslider visible or not</li>
+                              <li class="card-text"><b>Select a lineage - </b>This element allows us to select a lineage that we want to display.</li>
+                              <li class="card-text"><b>Mutations - </b>We can filter the graph by mutation value.</li>
+                              <li class="card-text"><b>Gene Domains - </b>This element allows us to mark the domains of the gene that we need to highlight.</li>
+                              <li class="card-text"><b>Needle Plot - </b> 
+                                  This graph displays variant mutations in Lineages of each sample, using the following data:<br>
+                                  <ul>
+                                      <li>x-axis - Genome position</li>
+                                      <li>y-axis - Allele Frequency (AF)</li>
+                                  </ul>
+                              </li>
+                              <li class="card-text"><b>Range slider - </b>This element allows us to select a specific area of ​​the needle plot, in a more comfortable way</li>
+                          </ol>
+                        </div>
+                      </div>
+                  </div>  
+              </div>
+          </div>
+          <a href="/dashboard/variants/samplesReceivedOverTimeGraph" class="btn btn-outline-success" role="button" style="margin-left:10%;">Expand</a>
+      </div>
+      <div class="card-body border" style="text-align: center;">
         {% plotly_app name="SamplesInTimeGraph" ratio=1 %}
+      </div>
     </div>
+  </div>
+  <!--end card 2-->
 </div>
-</div>
+
 {% endblock %}

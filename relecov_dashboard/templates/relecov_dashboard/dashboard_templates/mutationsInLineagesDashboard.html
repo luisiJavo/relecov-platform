@@ -56,7 +56,7 @@
       
       </div>
       <div class="card-body border" style="text-align: center;">
-          {% plotly_app name="needlePlotBySample" ratio=1 %}
+          {% plotly_app name="needlePlotBySample" ratio=1.3 %}
       </div>
     </div>
   </div>
@@ -102,17 +102,17 @@
           <a href="/dashboard/variants/mutationsInLineagesByLineage" class="btn btn-outline-success" role="button" style="margin-left:10%;">Expand</a>
       </div>
       <div class="card-body border" style="text-align: center;">
-        {% plotly_app name="needlePlotMutationByLineage" ratio=1 %}
+        {% plotly_app name="needlePlotMutationByLineage" ratio=1.3 %}
       </div>
     </div>
   </div>
   <!--end card 2-->
 
   <!--card 3-->
-  <div class="card d-inline-flex  p-2 m-1" style="width: 40%">
+  <div class="card d-inline-flex  p-2 m-1" style="width: 41%">
     <div class="card-body border" style="text-align: left;">
       <div class="card-header" ><h2>Heatmap</h2>
-          <div class="card-subtitle">This needle plot allows you to display variant mutations in Lineages of each sample available in the database. Click on the Tutorial button to know more about each of the parts that are part of this graph</div>
+          <div class="card-subtitle">This needle plot allows you to display variant mutations in Lineages of each sample we select. Click on the Tutorial button to know more about each of the parts that are part of this graph</div>
 
           <!-- Example split danger button -->
           <div class="btn-group">
@@ -150,8 +150,8 @@
           </div>
           <a href="/dashboard/variants/mutationsInLineagesHeatmap" class="btn btn-outline-success" role="button" style="margin-left:10%;">Expand</a>
       </div>
-      <div class="card-body border" style="text-align: center;">
-        {% plotly_app name="mutationHeatmap" ratio=1 %}
+      <div class="card-body border" style="text-align: center">
+        {% plotly_app name="mutationHeatmap" ratio=1.1 %}
       </div>
     </div>
   </div>
@@ -159,7 +159,7 @@
 
 
   <!--card 4-->
-  <div class="card d-inline-flex  p-2 m-1" style="width: 40%">
+  <div class="card d-inline-flex  p-2 m-1" style="width: 41%">
     <div class="card-body border" style="text-align: left;">
       <div class="card-header" ><h2>Table filtered by mutation effect</h2>
           <div class="card-subtitle">The following table shows us the data related to the mutations present in each sample. We can filter the results by adding or removing mutation effects from the select widget</div>
@@ -199,7 +199,7 @@
           <a href="/dashboard/variants/mutationsInLineagesTable" class="btn btn-outline-success" role="button" style="margin-left:10%;">Expand</a>
       </div>
       <div class="card-body border" style="text-align: center;">
-        {% plotly_app name="mutationTable" ratio=1 %}
+        {% plotly_app name="mutationTable" ratio=1.1 %}
       </div>
     </div>
   </div>
