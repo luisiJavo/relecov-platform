@@ -17,7 +17,9 @@
   <!--card 1-->
   <div class="card d-inline-flex  p-2 m-1" style="width: 40%">
     <div class="card-body border" style="text-align: left;">
-      <div class="card-header" ><h2>Samples received over time in Spain</h2>
+      <div class="card-header">
+          <h2>Samples received over time in Spain</h2>
+          <h3>Located on a 3D map.</h3>
           <div class="card-subtitle">Check the number of samples received from the beginning of the project until now.<br>Click on the Tutorial button to know more about each of the parts that are part of this graph</div>
 
           <!-- Example split danger button -->
@@ -65,8 +67,8 @@
   <!--card 2-->
   <div class="card d-inline-flex  p-2 m-1" style="width: 40%">
     <div class="card-body border" style="text-align: left;">
-      <div class="card-header" ><h2>Search by lineage</h2>
-          <div class="card-subtitle">Choose a lineage and the needle plot will display the positions in all the samples that contain the selected lineage.<br>Click on the Tutorial button to know more about each of the parts that are part of this graph</div>
+      <div class="card-header" ><h2>Samples received over time in Spain</h2>
+          <div class="card-subtitle"></div>
 
           <!-- Example split danger button -->
           <div class="btn-group">
@@ -107,6 +109,112 @@
     </div>
   </div>
   <!--end card 2-->
+
+  <!--Pie charts-->
+  <!--card 3-->
+  <div class="card d-inline-flex  p-2 m-2" style="width: 40%">
+    <div class="card-body border" style="text-align: left;">
+      <div class="card-header" ><h2>Samples Received in Spain</h2>
+          <div class="card-subtitle">This graph shows the percentage of samples received by Autonomous Community.</div>
+
+          <!-- Example split danger button -->
+          <div class="btn-group">
+              <button type="button" class="btn btn-info">Info</button>
+              <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="visually-hidden">Toggle Dropdown</span>
+              </button>
+              <div class="dropdown-menu">
+                  <div class="dropdown-item">
+                      <div class="card dropdown-item" style="width: auto;">
+                        <!--<img src="{% static 'relecov_dashboard/img/variants_dashboard_images/mutations_in_lineages_dashboard_images/variant_in_lineages_mutation_heatmap_tutorial.png' %}"class="card-img-left" alt="mutations in lineages by sample"style="width:85%;">-->
+                        <div class="card-body">
+                          <h5 class="card-title">Info about graph elements</h5>
+                          <!--
+                          <ol>
+                              <li class="card-text"><b>Select samples - </b>This element allows us to select the sample or samples we want to display to compare.</li>
+                              <li class="card-text"><b>Select genes - </b>This element allows us to choose the genes affected in each of the samples to be able to visualize them.</li>
+                              <li class="card-text"><b>AF - </b>This element shows us the Allele Frequency values ​​related to a certain color.</li>
+                              <li class="card-text"><b>Samples - </b>In this element all the samples that we choose will be arranged.</li>
+                              <li class="card-text"><b>Mutations - </b>This element shows us a combination of the name of the gene - name of the mutation.</li>
+                          </ol>
+                          <ul>
+                            <li class="card-text"><b>Hetamap graph - </b> 
+                              This graph displays variant mutations in Lineages of each sample, using the following data:<br>
+                              <ul>
+                                  <li>x-axis - Mutations</li>
+                                  <li>y-axis - Samples selected</li>
+                                  <li>Color - Express the value of AF relating it to a certain color</li>
+                              </ul>
+                          </li>
+                          </ul>
+                          -->
+                        </div>
+                      </div>
+                  </div>  
+              </div>
+          </div>
+          <a href="/dashboard/variants/samplesReceivedOverTimePie" class="btn btn-outline-success" role="button" style="margin-left:10%;">Expand</a>
+      </div>
+      <div class="card-body border" style="text-align: center;">
+        {% plotly_app name="samplesReceivedOverTimePerCCAAPie" ratio=1 %}
+      </div>
+    </div>
+  </div>
+  <!--end card 3-->
+
+   <!--card 4-->
+   <div class="card d-inline-flex  p-2 m-2" style="width: 40%">
+    <div class="card-body border" style="text-align: left;">
+      <div class="card-header" ><h2>Samples Received in Spain</h2>
+          <div class="card-subtitle">This graph shows the percentage of samples received by Laboratory.</div>
+
+          <!-- Example split danger button -->
+          <div class="btn-group">
+              <button type="button" class="btn btn-info">Info</button>
+              <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="visually-hidden">Toggle Dropdown</span>
+              </button>
+              <div class="dropdown-menu">
+                  <div class="dropdown-item">
+                      <div class="card dropdown-item" style="width: auto;">
+                        <!--<img src="{% static 'relecov_dashboard/img/variants_dashboard_images/mutations_in_lineages_dashboard_images/variant_in_lineages_mutation_heatmap_tutorial.png' %}"class="card-img-left" alt="mutations in lineages by sample"style="width:85%;">-->
+                        <div class="card-body">
+                          <h5 class="card-title">Info about graph elements</h5>
+                          <!--
+                          <ol>
+                              <li class="card-text"><b>Select samples - </b>This element allows us to select the sample or samples we want to display to compare.</li>
+                              <li class="card-text"><b>Select genes - </b>This element allows us to choose the genes affected in each of the samples to be able to visualize them.</li>
+                              <li class="card-text"><b>AF - </b>This element shows us the Allele Frequency values ​​related to a certain color.</li>
+                              <li class="card-text"><b>Samples - </b>In this element all the samples that we choose will be arranged.</li>
+                              <li class="card-text"><b>Mutations - </b>This element shows us a combination of the name of the gene - name of the mutation.</li>
+                          </ol>
+                          <ul>
+                            <li class="card-text"><b>Hetamap graph - </b> 
+                              This graph displays variant mutations in Lineages of each sample, using the following data:<br>
+                              <ul>
+                                  <li>x-axis - Mutations</li>
+                                  <li>y-axis - Samples selected</li>
+                                  <li>Color - Express the value of AF relating it to a certain color</li>
+                              </ul>
+                          </li>
+                          </ul>
+                          -->
+                        </div>
+                      </div>
+                  </div>  
+              </div>
+          </div>
+          <a href="/dashboard/variants/samplesReceivedOverTimePieLaboratory" class="btn btn-outline-success" role="button" style="margin-left:10%;">Expand</a>
+      </div>
+      <div class="card-body border" style="text-align: center;">
+        {% plotly_app name="samplesReceivedOverTimePerLaboratoryPie" ratio=1 %}
+      </div>
+    </div>
+  </div>
+  <!--end card 4-->
+
 </div>
+
+
 
 {% endblock %}

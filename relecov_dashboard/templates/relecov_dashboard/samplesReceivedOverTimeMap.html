@@ -1,0 +1,16 @@
+{% extends 'relecov_core/base.html' %}
+{% load static %}
+{%load plotly_dash%}
+
+{% block content %}
+<br><br><br><br><br><br>
+{% include "relecov_dashboard/variantsSidebar.html"%}
+<div class="container-fluid" style="text-align: center;">
+<div class="card d-inline-flex p-2 m-1" style="width: 75%;">
+    <div class="card-body border">
+        <!--<h5>Missing file to create graphics</h5>-->
+        {% plotly_app name="samplesReceivedOverTimeMap" ratio=1 %}
+    </div>
+</div>
+</div>
+{% endblock %}
