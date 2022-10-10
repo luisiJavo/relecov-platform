@@ -1,7 +1,5 @@
-# import os
 import pandas as pd
 
-# from django.conf import settings
 from django_plotly_dash import DjangoDash
 import dash_table
 from dash.dependencies import Input, Output
@@ -9,72 +7,15 @@ from dash.dependencies import Input, Output
 import dash_bio as dashbio
 import dash_html_components as html
 from dash_bio.utils import PdbParser, create_mol3d_style
-
-
-def create_molecule3D_graph():
-    app = DjangoDash("model3D")
-
-    parser = PdbParser("https://git.io/4K8X.pdb")
-    """
-    parser = PdbParser(os.path.join(
-            settings.BASE_DIR, "relecov_dashboard", "utils", "pdb_files", "6vxx.pdb"
-        ))
-    """
-
-    data = parser.mol3d_data()
-    styles = create_mol3d_style(
-        data["atoms"], visualization_type="cartoon", color_element="residue"
-    )
-
-    app.layout = html.Div(
-        [
-            dashbio.Molecule3dViewer(
-                width="auto",
-                id="dashbio-default-molecule3d",
-                modelData=data,
-                styles=styles,
-                labels=[
-                    {
-                        "text": "Residue Name: GLY1",
-                        "fontColor": "red",
-                        "font": "Courier New, monospace",
-                    },
-                    {
-                        "text": "Residue Chain: A",
-                        "position": {"x": 15.407, "y": -8.432, "z": 6.573},
-                    },
-                ],
-            ),
-            "Selection data",
-            html.Hr(),
-            html.Div(id="default-molecule3d-output"),
-        ]
-    )
-
-    @app.callback(
-        Output("default-molecule3d-output", "children"),
-        Input("dashbio-default-molecule3d", "selectedAtomIds"),
-    )
-    def show_selected_atoms(atom_ids):
-        if atom_ids is None or len(atom_ids) == 0:
-            return "No atom has been selected. Click somewhere on the molecular \
-            structure to select an atom."
-        return [
-            html.Div(
-                [
-                    html.Div("Element: {}".format(data["atoms"][atm]["elem"])),
-                    html.Div("Chain: {}".format(data["atoms"][atm]["chain"])),
-                    html.Div(
-                        "Residue name: {}".format(data["atoms"][atm]["residue_name"])
-                    ),
-                    html.Br(),
-                ]
-            )
-            for atm in atom_ids
-        ]
+from relecov_dashboard.utils.graphics.graphics_handling import (
+    screen_size,
+    set_screen_size,
+)
 
 
 def create_molecule3D_zoom_specific_residues():
+    size = set_screen_size(screen_size())
+
     app = DjangoDash("model3D_zoom_residues")
 
     parser = PdbParser("https://git.io/4K8X.pdb")
@@ -90,6 +31,7 @@ def create_molecule3D_zoom_specific_residues():
 
     app.layout = html.Div(
         [
+            html.P("Data table"),
             dash_table.DataTable(
                 id="zooming-specific-residue-table",
                 columns=[{"name": i, "id": i} for i in df.columns],
@@ -97,8 +39,30 @@ def create_molecule3D_zoom_specific_residues():
                 row_selectable="single",
                 page_size=10,
             ),
-            dashbio.Molecule3dViewer(
-                id="zooming-specific-molecule3d-zoomto", modelData=data, styles=styles
+            html.Br(),
+            html.Br(),
+            html.Hr(),
+            html.P("Molecule 3D Viewer"),
+            html.Div(
+                children=[
+                    dashbio.Molecule3dViewer(
+                        id="zooming-specific-molecule3d-zoomto",
+                        modelData=data,
+                        styles=styles,
+                        height=size[1],
+                        width=size[0],
+                        zoom={
+                            "factor": 1.2,
+                            "animationDuration": 0,
+                            "fixedPath": False,
+                        },
+                    ),
+                ],
+                style={
+                    "display": "inline-flex",
+                    "justify-content": "center",
+                    "align-self": "auto",
+                },
             ),
         ]
     )
@@ -131,28 +95,3 @@ def create_molecule3D_zoom_specific_residues():
                 }
             ],
         ]
-
-
-def create_molecule3D_labels():
-    parser = PdbParser("https://git.io/4K8X.pdb")
-
-    data = parser.mol3d_data()
-    styles = create_mol3d_style(
-        data["atoms"], visualization_type="cartoon", color_element="residue"
-    )
-
-    dashbio.Molecule3dViewer(
-        modelData=data,
-        styles=styles,
-        labels=[
-            {
-                "text": "Residue Name: GLY1",
-                "fontColor": "red",
-                "font": "Courier New, monospace",
-            },
-            {
-                "text": "Residue Chain: A",
-                "position": {"x": 15.407, "y": -8.432, "z": 6.573},
-            },
-        ],
-    )

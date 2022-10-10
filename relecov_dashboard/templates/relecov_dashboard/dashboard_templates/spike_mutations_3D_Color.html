@@ -1,15 +1,7 @@
-{% extends 'relecov_core/base.html' %}
-{% load static %}
-
 {% block content %}
 <br><br><br><br><br><br>
-{% include "relecov_dashboard/variantsSidebar.html"%}
-<div class="container-fluid" style="text-align: center;">
-    <div class="card d-inline-flex p-2 m-1" style="width: 75%;">
-        <div class="card-body border">
+
         {% include "relecov_dashboard/graph_templates/molecule3D_color.html"%}
-        </div>
-    </div>
-</div>
+
 <br><br><br><br>
 {% endblock %}

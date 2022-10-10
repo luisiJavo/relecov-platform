@@ -3,13 +3,51 @@
 {%load plotly_dash%}
 {% block content %}
 <br><br><br><br><br><br>
-{% include "relecov_dashboard/variantsSidebar.html"%}
 <div class="container-fluid" style="text-align: center;">
-    <div class="card d-inline-flex p-2 m-1" style="width: 75%;">
-        <div class="card-body border">
+    <div class="card d-inline-flex  p-2 m-2" style="width: 80%">
+        <div class="card-body border" style="text-align: left;">
+          <div class="card-header" ><h2>Table filtered by mutation effect</h2>
+              <div class="card-subtitle">The following table shows us the data related to the mutations present in each sample. We can filter the results by adding or removing mutation effects from the select widget</div>
+    
+              <!-- Example split danger button -->
+              <div class="btn-group">
+                  <button type="button" class="btn btn-info">Tutorial</button>
+                  <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                  <span class="visually-hidden">Toggle Dropdown</span>
+                  </button>
+                  <div class="dropdown-menu">
+                      <div class="dropdown-item">
+                          <div class="card dropdown-item" style="width: auto;">
+                            <!--<img src="{% static 'relecov_dashboard/img/variants_dashboard_images/mutations_in_lineages_dashboard_images/variants_in_lineages_by_sample_tutorial.png' %}"class="card-img-left" alt="mutations in lineages by sample"style="width:85%;">-->
+                            <div class="card-body">
+                              <h5 class="card-title">Info about graph elements</h5>
+                              <ul>
+                                  <span class="fs-5"><b><u>Elements available</u></b></span>
+                                  <li class="card-text"><b>Select effects - </b>This element allows you to filter the results by choosing one or more effects available in the database.</li>
+                              </ul>
+                              <hr>
+                              <ul>
+                                  <span class="fs-5"><b><u>Fields available in the table</u></b></span>
+                                  <li class="card-text"><b>SAMPLE - </b>Number of sample.</li>
+                                  <li class="card-text"><b>POS - </b>Position in the genome.</li>
+                                  <li class="card-text"><b>MUTATION - </b>Mutation name.</li>
+                                  <li class="card-text"><b>AF - </b>Allele Frequency.</li>
+                                  <li class="card-text"><b>EFFECT - </b>Effect name.</li>
+                                  <li class="card-text"><b>GENE - </b>Gene affected by the mutation.</li>
+                                  <li class="card-text"><b>LINEAGE - </b>Lineage assigned to the sample.</li>
+                              </ul>
+                            </div>
+                          </div>
+                      </div>  
+                  </div>
+              </div>
+              <a href="/dashboard/variants/mutationsInLineagesDashboard" class="btn btn-outline-success" role="button" style="margin-left:10%;">Go back</a>
+          </div>
+          <div class="card-body border" style="text-align: center;">
             {% plotly_app name="mutationTable" ratio=1 %}
+          </div>
         </div>
-    </div>
+      </div>
 </div>
 
 {% endblock %}
