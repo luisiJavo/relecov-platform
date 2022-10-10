@@ -3,12 +3,6 @@
 
 {% block content %}
 <br><br><br><br><br><br>
-<div class="container-fluid" style="text-align: center;">
-    <div class="card d-inline-flex p-2 m-1" style="width: 75%;">
-        <div class="card-body border">
-            {% include "relecov_dashboard/graph_templates/molecule3D_bn.html"%}
-        </div>
-    </div>
-</div>
+{% include "relecov_dashboard/graph_templates/molecule3D_bn.html"%}
 <br><br><br><br>
 {% endblock %}

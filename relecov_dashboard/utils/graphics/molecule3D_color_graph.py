@@ -7,9 +7,15 @@ from dash.dependencies import Input, Output
 import dash_bio as dashbio
 import dash_html_components as html
 from dash_bio.utils import PdbParser, create_mol3d_style
+from relecov_dashboard.utils.graphics.graphics_handling import (
+    screen_size,
+    set_screen_size
+)
 
 
 def create_molecule3D_zoom_specific_residues():
+    size =set_screen_size(screen_size())
+    
     app = DjangoDash("model3D_zoom_residues")
 
     parser = PdbParser("https://git.io/4K8X.pdb")
@@ -43,14 +49,15 @@ def create_molecule3D_zoom_specific_residues():
                         id="zooming-specific-molecule3d-zoomto",
                         modelData=data,
                         styles=styles,
-                        height=800,
-                        width=900,
+                        height=size[1],
+                        width=size[0],
+                        zoom={ "factor": 1.2, "animationDuration": 0, "fixedPath": False,}
                     ),
                 ],
                 style={
-                    "display": "flex",
-                    "justify-content": "flex-start",
-                    "align-items": "center",
+                    "display": "inline-flex",
+                    "justify-content": "center",
+                    "align-self": "auto",
                 },
             ),
         ]
