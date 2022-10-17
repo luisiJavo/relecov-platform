@@ -2,8 +2,11 @@
 
 .variant_index_img_3d {
     /* adjust the below to control the 3D effect */
-    --x: 10px;
-    --y: 20px;
+    /*--x: 10px;
+    --y: 20px;*/
+    --x: 2%;
+    --y: 0.5%;
+    /* transform: perspective(1000px) rotateX(var(--_a,40deg));*/
     transform: perspective(1000px) rotateX(var(--_a,40deg));
     /* */
     clip-path: polygon(       
@@ -24,11 +27,11 @@
     --_c: calc(100% - var(--y));
   }
   
-  /* the below is irrelevant to the 3D effect */
+  /* the below is irrelevant to the 3D effect 
   .variant_index_box_3d {
     cursor: pointer;
-  }
-  .variant_index_box_3d h2 {
+  }*/
+  /*.variant_index_box_3d h2 {
     text-align: center;
     margin: 0;
     font-size: 30px;
@@ -40,12 +43,39 @@
   .variant_index_box_3d:hover h2{
     transform: translateY(0%);
     transition: .8s .2s;
+  }*/
+
+  .variant_index_box_3d > p {
+    text-align: center;
+    margin: 0;
+    /*font-size: 30px;
+    font-family: sans-serif;*/
+    font-weight: bold;
+    
+    transform: translateY(200%);
+    transition: .8s;
+  }
+  .variant_index_box_3d:hover > p{
+    transform: translateY(0%);
+    transition: .8s .2s;
   }
   
 
-  /*  
+   
   @media (max-width: 900px) {
-    body {
+    /*body {
       grid-auto-flow: row;   
+    }*/
+    p {
+      font-size: 30px;
     }
-  }*/
+  }
+
+  @media (min-width: 300px) {
+    /*body {
+      grid-auto-flow: row;   
+    }*/
+    p {
+      font-size: 1px;
+    }
+  }
